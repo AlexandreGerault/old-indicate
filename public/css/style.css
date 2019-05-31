@@ -1,0 +1,40 @@
+h2 {
+    font-size: 2.25rem;
+    font-family: 'Amaranth', Tahoma, Arial;
+    color: #303030;
+    font-weight: bold;
+}
+
+h2 .text-muted {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-family: 'Roboto', Tahoma, Arial;
+    font-weight: 600;
+    font-size: 1.625rem;
+}
+
+p {
+    color: #707070;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 1.75;
+}
+.element-divider {
+    display: block;
+    min-width: 500px;
+}
+
+.element-divider .element-divider-separator {
+    margin: 2rem auto;
+    text-align: center;
+    display: block;
+    width: 50%;
+    border-top: 1px solid #dd7d00;
+}
+
+.post-preview-content h2, .post-preview-content h3, .post-preview-content h4, .post-preview-content h5, .post-preview-content h6 {
+    font-size: 0;
+}
