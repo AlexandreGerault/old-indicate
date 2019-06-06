@@ -45,6 +45,9 @@ class NewsController extends Controller
         $validator = $request->validated();
 
         $news = News::findOrFail($request->id);
+
+        $this->authorize('update', $news);
+
         $news->title = $request->title;
         $news->content = $request->content;
 
@@ -88,7 +91,4 @@ class NewsController extends Controller
 
         return response()->json($news);
     }
-
-    
-
 }

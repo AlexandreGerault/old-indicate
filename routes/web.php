@@ -37,6 +37,8 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
 Route::prefix('structure')->group(function () {
     Route::get('/profile/{id}', 'App\StructureController@showProfile')->name('structure.profile.show');
 
+    Route::get('/{id}/news', 'App\StructureController@news')->name('structure.news');
+
     Route::middleware(['auth', 'nostruct', 'verified'])->group(function() {
         Route::get('/list', 'App\StructureController@list')->name('structure.list');
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
@@ -49,6 +51,8 @@ Route::prefix('structure')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::get('/profile/{id}', 'App\UserController@showProfile')->name('user.profile.show');
+    Route::get('/{id}/news', 'App\UserController@news')->name('user.news');
+
 });
 
 Route::prefix('news')->middleware('verified')->group(function () {

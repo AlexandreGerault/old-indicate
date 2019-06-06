@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;
+use App\Models\App\News;
 use App\Models\App\Structure;
 use App\Models\App\UserStructure;
 use App\Models\App\UserStructureAuthorizations;
@@ -95,6 +96,18 @@ class User extends Authenticatable implements MustVerifyEmail
      * Check if the user is the structure owner
      */
     public function isStructureOwner($structure) {
-        return ! (DB::table('structures_owners')->where('user_id', '=', $this->id)->where('structure_id', '=', $structure->id)->get()->isEmpty());
+        return ! (DB::table('structures_owners')
+                    ->where('user_id', '=', $this->id)
+                    ->where('structure_id', '=', $structure->id)
+                    ->get()
+                    ->isEmpty()
+                );
+    }
+
+    /**
+     * Get user's news
+     */
+    public function news() {
+        return $this->hasMany(News::class, 'author_id');
     }
 }

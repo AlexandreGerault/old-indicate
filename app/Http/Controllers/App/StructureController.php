@@ -66,4 +66,18 @@ class StructureController extends Controller
 
         return view('structure.profile.show')->with('structure', $structure)->with('news', $news);
     }
+
+    public function news(Request $request) {
+        $amount = config('pagination.news-paginate');
+        $structure = Structure::findOrFail($request->route()->parameter('id'));
+
+        $news = $structure->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
+
+        foreach($news as $post) {
+            $post->canEdit = Auth::user()->can('update', $post);
+            $post->canDelete = Auth::user()->can('delete', $post);
+        }
+
+        return response()->json($news);
+    }
 }

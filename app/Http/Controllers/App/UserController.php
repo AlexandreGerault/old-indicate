@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\App\News;
 
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -21,5 +22,19 @@ class UserController extends Controller
         $news = News::all()->where('author_id', '=', $request->id);
 
         return view('user.profile.show')->with('user', $user)->with('news', $news);
+    }
+
+    public function news(Request $request) {
+        $amount = config('pagination.news-paginate');
+        $user = User::findOrFail($request->route()->parameter('id'));
+
+        $news = $user->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
+
+        foreach($news as $post) {
+            $post->canEdit = Auth::user()->can('update', $post);
+            $post->canDelete = Auth::user()->can('delete', $post);
+        }
+
+        return response()->json($news);
     }
 }

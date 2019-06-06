@@ -54,7 +54,7 @@
                     @endcan
                     @endif @endauth
                     <news-feed
-                        get-route="/news"
+                        get-route="/structure/{{ $structure->id }}/news"
                         base-update-route="/news/update/"
                         base-delete-route="/news/delete/"
                         base-user-route="/user/profile/"

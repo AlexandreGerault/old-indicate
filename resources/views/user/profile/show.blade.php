@@ -56,11 +56,15 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-                <div id="newsTimeline">
-                    @foreach ($news as $post)
-                    @news(['news' => $post])
-                    @endnews
-                    @endforeach
+                <div id="news">
+                    <news-feed
+                        get-route="/user/{{ $user->id }}/news"
+                        base-update-route="/news/update/"
+                        base-delete-route="/news/delete/"
+                        base-user-route="/user/profile/"
+                        base-structure-route="/structure/profile/"
+                    >
+                    </news-feed>
                 </div>
             </div>
             <div class="col-md-3 card px-3 pb-3 pt-3">
