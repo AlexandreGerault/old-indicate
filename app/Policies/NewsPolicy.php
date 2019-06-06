@@ -30,7 +30,7 @@ class NewsPolicy
      */
     public function create(User $user)
     {
-        return $user->authorizations->create_news || ($user->isStructureOwner($news->structure)) ? true : null;
+        return $user->authorizations->create_news;
     }
 
     /**
