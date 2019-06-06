@@ -10,10 +10,6 @@ class NewsPolicy
 {
     use HandlesAuthorization;
 
-    public function before(User $user, $ability) {
-        return ($user->isStructureOwner($user->structure)) ? true : null;
-    }
-
     /**
      * Determine whether the user can view the news.
      *
@@ -34,7 +30,7 @@ class NewsPolicy
      */
     public function create(User $user)
     {
-        return $user->authorizations->create_news;
+        return $user->authorizations->create_news || ($user->isStructureOwner($news->structure)) ? true : null;
     }
 
     /**
@@ -46,7 +42,7 @@ class NewsPolicy
      */
     public function update(User $user, News $news)
     {
-        return $user->authorizations->edit_news || $user->id === $news->author_id;
+        return $user->authorizations->edit_news || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;;
     }
 
     /**
@@ -58,7 +54,7 @@ class NewsPolicy
      */
     public function delete(User $user, News $news)
     {
-        return $user->authorizations->delete_news || $user->id === $news->author_id;
+        return $user->authorizations->delete_news || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;
     }
 
     /**
