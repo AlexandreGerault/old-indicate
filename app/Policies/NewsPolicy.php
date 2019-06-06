@@ -42,7 +42,7 @@ class NewsPolicy
      */
     public function update(User $user, News $news)
     {
-        return $user->authorizations->edit_news || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;;
+        return ($user->authorizations->edit_news && $user->structure->id === $news->structure->id) || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;;
     }
 
     /**
@@ -54,7 +54,7 @@ class NewsPolicy
      */
     public function delete(User $user, News $news)
     {
-        return $user->authorizations->delete_news || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;
+        return ($user->authorizations->delete_news && $user->structure->id === $news->structure->id) || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;
     }
 
     /**
