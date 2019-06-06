@@ -9,6 +9,5 @@ return [
   'structure_membership_request_status' => [
     'PENDING' => 1,
     'ACCEPTED' => 2,
-    'REFUSED' => 3,
   ],
 ];

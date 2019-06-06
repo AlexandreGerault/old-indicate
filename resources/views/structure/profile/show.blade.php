@@ -36,9 +36,8 @@
             </div>
 
             <div class="col-md-6">
-                <div>
-                    @auth
-                    @if (Auth::user()->isRelatedTo($structure))
+                <div id="news">
+                    @auth @if (Auth::user()->isRelatedToStructure() && Auth::user()->isRelatedTo($structure)) 
                     @can('create', App\Models\App\News::class)
                     <form class="card mb-5" method="post" action="{{ route('news.store') }}">
                     @csrf
@@ -53,13 +52,15 @@
                         </div>
                     </form>
                     @endcan
-                    @endif
-                    @endauth
-                    @foreach ($news as $post)
-                        @news(['news' => $post])
-                            {{ $post->content }}
-                        @endnews
-                    @endforeach
+                    @endif @endauth
+                    <news-feed
+                        get-route="/news"
+                        base-update-route="/news/update/"
+                        base-delete-route="/news/delete/"
+                        base-user-route="/user/profile/"
+                        base-structure-route="/structure/profile/"
+                    >
+                    </news-feed>
                 </div>
             </div>
 

@@ -17,7 +17,7 @@ class UserController extends Controller
      * @return Response
      */
     public function showProfile(Request $request) {
-        $user = User::find($request->id);
+        $user = User::findOrFail($request->id);
         $news = News::all()->where('author_id', '=', $request->id);
 
         return view('user.profile.show')->with('user', $user)->with('news', $news);

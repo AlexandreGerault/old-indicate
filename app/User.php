@@ -6,14 +6,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DB;
-use App\Traits\OwnsModels;
 use App\Models\App\Structure;
 use App\Models\App\UserStructure;
 use App\Models\App\UserStructureAuthorizations;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, OwnsModels;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -61,25 +60,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserStructure::class, 'user_id');
     }
 
+    public function structure() {
+        return $this->userStructure->structure();
+    }
+
     /**
      * Check if the user is related to a structure
      * 
      * @return boolean
      */
     public function isRelatedToStructure () {
-        if ($this->userStructure === null) {
-            return false;
-        } 
-        return true;
-    }
-
-    /**
-     * Return the structure the user is related to
-     * 
-     * @return Structure
-     */
-    public function structure() {
-        return $this->userStructure->structure();
+        return ($this->userStructure->structure_id === null) ? false : true;
     }
 
     /**
@@ -87,8 +78,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * 
      * @return boolean
      */
-    public function isRelatedTo(Structure $struct) {
-        return $this->userStructure->structure_id === $struct->id;
+    public function isRelatedTo($struct) {
+        return optional($this->userStructure)->structure_id === $struct->id;
     }
 
     /**
@@ -97,13 +88,13 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return UserStructureAuthorizations
      */
     public function authorizations() {
-        return $this->usersStructure->authorizations;
+        return $this->userStructure->authorizations();
     }
 
     /**
      * Check if the user is the structure owner
      */
-    public function isStructureOwner(Structure $structure) {
+    public function isStructureOwner($structure) {
         return ! (DB::table('structures_owners')->where('user_id', '=', $this->id)->where('structure_id', '=', $structure->id)->get()->isEmpty());
     }
 }

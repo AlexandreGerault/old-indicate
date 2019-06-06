@@ -16,7 +16,7 @@ class CreateUsersStructuresTable extends Migration
         Schema::create('users_structures', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->unique();
-            $table->integer('structure_id')->unsigned();
+            $table->integer('structure_id')->unsigned()->nullable()->default(null);
             $table->integer('status')->default(1);
             $table->string('jobname')->nullable()->default(null);
             $table->timestamps();

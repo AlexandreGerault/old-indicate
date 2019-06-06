@@ -12,7 +12,7 @@ class UserStructureAuthorizations extends Model
      *
      * @var string
      */
-    protected $table = 'user_structure_authorizations';
+    protected $table = 'users_structures_authorizations';
 
     /**
      * Return the UserStructure relationship

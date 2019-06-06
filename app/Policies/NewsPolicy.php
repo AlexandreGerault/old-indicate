@@ -11,7 +11,7 @@ class NewsPolicy
     use HandlesAuthorization;
 
     public function before(User $user, $ability) {
-        return ($user->isStructureOwner($user->structure));
+        return ($user->isStructureOwner($user->structure)) ? true : null;
     }
 
     /**
@@ -46,7 +46,7 @@ class NewsPolicy
      */
     public function update(User $user, News $news)
     {
-        return $user->authorizations->edit_news || $user->owns($news);
+        return $user->authorizations->edit_news || $user->id === $news->author_id;
     }
 
     /**
@@ -58,7 +58,7 @@ class NewsPolicy
      */
     public function delete(User $user, News $news)
     {
-        return $user->authorizations->delete_news || $user->owns($news);
+        return $user->authorizations->delete_news || $user->id === $news->author_id;
     }
 
     /**

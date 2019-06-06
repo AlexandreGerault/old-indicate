@@ -28,10 +28,10 @@ class CreateUserStructureRelationship
      */
     public function handle(StructureCreated $event)
     {
-        UserStructure::create([
-            'user_id' => $event->user->id,
-            'structure_id' => $event->structure->id,
-            'status' => config('enums.structure_membership_request_status.ACCEPTED')
-        ]);
+        $userStructure = $event->user->userStructure;
+        $userStructure->user_id = $event->user->id;
+        $userStructure->structure_id = $event->structure->id;
+        $userStructure->status = config('enums.structure_membership_request_status.ACCEPTED');
+        $userStructure->save();
     }
 }

@@ -18,6 +18,8 @@ use App\Listeners\SendEmailConfirmation;
 use App\Listeners\SendEmailJoinDemand;
 use App\Listeners\SendEmailNewsDeletedNotification;
 use App\Listeners\CreateUserStructureRelationship;
+use App\Listeners\CreateDefaultUserStructure;
+use App\Listeners\CreateDefaultAuthorizations;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,8 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            CreateDefaultUserStructure::class,
+            CreateDefaultAuthorizations::class,
         ],
         StructureCreated::class => [
             SendEmailConfirmation::class,

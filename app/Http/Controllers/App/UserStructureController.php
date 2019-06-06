@@ -15,10 +15,10 @@ class UserStructureController extends Controller
      * @return
      */
     public function join(Request $request) {
-        $userStructure = new UserStructure;
+        $userStructure = UserStructure::findOrFail(Auth::user()->userStructure->id);
 
-        $userStructure->user_id = Auth::user()->id;
         $userStructure->structure_id = $request->id;
+        $userStructure->status = config('enums.structure_membership_request_status.PENDING');
 
         $userStructure->save();
 

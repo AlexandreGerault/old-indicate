@@ -51,8 +51,10 @@ Route::prefix('user')->group(function () {
     Route::get('/profile/{id}', 'App\UserController@showProfile')->name('user.profile.show');
 });
 
-Route::prefix('news')->group(function () {
-    Route::post('/store', 'App\NewsController@store')->name('news.store')->middleware('verified');
+Route::prefix('news')->middleware('verified')->group(function () {
+    Route::get('/', 'App\NewsController@index')->name('news.index');
+    Route::post('/store', 'App\NewsController@store')->name('news.store');
+    Route::patch('/update/{id}', 'App\NewsController@update')->name('news.update');
     Route::delete('/delete/{id}', 'App\NewsController@delete')->name('news.delete');
 });
 

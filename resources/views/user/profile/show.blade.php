@@ -24,12 +24,10 @@
 
                     @switch($user->userStructure->status)
 
-                        {{-- Status = 1 => Pending request --}}
                         @case(config('enums.structure_membership_request_status.PENDING'))
                             <p class="lead">{{ __('Demande d\'affiliation en cours...') }}</p>
                             @break
                         
-                        {{-- Status = 2 => Request accepted --}}
                         @case(config('enums.structure_membership_request_status.ACCEPTED'))
                             <p class="lead"><a href="{{ route('structure.profile.show', ['id' => $user->structure->id]) }}">{{ $user->structure->name }}</a></p>
                             @break
@@ -41,8 +39,8 @@
 
                     @endswitch
 
-                @elseif (! $user->isRelatedToStructure() )
-                    @if (Auth::user()->id === $user->id)
+                @else
+                    @if (Auth::id() === $user->id)
                     <p class="lead">Veuillez effectuer une des actions suivantes</p>
                     <a class="btn btn-primary" href="{{ route('structure.list') }}">Rejoindre une structure</a> ou <a class="btn btn-primary" href="{{ route('structure.create') }}">Créer une structure</a>
                     @else
@@ -58,11 +56,12 @@
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
-            @foreach ($news as $post)
-                @news(['news' => $post])
-                    {{ $post->content }}
-                @endnews
-            @endforeach
+                <div id="newsTimeline">
+                    @foreach ($news as $post)
+                    @news(['news' => $post])
+                    @endnews
+                    @endforeach
+                </div>
             </div>
             <div class="col-md-3 card px-3 pb-3 pt-3">
                 <div class="row">

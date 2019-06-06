@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;
+use App\Models\App\News;
 
 class StoreNewsRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class StoreNewsRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::user()->can('create', News::class);
     }
 
     /**
