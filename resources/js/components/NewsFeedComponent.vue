@@ -1,16 +1,7 @@
 <template>
     <div>
         <div v-for="(item, $index) in newsFeed" :key="$index">
-            <news-item 
-                :title="item.title" 
-                :news-id="item.id"
-                :user-id="item.author.id" 
-                :structure-id="item.structure.id" 
-                :user-name="item.author.firstname"
-                :structure-name="item.structure.name"
-                :text-content="item.content"
-                :can-delete="item.canDelete"
-                :can-edit="item.canEdit"
+            <news-item :news="item"
                 :update-route="baseUpdateRoute + item.id"
                 :delete-route="baseDeleteRoute + item.id"
                 :user-route="baseUserRoute + item.author.id"

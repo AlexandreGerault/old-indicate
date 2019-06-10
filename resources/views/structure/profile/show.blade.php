@@ -6,20 +6,27 @@
 <div class="py-5">
     <div class="container">
         <div class="row shadow-none border-light">
-            <div class="col-sm-2"><img class="img-fluid d-block"
-                    src="https://static.pingendo.com/img-placeholder-3.svg">
+            <div class="col-4 col-md-2">
+                <img class="img-fluid d-block" src="https://static.pingendo.com/img-placeholder-3.svg">
             </div>
-            <div class="col-sm-8 shadow-none">
+            <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $structure->name }} <span class="badge badge-secondary">{{ $structure->typename() }}</span></h1>
                 <p class="lead">{{ $structure->comment }}</p>
+                @if( ! Auth::user()->structure->follows($structure) && Auth::user()->structure->id !== $structure->id )
+                <a href="{{ route('structure.follows', ['id' => $structure->id]) }}" class="btn btn-primary">Suivre</a>
+                @elseif (Auth::user()->structure->follows($structure) && Auth::user()->structure->id !== $structure->id)
+                <a href="{{ route('structure.unfollows', ['id' => $structure->id]) }}" class="btn btn-primary">Ne plus suivre</a>
+                @endif
             </div>
         </div>
     </div>
 </div>
+
 <div class="py-5">
     <div class="container">
         <div class="row">
-
+        </div>
+        <div class="row">
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
@@ -35,9 +42,9 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div id="news">
-                    @auth @if (Auth::user()->isRelatedToStructure() && Auth::user()->isRelatedTo($structure)) 
+            <div class="col-md-6 pt-3 pt-md-0">
+                <div id="app">
+                    @auth @if (Auth::user()->isRelatedToStructure() && Auth::user()->isRelatedTo($structure))
                     @can('create', App\Models\App\News::class)
                     <form class="card mb-5" method="post" action="{{ route('news.store') }}">
                     @csrf
@@ -64,19 +71,18 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 px-3 pb-3 pt-3 pt-md-0">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="mb-4 card-title">Connexions</h4>
-                        <div class="row mb-2">
-                            <div class="col-md-4">
-                                <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg">
-                            </div>
-                            <div class="col-md-8">
-                                <h5 class="">Indicate</h5><a class="label" href="#">Button</a>
-                            </div>
-                        </div>
+                    <div class="card-header">
+                        <h3 class="text-center mb-0">Connexions</h3>
                     </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach ($structure->followed as $followed)
+                        <li class="list-group-item text-center">
+                            <span class="h4"><a href="{{ route('structure.profile.show', ['id' => $followed->id]) }}">{{ $followed->name }}</a></span>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
 

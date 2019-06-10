@@ -14,10 +14,10 @@
         </div>
         @endif
         <div class="row shadow-none border-light">
-            <div class="col-sm-2">
+            <div class="col-4 col-md-2">
                 <img class="img-fluid d-block" src="/storage/users/avatars/{{ $user->avatar }}">
             </div>
-            <div class="col-sm-8 shadow-none">
+            <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $user->firstname }} {{ $user->lastname }}</h1>
                 
                 @if ($user->isRelatedToStructure())
@@ -55,8 +55,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3"></div>
+
             <div class="col-md-6">
-                <div id="news">
+                <div id="app">
                     <news-feed
                         get-route="/user/{{ $user->id }}/news"
                         base-update-route="/news/update/"
@@ -67,32 +68,44 @@
                     </news-feed>
                 </div>
             </div>
-            <div class="col-md-3 card px-3 pb-3 pt-3">
-                <div class="row">
-                    <div class="col-md-12 mb-3">
+
+            <div class="col-md-3 px-3 pb-3 pt-3 pt-md-0">
+                <div class="card">
+                    <div class="card-header">
                         <h3 class="">Suggestions</h3>
                     </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4"><img class="img-fluid d-block rounded-circle"
-                            src="https://static.pingendo.com/img-placeholder-3.svg"></div>
-                    <div class="col-md-8">
-                        <h4 class="">Indicate</h4><a class="label" href="#">Button</a>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4"><img class="img-fluid d-block rounded-circle"
-                            src="https://static.pingendo.com/img-placeholder-3.svg"></div>
-                    <div class="col-md-8">
-                        <h4 class="">WarpZone</h4><a class="label" href="#">Button</a>
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-md-4"><img class="img-fluid d-block rounded-circle"
-                            src="https://static.pingendo.com/img-placeholder-3.svg"></div>
-                    <div class="col-md-8">
-                        <h4 class="">Incubateur</h4><a class="label" href="#">Button</a>
-                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" />
+                                </div>
+                                <div class="col-8">
+                                    <span class="h4">Indicate</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" />
+                                </div>
+                                <div class="col-8">
+                                    <span class="h4">Indicate</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-4">
+                                    <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" />
+                                </div>
+                                <div class="col-8">
+                                    <span class="h4">Indicate</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

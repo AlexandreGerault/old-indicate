@@ -58,8 +58,9 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'nostruct' => \App\Http\Middleware\UserDoesNotBelongToStructure::class,
+        'nostruct' => \App\Http\Middleware\UserDoesntBelongStructure::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'struct' => \App\Http\Middleware\UserMustBelongToStructure::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];

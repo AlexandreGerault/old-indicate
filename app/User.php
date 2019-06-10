@@ -9,7 +9,7 @@ use DB;
 use App\Models\App\News;
 use App\Models\App\Structure;
 use App\Models\App\UserStructure;
-use App\Models\App\UserStructureAuthorizations;
+use App\Models\App\UserAuthorizations;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -89,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @return UserStructureAuthorizations
      */
     public function authorizations() {
-        return $this->userStructure->authorizations();
+        return $this->hasOne(UserAuthorizations::class);
     }
 
     /**

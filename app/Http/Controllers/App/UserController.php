@@ -35,6 +35,6 @@ class UserController extends Controller
             $post->canDelete = Auth::user()->can('delete', $post);
         }
 
-        return response()->json($news);
+        return response()->json($news, 200);
     }
 }

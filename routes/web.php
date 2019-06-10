@@ -35,24 +35,34 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
 });
 
 Route::prefix('structure')->group(function () {
-    Route::get('/profile/{id}', 'App\StructureController@showProfile')->name('structure.profile.show');
+    Route::prefix('profile')->group(function () {
+        Route::get('{id}', 'App\StructureController@showProfile')->name('structure.profile.show');
+        Route::get('{id}/edit', function () {
+             return;
+        })->name('structure.profile.edit');
+    });
 
     Route::get('/{id}/news', 'App\StructureController@news')->name('structure.news');
+    Route::get('/{id}/newsfeed', 'App\StructureController@news')->name('structure.newsfeed');
 
+    /**
+     * Routes below are used to join or create a structure
+     */
     Route::middleware(['auth', 'nostruct', 'verified'])->group(function() {
         Route::get('/list', 'App\StructureController@list')->name('structure.list');
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
         Route::get('/create', 'App\StructureController@create')->name('structure.create');
         Route::post('/store', 'App\StructureController@store')->name('structure.store');
     });
-    
-    //Route::get('/caracteristics/{id}', 'Structure\ProfilController@caracteristics')->name('structure.profil.caracteristics');
+
+    Route::get('/follows', 'App\StructureController@follows')->name('structure.follows');
+    Route::get('/unfollows', 'App\StructureController@unfollows')->name('structure.unfollows');
+    //Route::get('/caracteristics/{id}', 'Structure\ProfilController@caracteristics')->name('structure.profile.caracteristics');
 });
 
 Route::prefix('user')->group(function () {
     Route::get('/profile/{id}', 'App\UserController@showProfile')->name('user.profile.show');
     Route::get('/{id}/news', 'App\UserController@news')->name('user.news');
-
 });
 
 Route::prefix('news')->middleware('verified')->group(function () {
@@ -69,6 +79,10 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect()->route('app.home');
 });
+
+Route::get('/indicate-search', function() {
+    return view('app.indicate-search');
+})->name('research');
 
 Route::get('/search', 'App\SearchController@search')->name('search');
 

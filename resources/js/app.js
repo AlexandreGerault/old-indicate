@@ -30,16 +30,16 @@ Vue.use(InfiniteLoading, {
 
 Vue.component('news-item', require('./components/NewsItemComponent.vue').default);
 Vue.component('news-feed', require('./components/NewsFeedComponent.vue').default);
+Vue.component('indicate-search-form', require('./components/IndicateResearch/SearchFormComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-const app = new Vue({
-    el: '#news',
-});
+if(document.getElementById('#app') !== undefined) {
+    const app = new Vue().$mount('#app');
+}
 
 let editor = document.getElementById('editor');
 let toolbarOptions = [

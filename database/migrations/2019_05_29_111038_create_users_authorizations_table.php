@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersStructuresAuthorizationsTable extends Migration
+class CreateUsersAuthorizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,19 @@ class CreateUsersStructuresAuthorizationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_structures_authorizations', function (Blueprint $table) {
+        Schema::create('users_authorizations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_structure_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->boolean('create_news')->default(false);
             $table->boolean('edit_news')->default(false);
             $table->boolean('delete_news')->default(false);
+            $table->boolean('follow_structure')->default(false);
             $table->boolean('manage_users')->default(false);
             $table->timestamps();
         });
 
-        Schema::table('users_structures_authorizations', function (Blueprint $table) {
-            $table->foreign('user_structure_id')->references('id')->on('users_structures')->onDelete('cascade');
+        Schema::table('users_authorizations', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -35,9 +36,9 @@ class CreateUsersStructuresAuthorizationsTable extends Migration
      */
     public function down()
     {
-        Schema::table('users_structures_authorizations', function (Blueprint $table) {
-            $table->dropForeign('users_structures_authorizations_user_structure_id_foreign');
+        Schema::table('users_authorizations', function (Blueprint $table) {
+            $table->dropForeign('users_authorizations_user_id_foreign');
         });
-        Schema::dropIfExists('users_structures_authorizations');
+        Schema::dropIfExists('users_authorizations');
     }
 }

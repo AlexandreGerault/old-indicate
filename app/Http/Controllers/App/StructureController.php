@@ -10,6 +10,7 @@ use App\Models\App\UserStructure;
 use App\Events\StructureCreated;
 
 use Auth;
+use DB;
 
 class StructureController extends Controller
 {
@@ -78,6 +79,40 @@ class StructureController extends Controller
             $post->canDelete = Auth::user()->can('delete', $post);
         }
 
-        return response()->json($news);
+        return response()->json($news, 200);
+    }
+
+    public function follows(Request $request) {
+        $structureToFollow = Structure::findOrFail($request->id);
+        $structureThatFollows = Auth::user()->structure;
+
+        if ($structureThatFollows->follows($structureToFollow)) {
+            return back()->with('error', __('Vous suivez déjà '. $structureToFollow->name . '.'));
+        }
+
+        DB::table('followers')->insert([
+            'follower_id' => $structureThatFollows->id,
+            'followed_id' => $structureToFollow->id,
+            'created_at' => new \Datetime(),
+            'updated_at' => null
+        ]);
+
+        return back()->with('success', __('Vous suivez maintenant ' . $structureToFollow->name . '.'));
+    }
+
+    public function unfollows(Request $request) {
+        $structureToUnfollow = Structure::findOrFail($request->id);
+        $structureThatUnfollows = Auth::user()->structure;
+
+        if (! $structureThatUnfollows->follows($structureToUnfollow)) {
+            return back()->with('error', __('Vous ne suivez pas encore '. $structureToFollow->name . '.'));
+        }
+
+        DB::table('followers')->where([
+            ['follower_id', '=', $structureThatUnfollows->id],
+            ['followed_id', '=', $structureToUnfollow->id]
+        ])->delete();
+
+        return back()->with('success', __('Vous ne suivez désormais plus ' . $structureToUnfollow->name . '.'));
     }
 }

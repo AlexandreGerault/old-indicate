@@ -2,19 +2,19 @@
     <article class="card mb-5" v-if="! isDeleted && ! editing">
         <div class="card-header">
             <h6 class="card-subtitle my-2 text-muted">
-                Utilisateur: <a :href="userRoute">{{ userName }}</a> 
+                Utilisateur: <a :href="this.userRoute">{{ authorFullname }}</a> 
                 &gt; 
-                <a :href="structureRoute">{{ structureName }}</a>
+                <a :href="this.structureRoute">{{ news.structure.name }}</a>
             </h6>
         </div>
         <div class="card-body">
             <h5 class="card-title font-weight-bold" v-if="localTitle">{{ localTitle }}</h5>
             <p class="card-text">{{ localContent }}</p>
         </div>
-        <template v-if="canDelete || canEdit">
+        <template v-if="news.canDelete || news.canEdit">
             <div class="card-footer">
-                <a role="button" class="text-primary card-link" v-if="canEdit" v-on:click.prevent="toggleEdit">Éditer</a>
-                <a role="button" class="text-primary card-link" v-if="canDelete" v-on:click.prevent="deleteNews">Supprimer</a>
+                <a role="button" class="text-primary card-link" v-if="news.canEdit" v-on:click.prevent="toggleEdit">Éditer</a>
+                <a role="button" class="text-primary card-link" v-if="news.canDelete" v-on:click.prevent="deleteNews">Supprimer</a>
             </div>
         </template>
     </article>
@@ -39,35 +39,24 @@
     export default {
         data () {
             return {
-                editing: '',
-                isDeleted: '',
-                localTitle: this.title,
-                localContent: this.textContent
+                editing: false,
+                isDeleted: false,
+                localTitle: this.news.title,
+                localContent: this.news.content
             }
         },
-        props: [
-            'title',
-            'newsId',
-            'userId',
-            'userName',
-            'structureId',
-            'structureName',
-            'textContent',
-            'canEdit',
-            'canDelete',
-            'updateRoute',
-            'deleteRoute',
-            'userRoute',
-            'structureRoute'],
-        mounted() {
-            this.isDeleted = false
-            this.editing = false
+        mounted () {
+            console.log(this.news);
         },
+        computed: {
+            authorFullname: function () {
+                    return this.news.author.firstname + ' ' + this.news.author.lastname
+            }
+        },
+        props: ['news', 'updateRoute', 'deleteRoute', 'userRoute', 'structureRoute'],
         methods: {
             toggleEdit: function(event) {
-                console.log('BEFORE TOGGLE: ' + this.editing)
                 this.editing = !this.editing
-                console.log('AFTER TOGGLE: ' + this.editing)
 
             },
             updateNews: function(event) {

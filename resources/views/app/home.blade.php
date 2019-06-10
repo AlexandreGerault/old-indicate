@@ -21,25 +21,27 @@
                     @csrf
 
                     <div class="form-group row">
-                        <div class="col-md-6 pl-0">
-                            <label for="firstname">{{ __('Prénom') }}</label>
-                            <input id="firstname" type="text" class="form-control{{ $errors->has('firstname') ? ' is-invalid' : '' }}" name="firstname" value="{{ old('firstname') }}" required autofocus>
-                            
-                            @if ($errors->has('firstname'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('firstname') }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                        <div class="col-md-6 pr-0">
-                            <label for="lastname">{{ __('Nom') }}</label>
-                            <input id="lastname" type="text" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required>
-                            
-                            @if ($errors->has('lastname'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('last name') }}</strong>
-                                </span>
-                            @endif
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="firstname">{{ __('Prénom') }}</label>
+                                <input id="firstname" type="text" class="form-control{{ $errors->has('firstname') ? ' is-invalid' : '' }}" name="firstname" value="{{ old('firstname') }}" required autofocus>
+                                
+                                @if ($errors->has('firstname'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('firstname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastname">{{ __('Nom') }}</label>
+                                <input id="lastname" type="text" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" required>
+                                
+                                @if ($errors->has('lastname'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('last name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
                     </div>
 

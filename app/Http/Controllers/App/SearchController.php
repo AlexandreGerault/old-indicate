@@ -26,7 +26,7 @@ class SearchController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('user.searchresult')->withErrors($validator)->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
         $structures = Structure::where('name', 'LIKE', '%'.$search.'%')->orderBy('name')->paginate(5);

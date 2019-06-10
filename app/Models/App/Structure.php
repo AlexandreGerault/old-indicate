@@ -99,4 +99,12 @@ class Structure extends Model
     public function news() {
         return $this->hasMany(News::class, 'structure_id');
     }
+
+    public function followed() {
+        return $this->belongsToMany(Structure::class, 'followers', 'follower_id', 'followed_id');
+    }
+
+    public function follows(Structure $struct) {
+        return $this->followed->contains($struct);
+    }
 }

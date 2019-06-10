@@ -24,6 +24,8 @@ class NewsController extends Controller
      */
     public function store(StoreNewsRequest $request) {
         $validator = $request->validated();
+
+        $this->authorize('create', News::class);
         
         $news = News::create([
             'title' => $request->title,
@@ -89,6 +91,6 @@ class NewsController extends Controller
             $post->canDelete = Auth::user()->can('delete', $post);
         }
 
-        return response()->json($news);
+        return response()->json($news, 200);
     }
 }

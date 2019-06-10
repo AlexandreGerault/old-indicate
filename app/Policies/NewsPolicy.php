@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\User;
+use App\Models\App\Structure;
 use App\Models\App\News;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -26,6 +27,7 @@ class NewsPolicy
      * Determine whether the user can create news.
      *
      * @param  \App\User  $user
+     * @param  \App\Models\App\Structure  $user
      * @return mixed
      */
     public function create(User $user)

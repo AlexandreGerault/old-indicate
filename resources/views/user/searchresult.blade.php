@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="mb-3 border-bottom border-light">Search results</h1>
+                <h1 class="mb-3 border-bottom border-light">@lang('Résultat de la recherche')</h1>
             </div>
         </div>
         <div class="row">

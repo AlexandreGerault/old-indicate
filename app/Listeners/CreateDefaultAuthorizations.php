@@ -29,8 +29,8 @@ class CreateDefaultAuthorizations
      */
     public function handle(Registered $event)
     {
-        DB::table('users_structures_authorizations')->insert([
-            'user_structure_id' => $event->user->userStructure->id,
+        DB::table('users_authorizations')->insert([
+            'user_id' => $event->user->id,
             'created_at' => new \Datetime(),
             'updated_at' => new \Datetime(),
         ]);
