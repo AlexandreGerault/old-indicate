@@ -14,14 +14,14 @@ class CreateFollowersTable extends Migration
     public function up()
     {
         Schema::create('followers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('follower_id')->unsigned();
-            $table->integer('followed_id')->unsigned();
+            $table->integer('follower_id')->unsigned()->index();
+            $table->integer('following_id')->unsigned()->index();
             $table->timestamps();
         });
         Schema::table('followers', function (Blueprint $table) {
+            $table->primary(['follower_id', 'following_id']);
             $table->foreign('follower_id')->references('id')->on('structures')->onDelete('cascade');
-            $table->foreign('followed_id')->references('id')->on('structures')->onDelete('cascade');
+            $table->foreign('following_id')->references('id')->on('structures')->onDelete('cascade');
         });
     }
 
@@ -34,7 +34,7 @@ class CreateFollowersTable extends Migration
     {
         Schema::table('followers', function (Blueprint $table) {
             $table->dropForeign('followers_follower_id_foreign');
-            $table->dropForeign('followers_followed_id_foreign');
+            $table->dropForeign('followers_following_id_foreign');
         });
         Schema::dropIfExists('followers');
     }

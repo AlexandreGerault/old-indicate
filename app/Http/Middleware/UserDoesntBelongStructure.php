@@ -16,9 +16,9 @@ class UserDoesntBelongStructure
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->isRelatedToStructure()) {
+        if (Auth::user()->hasStructure()) {
             return redirect()->route('user.profile.show', ['id' => Auth::user()->id ])
-                             ->with('flash', __('Vous appartenez déjà à une structure.'));
+                             ->with('error', __('Vous appartenez déjà à une structure.'));
         }
         return $next($request);
     }

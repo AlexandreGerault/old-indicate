@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\User;
 use App\Models\App\News;
 use App\Models\App\UserStructure;
+use Auth;
 
 class Structure extends Model
 {
@@ -100,11 +101,22 @@ class Structure extends Model
         return $this->hasMany(News::class, 'structure_id');
     }
 
-    public function followed() {
-        return $this->belongsToMany(Structure::class, 'followers', 'follower_id', 'followed_id');
+    /**
+     * Get the news from the structure this one is following
+     */
+    public function timeline() {
+        return News::byFollowersOf(Auth::user());
     }
 
-    public function follows(Structure $struct) {
-        return $this->followed->contains($struct);
+    public function following() {
+        return $this->belongsToMany(Structure::class, 'followers', 'follower_id', 'following_id');
     }
+
+    /**
+     * Determine wether the structure is subscribed to the target timeline
+     */
+    public function follows(Structure $struct) {
+        return $this->following->contains($struct);
+    }
+
 }

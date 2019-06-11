@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\App\Structure;
 use App\Http\Requests\StoreStructureRequest;
 use App\Models\App\UserStructure;
+use App\Models\App\News;
 use App\Events\StructureCreated;
+use Illuminate\Database\Eloquent\Collection;
 
 use Auth;
 use DB;
@@ -72,7 +74,7 @@ class StructureController extends Controller
         $amount = config('pagination.news-paginate');
         $structure = Structure::findOrFail($request->route()->parameter('id'));
 
-        $news = $structure->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
+        $news = $structure->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount)->all();
 
         foreach($news as $post) {
             $post->canEdit = Auth::user()->can('update', $post);
@@ -82,37 +84,17 @@ class StructureController extends Controller
         return response()->json($news, 200);
     }
 
-    public function follows(Request $request) {
-        $structureToFollow = Structure::findOrFail($request->id);
-        $structureThatFollows = Auth::user()->structure;
+    public function timeline(Request $request) {
+        $amount = config('pagination.news-paginate');
+        $structure = Structure::findOrFail($request->id);
 
-        if ($structureThatFollows->follows($structureToFollow)) {
-            return back()->with('error', __('Vous suivez déjà '. $structureToFollow->name . '.'));
+        $news = $structure->timeline()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount)->all();
+
+        foreach($news as $post) {
+            $post->canEdit = Auth::user()->can('update', $post);
+            $post->canDelete = Auth::user()->can('delete', $post);
         }
-
-        DB::table('followers')->insert([
-            'follower_id' => $structureThatFollows->id,
-            'followed_id' => $structureToFollow->id,
-            'created_at' => new \Datetime(),
-            'updated_at' => null
-        ]);
-
-        return back()->with('success', __('Vous suivez maintenant ' . $structureToFollow->name . '.'));
-    }
-
-    public function unfollows(Request $request) {
-        $structureToUnfollow = Structure::findOrFail($request->id);
-        $structureThatUnfollows = Auth::user()->structure;
-
-        if (! $structureThatUnfollows->follows($structureToUnfollow)) {
-            return back()->with('error', __('Vous ne suivez pas encore '. $structureToFollow->name . '.'));
-        }
-
-        DB::table('followers')->where([
-            ['follower_id', '=', $structureThatUnfollows->id],
-            ['followed_id', '=', $structureToUnfollow->id]
-        ])->delete();
-
-        return back()->with('success', __('Vous ne suivez désormais plus ' . $structureToUnfollow->name . '.'));
+        
+        return response()->json($news, 200);
     }
 }

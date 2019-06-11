@@ -1,22 +1,19 @@
 <template>
     <article class="card mb-5" v-if="! isDeleted && ! editing">
-        <div class="card-header">
-            <h6 class="card-subtitle my-2 text-muted">
+        <div class="card-body">
+            <h6 class="card-subtitle my-2 mb-3 text-muted">
                 Utilisateur: <a :href="this.userRoute">{{ authorFullname }}</a> 
                 &gt; 
                 <a :href="this.structureRoute">{{ news.structure.name }}</a>
             </h6>
-        </div>
-        <div class="card-body">
             <h5 class="card-title font-weight-bold" v-if="localTitle">{{ localTitle }}</h5>
             <p class="card-text">{{ localContent }}</p>
-        </div>
-        <template v-if="news.canDelete || news.canEdit">
-            <div class="card-footer">
+            <template v-if="news.canDelete || news.canEdit">
                 <a role="button" class="text-primary card-link" v-if="news.canEdit" v-on:click.prevent="toggleEdit">Éditer</a>
                 <a role="button" class="text-primary card-link" v-if="news.canDelete" v-on:click.prevent="deleteNews">Supprimer</a>
-            </div>
-        </template>
+            </template>
+        </div>
+        
     </article>
 
     <div v-else-if="! isDeleted && editing">

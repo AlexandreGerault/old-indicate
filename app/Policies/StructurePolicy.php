@@ -88,8 +88,19 @@ class StructurePolicy
      * @param  \App\Models\App\Structure  $structure
      * @return mixed
      */
-    public function follows(User $user, Structure $structure)
+    public function follow(User $user, Structure $structure)
     {
-        return ($user->authorizations->follow_structure);
+        return $user->authorizations->follow_structure && ! $user->structure->follows($structure) && $user->structure->id !== $structure->id;
+    }
+    /**
+     * Determine whether the user can follows another structure.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Models\App\Structure  $structure
+     * @return mixed
+     */
+    public function unfollow(User $user, Structure $structure)
+    {
+        return $user->authorizations->follow_structure && $user->structure->follows($structure) && $user->structure->id !== $structure->id;
     }
 }

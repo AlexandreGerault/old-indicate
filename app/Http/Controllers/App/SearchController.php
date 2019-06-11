@@ -29,10 +29,27 @@ class SearchController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $structures = Structure::where('name', 'LIKE', '%'.$search.'%')->orderBy('name')->paginate(5);
+        $structures = Structure::searchByName($search)->orderBy('name')->paginate(5);
         
         $users = User::searchByName($search)->orderBy('firstname')->paginate(5);
 
         return view('user.searchresult')->with(['structures' => $structures, 'users' => $users]);
+    }
+
+    public function ajaxSearch(Request $request) {
+        $search = $request->input('search');
+
+        $validator = Validator::make($request->all(), [
+            'search' => 'required|max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(403);
+        }
+
+        $structures = Structure::searchByName($search)->orderBy('name')->paginate(5);
+        $users = User::searchByName($search)->orderBy('firstname')->paginate(5);
+
+        return response()->json(['users' => $users->all(), 'structures' => $structures->all()]);
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\App\News;
 use App\Policies\NewsPolicy;
+use App\Models\App\Structure;
+use App\Policies\StructurePolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
         News::class => NewsPolicy::class, 
+        Structure::class => StructurePolicy::class,
     ];
 
     /**

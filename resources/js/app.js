@@ -28,19 +28,22 @@ Vue.use(InfiniteLoading, {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('news-item', require('./components/NewsItemComponent.vue').default);
-Vue.component('news-feed', require('./components/NewsFeedComponent.vue').default);
+Vue.component('news-timeline', require('./components/News/NewsTimelineComponent.vue').default);
 Vue.component('indicate-search-form', require('./components/IndicateResearch/SearchFormComponent.vue').default);
+Vue.component('simple-search-form', require('./components/SimpleSearch/SimpleSearch.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-if(document.getElementById('#app') !== undefined) {
-    const app = new Vue().$mount('#app');
+if(document.getElementById('news') !== null) {
+    const newsApp = new Vue().$mount('#news');
 }
 
+if(document.getElementById('simple-search-form') !== null) {
+    const simpleSearchApp = new Vue().$mount('#simple-search-form');
+}
 let editor = document.getElementById('editor');
 let toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons

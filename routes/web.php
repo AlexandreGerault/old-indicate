@@ -34,7 +34,7 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
     
 });
 
-Route::prefix('structure')->group(function () {
+Route::prefix('structure')->middleware('auth')->group(function () {
     Route::prefix('profile')->group(function () {
         Route::get('{id}', 'App\StructureController@showProfile')->name('structure.profile.show');
         Route::get('{id}/edit', function () {
@@ -43,20 +43,20 @@ Route::prefix('structure')->group(function () {
     });
 
     Route::get('/{id}/news', 'App\StructureController@news')->name('structure.news');
-    Route::get('/{id}/newsfeed', 'App\StructureController@news')->name('structure.newsfeed');
+    Route::get('/{id}/timeline', 'App\StructureController@timeline')->name('structure.timeline');
 
     /**
      * Routes below are used to join or create a structure
      */
-    Route::middleware(['auth', 'nostruct', 'verified'])->group(function() {
+    Route::middleware(['nostruct', 'verified'])->group(function() {
         Route::get('/list', 'App\StructureController@list')->name('structure.list');
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
         Route::get('/create', 'App\StructureController@create')->name('structure.create');
         Route::post('/store', 'App\StructureController@store')->name('structure.store');
     });
 
-    Route::get('/follows', 'App\StructureController@follows')->name('structure.follows');
-    Route::get('/unfollows', 'App\StructureController@unfollows')->name('structure.unfollows');
+    Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
+    Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
     //Route::get('/caracteristics/{id}', 'Structure\ProfilController@caracteristics')->name('structure.profile.caracteristics');
 });
 
@@ -72,18 +72,19 @@ Route::prefix('news')->middleware('verified')->group(function () {
     Route::delete('/delete/{id}', 'App\NewsController@delete')->name('news.delete');
 });
 
+Route::prefix('search')->middleware(['auth', 'verified'])->group(function () {
+    Route::get('/ajax', 'App\SearchController@ajaxSearch')->name('search.ajax');
+    Route::get('/', 'App\SearchController@search')->name('search');
 
-Route::get('/', function () {
-    return view('app.home');
-})->middleware('guest')->name('app.home');
-Route::get('/home', function () {
-    return redirect()->route('app.home');
 });
+
+Route::get('/', 'App\HomeController@index')->name('app.home');
+Route::get('/home', function () { return redirect()->route('app.home'); });
 
 Route::get('/indicate-search', function() {
     return view('app.indicate-search');
 })->name('research');
 
-Route::get('/search', 'App\SearchController@search')->name('search');
+
 
 Auth::routes(['verify' => true]);

@@ -25,7 +25,7 @@ class NewsController extends Controller
     public function store(StoreNewsRequest $request) {
         $validator = $request->validated();
 
-        $this->authorize('create', News::class);
+        $this->authorize('create', [News::class, Structure::find($request->structure_id)]);
         
         $news = News::create([
             'title' => $request->title,

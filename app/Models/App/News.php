@@ -5,6 +5,7 @@ namespace App\Models\App;
 use App\Models\App\Structure;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class News extends Model
 {
@@ -29,5 +30,9 @@ class News extends Model
      */
     public function structure() {
         return $this->belongsTo(Structure::class);
+    }
+
+    public function scopeByFollowersOf($query, $user) {
+        return $query->whereIn('structure_id', auth()->user()->structure->following->pluck('id'));
     }
 }

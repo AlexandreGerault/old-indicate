@@ -70,8 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * 
      * @return boolean
      */
-    public function isRelatedToStructure () {
-        return ($this->userStructure->structure_id === null) ? false : true;
+    public function hasStructure () {
+        return $this->userStructure->structure_id !== null;
     }
 
     /**
@@ -79,8 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * 
      * @return boolean
      */
-    public function isRelatedTo($struct) {
-        return optional($this->userStructure)->structure_id === $struct->id;
+    public function structureIs($struct) {
+        return $this->userStructure->structure_id === $struct->id;
     }
 
     /**

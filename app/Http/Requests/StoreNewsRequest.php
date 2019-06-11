@@ -3,8 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+
 use Auth;
+use Illuminate\Support\Facades\Input;
+
 use App\Models\App\News;
+use App\Models\App\Structure;
 
 class StoreNewsRequest extends FormRequest
 {
@@ -15,7 +19,9 @@ class StoreNewsRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->can('create', News::class);
+        $structure = Structure::find(Input::get('structure_id'));
+
+        return Auth::user()->can('create', [News::class, $structure]);
     }
 
     /**

@@ -30,9 +30,9 @@ class NewsPolicy
      * @param  \App\Models\App\Structure  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user, Structure $structure)
     {
-        return $user->authorizations->create_news;
+        return $user->authorizations->create_news && $user->hasStructure() && $user->structureIs($structure);
     }
 
     /**

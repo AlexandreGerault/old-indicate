@@ -28,7 +28,7 @@ class UserController extends Controller
         $amount = config('pagination.news-paginate');
         $user = User::findOrFail($request->route()->parameter('id'));
 
-        $news = $user->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
+        $news = $user->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount)->all();
 
         foreach($news as $post) {
             $post->canEdit = Auth::user()->can('update', $post);

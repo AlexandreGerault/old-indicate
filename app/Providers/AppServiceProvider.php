@@ -17,7 +17,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('blogger', function () {
             return auth()->check() && auth()->user()->blogger();
         });
-        Blade::component('components.news', 'news');
+        Blade::component('components.ui.buttons.follow', 'follow');
+        Blade::component('components.ui.buttons.unfollow', 'unfollow');
     }
 
     /**

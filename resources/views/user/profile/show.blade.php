@@ -20,7 +20,7 @@
             <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $user->firstname }} {{ $user->lastname }}</h1>
                 
-                @if ($user->isRelatedToStructure())
+                @if ($user->hasStructure())
 
                     @switch($user->userStructure->status)
 
@@ -57,15 +57,14 @@
             <div class="col-md-3"></div>
 
             <div class="col-md-6">
-                <div id="app">
-                    <news-feed
+                <div id="news">
+                    <news-timeline
                         get-route="/user/{{ $user->id }}/news"
                         base-update-route="/news/update/"
                         base-delete-route="/news/delete/"
                         base-user-route="/user/profile/"
                         base-structure-route="/structure/profile/"
-                    >
-                    </news-feed>
+                    />
                 </div>
             </div>
 

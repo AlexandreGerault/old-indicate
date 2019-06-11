@@ -9,12 +9,21 @@
             ></news-item>
         </div>
 
-        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+        <infinite-loading @infinite="infiniteHandler">
+            <div slot="no-results">
+                <i class="far fa-times-circle fa-2x"></i>
+            </div>
+        </infinite-loading>
     </div>
 </template>
 
 <script>
+import NewsItemComponent from './NewsItemComponent.vue';
+
 export default {
+    components: {
+        'news-item': NewsItemComponent,
+    },
     data () {
         return {
             page: 1,
@@ -32,10 +41,11 @@ export default {
                     },
                 }
             ).then((response) => {
-                if (response.data.data.length) {
+                console.log(response.data)
+                if (response.data.length) {
                     vm.page += 1;
-                    vm.newsFeed.push(...response.data.data);
-                    $state.loaded();
+                    vm.newsFeed.push(...response.data);
+                    $state.complete();
                 } else {
                     $state.complete();
                 }

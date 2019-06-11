@@ -15,7 +15,7 @@ class StoreStructureRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check() && !(Auth::user()->isRelatedToStructure());
+        return Auth::check() && !(Auth::user()->hasStructure());
     }
 
     /**
