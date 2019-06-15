@@ -44,24 +44,20 @@ class StructureController extends Controller
             'type' => $request->type
         ]);
 
-        $member = UserStructure::create([
-            'user_id' => auth()->id(),
-            'structure_id' => $structure->id,
-            'status' => config('enums.structure_membership_request_status.ACCEPTED'),
-            'jobname' => 'Fondateur'
-        ]);
+        $member = auth()->user()->userStructure;
 
-        $authorizations = UserAuthorizations::create([
-            'user_id' => auth()->id(),
-            'create_news' => 1,
-            'edit_news' => 1,
-            'delete_news' => 1,
-            'follow_news' => 1,
-            'manage_users' => 1,
-            'access_dashboard' => 1,
-            'created_at' => new \DateTime(),
-            'updated_at' => new \DateTime()
-        ]);
+        $member->structure_id = $structure->id;
+        $member->status = config('enums.structure_membership_request_status.ACCEPTED');
+        $member->jobname = 'Fondateur';
+        $member->save();
+
+        $authorizations = auth()->user()->authorizations;
+        $columns = \array_diff(Schema::getColumnListing('user_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
+
+        
+        foreach ($columns as $key => $value) {
+            $authorizations->$key = 1;
+        }
 
         event(new StructureCreated($structure, Auth::user()));
 
