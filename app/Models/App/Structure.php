@@ -42,8 +42,13 @@ class Structure extends Model
     /**
      * Return users related to the structure
      */
-    public function users() {
-        return $this->belongsToMany(User::class, 'users_structures', 'user_id', 'user_id');
+    public function members() {
+        $structure = $this;
+        return $this->belongsToMany(User::class, 'users_structures', 'structure_id', 'user_id')
+                    ->whereHas('UserStructure', function ($q) use ($structure) {
+                        $q->where('status', '=', config('enums.structure_membership_request_status.ACCEPTED'))
+                            ->where('structure_id', '=', $structure->id);
+                        });
     }
 
     /**
@@ -54,13 +59,32 @@ class Structure extends Model
     public function typename() {
         switch ($this->type) {
             case config('enums.structure_type.INVESTOR'):
+                return __('investor');
+                break;
+            case config('enums.structure_type.COMPANY'):
+                return __('company');
+                break;
+            case config('enums.structure_type.CONSULTING'):
+                return __('consulting');
+                break;
+        }
+    }
+
+    /**
+     * Get the name of the structure type
+     * 
+     * @return string
+     */
+    public function displayTypename() {
+        switch ($this->type) {
+            case config('enums.structure_type.INVESTOR'):
                 return __('Investisseur');
                 break;
             case config('enums.structure_type.COMPANY'):
                 return __('Entreprise');
                 break;
             case config('enums.structure_type.CONSULTING'):
-                return __('Structure de conseil');
+                return __('Consultant');
                 break;
         }
     }
@@ -105,11 +129,15 @@ class Structure extends Model
      * Get the news from the structure this one is following
      */
     public function timeline() {
-        return News::byFollowersOf(Auth::user());
+        return News::byFollowersOf(Auth::user()->structure);
     }
 
     public function following() {
         return $this->belongsToMany(Structure::class, 'followers', 'follower_id', 'following_id');
+    }
+
+    public function followers() {
+        return $this->belongsToMany(Structure::class, 'followers', 'following_id', 'follower_id');
     }
 
     /**

@@ -15,7 +15,7 @@
                 @can('follow', $structure)
                 @follow(['structure_id' => $structure->id]) @endfollow
                 @endcan
-                @if (Auth::user()->structure->follows($structure) && Auth::user()->structure->id !== $structure->id)
+                @if (Auth::user()->hasStructure() && Auth::user()->structure->follows($structure) && Auth::user()->structure->id !== $structure->id)
                 @unfollow(['structure_id' => $structure->id]) @endunfollow
                 @endif
             </div>

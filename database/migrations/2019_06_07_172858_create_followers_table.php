@@ -18,6 +18,7 @@ class CreateFollowersTable extends Migration
             $table->integer('following_id')->unsigned()->index();
             $table->timestamps();
         });
+        
         Schema::table('followers', function (Blueprint $table) {
             $table->primary(['follower_id', 'following_id']);
             $table->foreign('follower_id')->references('id')->on('structures')->onDelete('cascade');

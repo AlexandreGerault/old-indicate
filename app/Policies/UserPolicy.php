@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\User;
+use App\Models\App\Structure;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -88,8 +89,8 @@ class UserPolicy
      * 
      * @return mixed
      */
-    public function join(User $user)
+    public function join(User $user, Structure $structure)
     {
-        return ! $user->isRelatedToStructure();
+        return ! $user->hasStructure() && ! $user->blacklisted($structure);
     }
 }

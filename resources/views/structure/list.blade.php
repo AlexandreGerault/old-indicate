@@ -22,7 +22,9 @@
                                 <h5 class="card-title"><b>{{ $structure->name }}</b></h5>
                                 <h6 class="card-subtitle my-2 text-muted"><span class="badge badge-secondary">{{ $structure->typename() }}</span></h6>
                                 <p class="card-text">{{ $structure->comment }}</p>
+                                @can('join', ['App\User', $structure])
                                 <a href="{{ route('structure.join', ['id' => $structure->id]) }}" class="btn btn-primary">{{ __('Rejoindre cette structure')}}</a>
+                                @endcan
                             </div>
                         </div>
                         @endforeach

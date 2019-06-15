@@ -14,13 +14,13 @@ class CreateDemandsBlacklistTable extends Migration
     public function up()
     {
         Schema::create('demands_blacklist', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->integer('structure_id')->unsigned();
             $table->timestamps();
         });
 
         Schema::table('demands_blacklist', function (Blueprint $table) {
+            $table->primary(['user_id', 'structure_id']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
         });

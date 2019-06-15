@@ -32,7 +32,7 @@ class News extends Model
         return $this->belongsTo(Structure::class);
     }
 
-    public function scopeByFollowersOf($query, $user) {
-        return $query->whereIn('structure_id', auth()->user()->structure->following->pluck('id'));
+    public function scopeByFollowersOf($query, $structure) {
+        return $query->whereIn('structure_id', $structure->following->pluck('id'));
     }
 }

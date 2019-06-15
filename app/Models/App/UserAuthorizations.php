@@ -14,6 +14,14 @@ class UserAuthorizations extends Model
      */
     protected $table = 'users_authorizations';
 
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = ['id', 'user_id', 'created_at', 'updated_at'];
+
     /**
      * Return the UserStructure relationship
      * 

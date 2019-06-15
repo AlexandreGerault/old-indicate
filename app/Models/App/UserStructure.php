@@ -51,4 +51,12 @@ class UserStructure extends Model
     public function authorizations() {
         return $this->hasOne(UserStructureAuthorizations::class);
     }
+
+    public function scopeByStructure ($query, $structure) {
+        return $query->where('structure_id', '=', $structure->id);
+    }
+
+    public function scopePending ($query) {
+        return $query->where('status', '=', config('enums.structure_membership_request_status.PENDING'));
+    }
 }

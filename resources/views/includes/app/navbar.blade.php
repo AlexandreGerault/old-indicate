@@ -15,7 +15,7 @@
                     <a class="nav-link" href="{{ route('app.home') }}">@lang('Home')</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('research') }}">Research</a>
+                    <a class="nav-link" href="{{ route('research') }}">@lang('Research')</a>
                 </li>
             </ul>
 
@@ -45,6 +45,12 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('user.profile.show', ['id' => Auth::id()]) }}">Profile</a>
+                        @if(Auth::user()->hasStructure())
+                        <a class="dropdown-item" href="{{ route('structure.profile.show', ['id' => Auth::user()->structure->id]) }}">Structure</a>
+                        @endif
+                        @can('access-dashboard', App\Models\App\Structure::class)
+                        <a class="dropdown-item" href="{{ route('structure.dashboard.index') }}">Dashboard</a>
+                        @endcan
                         <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             @lang('Logout')
                         </a>

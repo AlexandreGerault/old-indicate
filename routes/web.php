@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/', 'App\HomeController@index')->name('app.home');
+
 /*
 |--------------------------------------------------------------------------
 | Blog routes 
@@ -34,6 +36,13 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
     
 });
 
+/*
+ |--------------------------------------------------------------------------
+ | Application routes
+ |--------------------------------------------------------------------------
+ |
+ | Here are the routes of the application, grouped by caterogy
+ | */
 Route::prefix('structure')->middleware('auth')->group(function () {
     Route::prefix('profile')->group(function () {
         Route::get('{id}', 'App\StructureController@showProfile')->name('structure.profile.show');
@@ -60,12 +69,28 @@ Route::prefix('structure')->middleware('auth')->group(function () {
     //Route::get('/caracteristics/{id}', 'Structure\ProfilController@caracteristics')->name('structure.profile.caracteristics');
 });
 
+Route::prefix('dashboard')->middleware(['auth', 'verified', 'can:access-dashboard,App\Models\App\Structure'])->group(function () {
+    Route::get('/', 'App\DashboardController@index')->name('structure.dashboard.index');
+    Route::prefix('/members')->group(function () {
+        Route::get('/list', 'App\DashboardController@listMembers')->name('structure.dashboard.members.list');
+        Route::get('/demands', 'App\DashboardController@demands')->name('structure.dashboard.members.demands');
+        Route::get('/demands/{id}/accepts', 'App\UserStructureController@accepts')->name('demands.accepts');
+        Route::get('/demands/{id}/refuses', 'App\UserStructureController@refuses')->name('demands.refuses');
+        Route::get('/permissions', 'App\DashboardController@permissionsMembers')->name('structure.dashboard.members.authorizations.list');
+        Route::get('/edit/{id}', 'App\DashboardController@editMember')->name('structure.dashboard.members.edit');
+        Route::post('/update/{id}', 'App\UserStructureController@update')->name('structure.dashboard.members.update');
+        Route::post('/update/authorizations/{id}', 'App\UserAuthorizationsController@update')->name('structure.dashboard.members.authorizations.update');
+    });
+    Route::get('/news', 'App\DashboardController@news')->name('structure.dashboard.news');
+    Route::get('/caracteristics', 'App\DashboardController@caracteristics')->name('structure.dashboard.caracteristics');
+});
+
 Route::prefix('user')->group(function () {
     Route::get('/profile/{id}', 'App\UserController@showProfile')->name('user.profile.show');
     Route::get('/{id}/news', 'App\UserController@news')->name('user.news');
 });
 
-Route::prefix('news')->middleware('verified')->group(function () {
+Route::prefix('news')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'App\NewsController@index')->name('news.index');
     Route::post('/store', 'App\NewsController@store')->name('news.store');
     Route::patch('/update/{id}', 'App\NewsController@update')->name('news.update');
@@ -78,13 +103,8 @@ Route::prefix('search')->middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('/', 'App\HomeController@index')->name('app.home');
-Route::get('/home', function () { return redirect()->route('app.home'); });
-
 Route::get('/indicate-search', function() {
     return view('app.indicate-search');
 })->name('research');
-
-
 
 Auth::routes(['verify' => true]);

@@ -14,7 +14,7 @@
         </div>
 
         <!-- Search results -->
-        <div id="app">
+        <div id="indicate-search-form">
             <div class="offset-md-8 col-md-4">
                 <div class="card">
                     <h3 class="text-center card-header">Indicate search</h3>

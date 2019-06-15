@@ -103,4 +103,19 @@ class StructurePolicy
     {
         return $user->authorizations->follow_structure && $user->structure->follows($structure) && $user->structure->id !== $structure->id;
     }
+
+    public function join(User $user, Structure $structure)
+    {
+
+    }
+
+    public function accessDashboard(User $user)
+    {
+        return $user->hasStructure() && $user->authorizations->access_dashboard;
+    }
+
+    public function manageUsers(User $user)
+    {
+        return $user->hasStructure() && $user->authorizations->manage_users;
+    }
 }

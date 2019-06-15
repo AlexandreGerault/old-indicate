@@ -86,7 +86,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Return the authorizations of the user
      * 
-     * @return UserStructureAuthorizations
+     * @return UserAuthorizations
      */
     public function authorizations() {
         return $this->hasOne(UserAuthorizations::class);
@@ -99,8 +99,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return ! (DB::table('structures_owners')
                     ->where('user_id', '=', $this->id)
                     ->where('structure_id', '=', $structure->id)
-                    ->get()
-                    ->isEmpty()
+                    ->exists()
                 );
     }
 
@@ -110,4 +109,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function news() {
         return $this->hasMany(News::class, 'author_id');
     }
+
+    /**
+     * Determines wether a user is blacklisted from a structure
+     */
+    public function blacklisted (Structure $structure) {
+        return DB::table('demands_blacklist')->where('user_id', '=', $this->id)->where('structure_id', '=', $structure->id)->exists();
+    }   
 }

@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 
+require('jquery');
+
 window.Vue = require('vue');
 
 import InfiniteLoading from 'vue-infinite-loading';
@@ -44,6 +46,11 @@ if(document.getElementById('news') !== null) {
 if(document.getElementById('simple-search-form') !== null) {
     const simpleSearchApp = new Vue().$mount('#simple-search-form');
 }
+
+if(document.getElementById('indicate-search-form') !== null) {
+    const indicateSearchApp = new Vue().$mount('#indicate-search-form');
+}
+
 let editor = document.getElementById('editor');
 let toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons

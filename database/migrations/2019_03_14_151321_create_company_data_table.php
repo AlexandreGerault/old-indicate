@@ -16,9 +16,15 @@ class CreateCompanyDataTable extends Migration
         Schema::create('company_data', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('structure_id')->unsigned();
+            $table->boolean('accept_offers');
+            $table->boolean('partnership');
+            $table->boolean('bank_funding');
+            $table->boolean('wcr');
+            $table->boolean('shareholding');
+            $table->boolean('looking_for_funding');
+            $table->boolean('looking_for_accompaniment');
             $table->integer('share_capital');
             $table->integer('employees_number');
-            $table->boolean('accept_offers');
             $table->integer('turnover');
             $table->integer('turnover_progression');
             $table->timestamps();
