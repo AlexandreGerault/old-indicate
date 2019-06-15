@@ -59,6 +59,8 @@ class StructureController extends Controller
             $authorizations->$key = 1;
         }
 
+        $authorizations->save();
+
         event(new StructureCreated($structure, Auth::user()));
 
         return redirect()->route('app.home');
