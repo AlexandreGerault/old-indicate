@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 use Auth;
 use DB;
+use App\Models\App\UserAuthorizations;
 
 class StructureController extends Controller
 {
@@ -41,6 +42,25 @@ class StructureController extends Controller
             'siren'=> $request->siren,
             'siret' => $request->siret,
             'type' => $request->type
+        ]);
+
+        $member = UserStructure::create([
+            'user_id' => auth()->id(),
+            'structure_id' => $structure->id,
+            'status' => config('enums.structure_membership_request_status.ACCEPTED'),
+            'jobname' => 'Fondateur'
+        ]);
+
+        $authorizations = UserAuthorizations::create([
+            'user_id' => auth()->id(),
+            'create_news' => 1,
+            'edit_news' => 1,
+            'delete_news' => 1,
+            'follow_news' => 1,
+            'manage_users' => 1,
+            'access_dashboard' => 1,
+            'created_at' => new \DateTime(),
+            'updated_at' => new \DateTime()
         ]);
 
         event(new StructureCreated($structure, Auth::user()));

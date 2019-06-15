@@ -36,8 +36,6 @@ class EventServiceProvider extends ServiceProvider
         ],
         StructureCreated::class => [
             SendEmailConfirmation::class,
-            CreateStructureOwner::class,
-            CreateUserStructureRelationship::class,
         ],
         UserJoinStructure::class => [
             SendEmailJoinDemand::class,
