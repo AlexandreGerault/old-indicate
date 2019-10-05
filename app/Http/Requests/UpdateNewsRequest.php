@@ -16,7 +16,7 @@ class UpdateNewsRequest extends FormRequest
      */
     public function authorize()
     {
-        $news = News::find($this->route('id'));
+        $news = News::findOrFail($this->route('news'));
 
         return Auth::user()->can('update', $news);
     }

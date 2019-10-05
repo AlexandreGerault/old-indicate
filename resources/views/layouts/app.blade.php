@@ -9,7 +9,7 @@
     @include('includes.app.navbar')
 
     @include('includes.alerts')
-    
+
     @yield('content')
 
     @include('includes.footer')

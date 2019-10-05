@@ -28,9 +28,11 @@ class StoreStructureRequest extends FormRequest
         return [
             'name' => 'required|max:255|unique:structures',
             'comment' => 'required|max:255',
+            'phone_number' => 'required',
+            'address' => 'required|string',
             'siren' => 'required|digits:9|unique:structures',
             'siret' => 'required|digits:14',
-            'type' => 'required|digits_between:0,2',
+            'data_type' => 'required|string',
         ];
     }
 }

@@ -90,7 +90,7 @@ class StructurePolicy
      */
     public function follow(User $user, Structure $structure)
     {
-        return $user->authorizations->follow_structure && ! $user->structure->follows($structure) && $user->structure->id !== $structure->id;
+        return $user->authorizations->follow_structure && ! $user->userStructure->structure->follows($structure) && $user->userStructure->structure->id !== $structure->id;
     }
     /**
      * Determine whether the user can follows another structure.
@@ -101,7 +101,7 @@ class StructurePolicy
      */
     public function unfollow(User $user, Structure $structure)
     {
-        return $user->authorizations->follow_structure && $user->structure->follows($structure) && $user->structure->id !== $structure->id;
+        return $user->authorizations->follow_structure && $user->userStructure->structure->follows($structure) && $user->userStructure->structure->id !== $structure->id;
     }
 
     public function join(User $user, Structure $structure)

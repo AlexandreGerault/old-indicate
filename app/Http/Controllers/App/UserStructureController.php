@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateMemberRequest;
 use App\Models\App\UserStructure;
@@ -15,24 +16,31 @@ class UserStructureController extends Controller
 {
     /**
      * Create a UserStructure relationship
-     * 
-     * @return
+     *
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function join(Request $request) {
-        $userStructure = UserStructure::findOrFail(Auth::user()->userStructure->id);
+        $userStructure = UserStructure::findOrFail(auth()->user()->userStructure->id);
 
-        if ($userStructure->user->can('join', [User::class, Structure::findOrFail($request->id)])) {
-            $userStructure->structure_id = $request->id;
+        if ($userStructure->user->can('join', [User::class, Structure::findOrFail($request->input('id'))])) {
+            $userStructure->structure_id = $request->input('id');
             $userStructure->status = config('enums.structure_membership_request_status.PENDING');
 
             $userStructure->save();
 
-            return redirect()->route('user.profile.show', ['id' => Auth::user()->id ]);
+            return redirect()->route('user.profile.show', ['id' => auth()->user()->id ]);
         }
         
-        return back()->with('error', 'Vous ne pouvez pas rejoindre cette structure');
+        return back()->with('error', __('error.user_structure.join'));
     }
 
+    /**
+     * Update UserStructure status to ACCEPTED
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function accepts(Request $request) {
         $userStructure = UserStructure::findOrFail($request->id);
 
@@ -40,9 +48,14 @@ class UserStructureController extends Controller
 
         $userStructure->save();
 
-        return back()->with('success', 'La demande a bien été acceptée');
+        return back()->with('success', __('success.user_structure.demand_accepted'));
     }
 
+    /**
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function refuses(Request $request) {
         $userStructure = UserStructure::findOrFail($request->id);
 
@@ -54,17 +67,23 @@ class UserStructureController extends Controller
         $userStructure->structure_id = null;
         $userStructure->save();
         
-        return back()->with('success', 'La demande a bien été acceptée');
+        return back()->with('success', __('success.user_structure.demand_accepted'));
     }
 
+    /**
+     * Update member's information
+     *
+     * @param UpdateMemberRequest $request
+     * @return RedirectResponse
+     */
     public function update (UpdateMemberRequest $request) {
-        $validator = $request->validated();
+        $request->validated();
         
-        $member = UserStructure::findOrFail($request->id);
+        $member = UserStructure::findOrFail($request->input('id'));
 
-        $member->jobname = $request->jobname;
+        $member->jobname = $request->input('jobname');
         $member->save();
 
-        return back()->with('success', 'Le profil membre a bien été mis à jour.');        
+        return back()->with('success', __('success.user_structure.member_update'));
     }
 }

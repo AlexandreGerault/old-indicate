@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,13 +12,8 @@ use App\Events\UserJoinStructure;
 use App\Events\NewsDeleted;
 
 /* Listeners import */
-use App\Listeners\CreateStructureOwner;
 use App\Listeners\SendEmailConfirmation;
 use App\Listeners\SendEmailJoinDemand;
-use App\Listeners\SendEmailNewsDeletedNotification;
-use App\Listeners\CreateUserStructureRelationship;
-use App\Listeners\CreateDefaultUserStructure;
-use App\Listeners\CreateDefaultAuthorizations;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -31,8 +25,6 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            CreateDefaultUserStructure::class,
-            CreateDefaultAuthorizations::class,
         ],
         StructureCreated::class => [
             SendEmailConfirmation::class,
@@ -41,7 +33,6 @@ class EventServiceProvider extends ServiceProvider
             SendEmailJoinDemand::class,
         ],
         NewsDeleted::class => [
-            SendEmailNewsDeletedNotification::class,
         ],
 
     ];

@@ -15,7 +15,7 @@ Route::get('/', 'App\HomeController@index')->name('app.home');
 
 /*
 |--------------------------------------------------------------------------
-| Blog routes 
+| Blog routes
 |--------------------------------------------------------------------------
 |
 | Here are the routes of the blog, contained by a subdomain
@@ -33,8 +33,9 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
         Route::get('/delete/{id}', 'Blog\BlogController@delete')->name('blog.delete');
         Route::post('/update/{id}', 'Blog\BlogController@update')->name('blog.update');
     });
-    
+
 });
+
 
 /*
  |--------------------------------------------------------------------------
@@ -43,33 +44,26 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
  |
  | Here are the routes of the application, grouped by caterogy
  | */
-Route::prefix('structure')->middleware('auth')->group(function () {
-    Route::prefix('profile')->group(function () {
-        Route::get('{id}', 'App\StructureController@showProfile')->name('structure.profile.show');
-        Route::get('{id}/edit', function () {
-             return;
-        })->name('structure.profile.edit');
-    });
 
-    Route::get('/{id}/news', 'App\StructureController@news')->name('structure.news');
-    Route::get('/{id}/timeline', 'App\StructureController@timeline')->name('structure.timeline');
+Route::resource('structure', 'App\StructureController')->middleware('auth');
+
+Route::prefix('structure')->middleware('auth')->group(function () {
+
+    Route::get('/{structure}/news', 'App\StructureController@news')->name('structure.news');
+    Route::get('/{structure}/timeline', 'App\StructureController@timeline')->name('structure.timeline');
 
     /**
      * Routes below are used to join or create a structure
      */
     Route::middleware(['nostruct', 'verified'])->group(function() {
-        Route::get('/list', 'App\StructureController@list')->name('structure.list');
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
-        Route::get('/create', 'App\StructureController@create')->name('structure.create');
-        Route::post('/store', 'App\StructureController@store')->name('structure.store');
     });
 
     Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
     Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
-    //Route::get('/caracteristics/{id}', 'Structure\ProfilController@caracteristics')->name('structure.profile.caracteristics');
 });
 
-Route::prefix('dashboard')->middleware(['auth', 'verified', 'can:access-dashboard,App\Models\App\Structure'])->group(function () {
+Route::prefix('{structure}/dashboard')->middleware(['auth', 'verified', 'can:access-dashboard,App\Models\App\Structure'])->group(function () {
     Route::get('/', 'App\DashboardController@index')->name('structure.dashboard.index');
     Route::prefix('/members')->group(function () {
         Route::get('/list', 'App\DashboardController@listMembers')->name('structure.dashboard.members.list');
@@ -82,20 +76,18 @@ Route::prefix('dashboard')->middleware(['auth', 'verified', 'can:access-dashboar
         Route::post('/update/authorizations/{id}', 'App\UserAuthorizationsController@update')->name('structure.dashboard.members.authorizations.update');
     });
     Route::get('/news', 'App\DashboardController@news')->name('structure.dashboard.news');
-    Route::get('/caracteristics', 'App\DashboardController@caracteristics')->name('structure.dashboard.caracteristics');
+    Route::prefix('characteristics')->group(function () {
+        Route::get('/', 'App\DashboardController@characteristics')->name('structure.dashboard.characteristics');
+        Route::post('/update/company', 'App\StructureDataController@updateCompanyData')->name('structure.dashboard.characteristics.update.company');
+        Route::post('/update/investor', 'App\StructureDataController@updateInvestorData')->name('structure.dashboard.characteristics.update.investor');
+        Route::post('/update/consulting', 'App\StructureDataController@updateConsultingData')->name('structure.dashboard.characteristics.update.consulting');
+    });
 });
 
-Route::prefix('user')->group(function () {
-    Route::get('/profile/{id}', 'App\UserController@showProfile')->name('user.profile.show');
-    Route::get('/{id}/news', 'App\UserController@news')->name('user.news');
-});
+Route::resource('user', 'App\UserController');
+Route::get('/user/{user}/news', 'App\UserController@news')->name('user.news');
 
-Route::prefix('news')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', 'App\NewsController@index')->name('news.index');
-    Route::post('/store', 'App\NewsController@store')->name('news.store');
-    Route::patch('/update/{id}', 'App\NewsController@update')->name('news.update');
-    Route::delete('/delete/{id}', 'App\NewsController@delete')->name('news.delete');
-});
+Route::resource('news', 'App\NewsController')->middleware(['auth', 'verified']);
 
 Route::prefix('search')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/ajax', 'App\SearchController@ajaxSearch')->name('search.ajax');
@@ -103,8 +95,20 @@ Route::prefix('search')->middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('/indicate-search', function() {
-    return view('app.indicate-search');
-})->name('research');
+/*********************
+ * INDICATE RESEARCH *
+ *********************/
+Route::get('/indicate-search', 'App\IndicateResearchController@form')->name('research.form');
+Route::get('/indicate-search-results', 'App\IndicateResearchController@results')->name('research.results');
+
+/************************
+ * SEARCH PROFESSIONALS *
+ ************************/
+Route::get('/search-professional', function () {
+    return view('search.forms.professional');
+})->name('search.professional');
+Route::get('/search-professional/results', function () {
+    return view('search.results.professional');
+})->name('search.professional.results');
 
 Auth::routes(['verify' => true]);

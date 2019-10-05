@@ -19,7 +19,7 @@
             </div>
             <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $user->firstname }} {{ $user->lastname }}</h1>
-                
+
                 @if ($user->hasStructure())
 
                     @switch($user->userStructure->status)
@@ -27,11 +27,11 @@
                         @case(config('enums.structure_membership_request_status.PENDING'))
                             <p class="lead">{{ __('Demande d\'affiliation en cours...') }}</p>
                             @break
-                        
+
                         @case(config('enums.structure_membership_request_status.ACCEPTED'))
-                            <p class="lead"><a href="{{ route('structure.profile.show', ['id' => $user->structure->id]) }}">{{ $user->structure->name }}</a></p>
+                            <p class="lead"><a href="{{ route('structure.show', ['id' => $user->userStructure->structure->id]) }}">{{ $user->userStructure->structure->name }}</a></p>
                             @break
-                        
+
                         @default
                             @if (Auth::user()->id === $user->id)
                             <p class="lead">{{ __('Votre requête rencontre un problème. Veuillez contacter le support') }}</p>
@@ -40,13 +40,15 @@
                     @endswitch
 
                 @else
-                    @if (Auth::id() === $user->id)
+                    @if (auth()->id() === $user->id)
                     <p class="lead">Veuillez effectuer une des actions suivantes</p>
                     <a class="btn btn-primary" href="{{ route('structure.list') }}">Rejoindre une structure</a> ou <a class="btn btn-primary" href="{{ route('structure.create') }}">Créer une structure</a>
                     @else
                     <p class="lead">{{ $user->firstname . ' ' . $user->lastname . __(' n\'est encore affilié à aucune structure')}}</p>
                     @endif
                 @endif
+
+                <a href="{{ route('search.professional') }}" class="btn btn-primary">{{ __('Rechercher un professionnel') }}</a>
             </div>
         </div>
     </div>
@@ -60,10 +62,6 @@
                 <div id="news">
                     <news-timeline
                         get-route="/user/{{ $user->id }}/news"
-                        base-update-route="/news/update/"
-                        base-delete-route="/news/delete/"
-                        base-user-route="/user/profile/"
-                        base-structure-route="/structure/profile/"
                     />
                 </div>
             </div>

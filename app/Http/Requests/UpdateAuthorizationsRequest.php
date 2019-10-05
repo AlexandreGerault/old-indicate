@@ -16,7 +16,6 @@ class UpdateAuthorizationsRequest extends FormRequest
      */
     public function authorize()
     {
-        $member = UserStructure::find($this->route('id'));
         return auth()->user()->can('manage-users', Structure::class);
     }
 

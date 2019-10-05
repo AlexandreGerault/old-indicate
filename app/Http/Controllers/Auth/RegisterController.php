@@ -27,7 +27,7 @@ class RegisterController extends Controller
     /**
      * Where to redirect users after registration.
      *
-     * @var string
+     * @return string
      */
     protected function redirectTo()
     {

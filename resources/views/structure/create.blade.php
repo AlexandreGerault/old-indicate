@@ -28,8 +28,8 @@
                     <strong>{{ $errors->first('siret') }}</strong>
                     @endif
 
-                    @if ($errors->has('type'))
-                    <strong>{{ $errors->first('type') }}</strong>
+                    @if ($errors->has('data_type'))
+                    <strong>{{ $errors->first('data_type') }}</strong>
                     @endif
                 </div>
                 @endif
@@ -39,19 +39,25 @@
                         <input type="text" class="form-control" placeholder="{{ __('Nom de la structure')}}" id="name" name="name" required="required" value="{{ old('name') }}">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" placeholder="{{ __('Slogan de la structure') }}" id="comment" name="comment" required="required"  value="{{ old('comment') }}">
+                        <input type="text" class="form-control" placeholder="{{ __('Slogan de la structure') }}" id="comment" name="comment" required="required" value="{{ old('comment') }}">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="number" class="form-control" placeholder="{{ __('Numéro Siren') }}" id="siren" name="siren" required="required"  value="{{ old('siren') }}">
+                        <input type="tel" class="form-control" placeholder="@lang('phone_number')" id="phone_number" name="phone_number" required="required" value="{{ old('phone_number') }}">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="number" class="form-control" placeholder="{{ __('Numéro Siret') }}" id="siret" name="siret" required="required"  value="{{ old('siret') }}">
+                        <input type="tel" class="form-control" placeholder="@lang('address')" id="address" name="address" required="required" value="{{ old('address') }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" class="form-control" placeholder="{{ __('Numéro Siren') }}" id="siren" name="siren" required="required" value="{{ old('siren') }}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="number" class="form-control" placeholder="{{ __('Numéro Siret') }}" id="siret" name="siret" required="required" value="{{ old('siret') }}">
                     </div>
                     <div class="form-group">
-                        <select class="form-control" id="type" name="type">
-                            <option value="0">{{ __('Investisseur') }}</option>
-                            <option value="1">{{ __('Entreprise') }}</option>
-                            <option value="2">{{ __('Structure de conseil') }}</option>
+                        <label for="data_type"></label><select class="form-control" id="data_type" name="data_type">
+                            <option value="investor">{{ __('Investisseur') }}</option>
+                            <option value="company">{{ __('Entreprise') }}</option>
+                            <option value="consulting">{{ __('Structure de conseil') }}</option>
                         </select>
                     </div>
                     

@@ -23,7 +23,7 @@ class VerificationController extends Controller
     /**
      * Where to redirect users after verification.
      *
-     * @var string
+     * @return string
      */
     protected function redirectTo () {
         return route('app.home');

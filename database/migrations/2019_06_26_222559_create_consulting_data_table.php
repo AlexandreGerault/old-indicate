@@ -1,10 +1,10 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAccessDashboardField extends Migration
+class CreateConsultingDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddAccessDashboardField extends Migration
      */
     public function up()
     {
-        Schema::table('users_authorizations', function (Blueprint $table) {
-            $table->boolean('access_dashboard')->default(false);
+        Schema::create('consulting_data', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
         });
     }
 
@@ -25,6 +26,6 @@ class AddAccessDashboardField extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('consulting_data');
     }
 }

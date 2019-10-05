@@ -21,6 +21,7 @@ class CreateUsersAuthorizationsTable extends Migration
             $table->boolean('delete_news')->default(false);
             $table->boolean('follow_structure')->default(false);
             $table->boolean('manage_users')->default(false);
+            $table->boolean('access_dashboard')->default(false);
             $table->timestamps();
         });
 

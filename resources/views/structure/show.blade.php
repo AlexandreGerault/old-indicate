@@ -10,16 +10,32 @@
                 <img class="img-fluid d-block" src="https://static.pingendo.com/img-placeholder-3.svg">
             </div>
             <div class="col-8 col-md-10 shadow-none">
-                <h1>{{ $structure->name }} <span class="badge badge-secondary">{{ $structure->typename() }}</span></h1>
+                <h1>{{ $structure->name }} <span class="badge badge-secondary">{{ __($structure->type) }}</span></h1>
                 <p class="lead">{{ $structure->comment }}</p>
                 @can('follow', $structure)
                 @follow(['structure_id' => $structure->id]) @endfollow
                 @endcan
-                @if (Auth::user()->hasStructure() && Auth::user()->structure->follows($structure) && Auth::user()->structure->id !== $structure->id)
+                @if (auth()->user()->hasStructure() && auth()->user()->userStructure->structure->follows($structure) && auth()->user()->userStructure->structure->id !== $structure->id)
                 @unfollow(['structure_id' => $structure->id]) @endunfollow
                 @endif
             </div>
         </div>
+        <div class="row my-3 bg-light">
+            <ul class="nav navbar">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">@lang('news-feed')</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">@lang('information')</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="mt-5">
+    <div class="container">
+        
     </div>
 </div>
 
@@ -27,18 +43,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                @if(isset($structure->data()[0]))
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Caractéristiques</h4>
+                        <h4 class="card-title">@lang('characteristics')</h4>
                         <ul>
-                            @foreach ($structure->data()[0] as $key => $data)
-                            <li><b>{{ $key }}</b> : {{ $data }}</li>
+                            @foreach ($structure->data->toArray() as $key => $data)
+                            <li><b>{{ __(snakeToString($key)) }}</b> : {{ $data }}</li>
                             @endforeach
                         </ul>
                     </div>
                 </div>
-                @endif
             </div>
 
             <div class="col-md-6 pt-3 pt-md-0">
@@ -48,14 +62,14 @@
                     <form class="card mb-5" method="post" action="{{ route('news.store') }}">
                     @csrf
                         <div class="card-body">
-                            <h4 class="mb-4 card-title">{{ __('Écrire une news') }}</h4>
+                            <h4 class="mb-4 card-title">@lang('write-news')</h4>
                             <input type="hidden" hidden="hidden" value="{{ $structure->id }}" name="structure_id" />
-                            <input type="text" name="title" id="title" placeholder="{{__('(Optionnel)') . ' ' . __('Titre de la news')}}" class="form-control" />
+                            <input type="text" name="title" id="title" placeholder="@lang('optional') @lang('news-title')" class="form-control" />
                             <div class="md-form">
                                 <label for="content"></label>
-                                <textarea id="content" name="content" class="md-textarea form-control" rows="3" placeholder="{{ __('Contenu de la news') }}"></textarea>
+                                <textarea id="content" name="content" class="md-textarea form-control" rows="3" placeholder="@lang('news-content')"></textarea>
                             </div>
-                            <input type="submit" class="btn btn-primary mt-4" value="Publier" />
+                            <input type="submit" class="btn btn-primary mt-4" value="@lang('publish')" />
                         </div>
                     </form>
                     @endcan
@@ -65,15 +79,14 @@
                         base-update-route="/news/update/"
                         base-delete-route="/news/delete/"
                         base-user-route="/user/profile/"
-                        base-structure-route="/structure/profile/"
-                    />
+                        base-structure-route="/structure/profile/"></news-timeline>
                 </div>
             </div>
 
             <div class="col-md-3 px-3 py-3 pt-md-0">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title m-0">Connexions</h3>
+                        <h3 class="card-title m-0">@lang('connections')</h3>
                     </div>
                     <ul class="list-group list-group-flush">
                         @foreach ($structure->following as $followed)

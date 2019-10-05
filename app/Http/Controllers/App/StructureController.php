@@ -2,72 +2,41 @@
 
 namespace App\Http\Controllers\App;
 
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\App\Structure;
 use App\Http\Requests\StoreStructureRequest;
-use App\Models\App\UserStructure;
-use App\Models\App\News;
-use App\Events\StructureCreated;
-use Illuminate\Database\Eloquent\Collection;
-
-use Auth;
-use DB;
-use App\Models\App\UserAuthorizations;
+use Illuminate\View\View;
 
 class StructureController extends Controller
 {
     /**
      * Show a form to create a structure.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return View
      */
-    public function create()
-    {
+    public function create() {
         return view('structure.create');
     }
 
     /**
-     * Store a new structure.
+     * Store a new structure
      *
-     * @param  Request  $request
-     * @return Response
+     * @param StoreStructureRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreStructureRequest $request) {
-        $validator = $request->validated();
-
-        $structure = Structure::create([
-            'name' => $request->name,
-            'comment' => $request->comment,
-            'siren'=> $request->siren,
-            'siret' => $request->siret,
-            'type' => $request->type
-        ]);
-
-        $member = auth()->user()->userStructure;
-
-        $member->structure_id = $structure->id;
-        $member->status = config('enums.structure_membership_request_status.ACCEPTED');
-        $member->jobname = 'Fondateur';
-        $member->save();
-
-        $authorizations = auth()->user()->authorizations;
-        $columns = \array_diff(Schema::getColumnListing('user_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
-
-        
-        foreach ($columns as $key => $value) {
-            $authorizations->$key = 1;
-        }
-
-        $authorizations->save();
-
-        event(new StructureCreated($structure, Auth::user()));
+        Structure::create($request->validated());
 
         return redirect()->route('app.home');
     }
 
     /**
-     * Display a list of structures for the user 
+     * Display all the structure
+     *
+     * @return Factory|View
      */
     public function list() {
         $structures = Structure::all();
@@ -76,43 +45,50 @@ class StructureController extends Controller
     }
 
     /**
-     * Display a structure profile.
+     * Display a structure profile
      *
-     * @param  Request  $request
-     * @return Response
+     * @param Structure $structure
+     * @return Factory|View
      */
-    public function showProfile(Request $request) {
-        $structure = Structure::findOrFail($request->route()->parameter('id'));
-        $news = $structure->news;
-
-        return view('structure.profile.show')->with('structure', $structure)->with('news', $news);
+    public function show(Structure $structure) {
+        return view('structure.show')->with('structure', $structure)->with('news', $structure->news);
     }
 
-    public function news(Request $request) {
+    /**
+     * Return a Json response of news
+     *
+     * @param Structure $structure
+     * @return JsonResponse
+     */
+    public function news(Structure $structure) {
         $amount = config('pagination.news-paginate');
-        $structure = Structure::findOrFail($request->route()->parameter('id'));
 
-        $news = $structure->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount)->all();
+        $news = $structure->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
 
         foreach($news as $post) {
-            $post->canEdit = Auth::user()->can('update', $post);
-            $post->canDelete = Auth::user()->can('delete', $post);
+            $post->canEdit = auth()->user()->can('update', $post);
+            $post->canDelete = auth()->user()->can('delete', $post);
         }
 
         return response()->json($news, 200);
     }
 
-    public function timeline(Request $request) {
+    /**
+     * Return a Json response of news feed
+     *
+     * @param Structure $structure
+     * @return JsonResponse
+     */
+    public function timeline(Structure $structure) {
         $amount = config('pagination.news-paginate');
-        $structure = Structure::findOrFail($request->id);
 
-        $news = $structure->timeline()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount)->all();
+        $news = $structure->timeline()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
 
         foreach($news as $post) {
-            $post->canEdit = Auth::user()->can('update', $post);
-            $post->canDelete = Auth::user()->can('delete', $post);
+            $post->canEdit = auth()->user()->can('update', $post);
+            $post->canDelete = auth()->user()->can('delete', $post);
         }
-        
+
         return response()->json($news, 200);
     }
 }

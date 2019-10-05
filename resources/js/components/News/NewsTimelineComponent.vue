@@ -2,10 +2,10 @@
     <div>
         <div v-for="(item, $index) in newsFeed" :key="$index">
             <news-item :news="item"
-                :update-route="baseUpdateRoute + item.id"
-                :delete-route="baseDeleteRoute + item.id"
-                :user-route="baseUserRoute + item.author.id"
-                :structure-route="baseStructureRoute + item.structure.id"
+                :update-route="'/news/' + item.id"
+                :delete-route="'/news/' + item.id"
+                :user-route="'/user/' + item.author.id"
+                :structure-route="'/structure/' + item.structure.id"
             ></news-item>
         </div>
 
@@ -30,7 +30,7 @@ export default {
             newsFeed: [],
         };
     },
-    props: ['getRoute', 'baseUpdateRoute', 'baseDeleteRoute', 'baseUserRoute', 'baseStructureRoute'],
+    props: ['getRoute'],
     methods: {
         infiniteHandler ($state) {
             let vm = this;
@@ -41,10 +41,9 @@ export default {
                     },
                 }
             ).then((response) => {
-                console.log(response.data)
-                if (response.data.length) {
+                if (response.data.data.length) {
                     vm.page += 1;
-                    vm.newsFeed.push(...response.data);
+                    vm.newsFeed.push(...response.data.data);
                     $state.complete();
                 } else {
                     $state.complete();

@@ -2,33 +2,37 @@
 
 namespace App\Http\Controllers\App;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\App\News;
 
 use App\User;
 use Auth;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
+
     /**
-     * Display a user profile.
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param User $user
+     * @return Factory|View
      */
-    public function showProfile(Request $request) {
-        $user = User::findOrFail($request->id);
-        $news = News::all()->where('author_id', '=', $request->id);
+    public function show(User $user) {
+        $news = News::all()->where('author_id', '=', $user->id);
 
         return view('user.profile.show')->with('user', $user)->with('news', $news);
     }
 
-    public function news(Request $request) {
+    /**
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function news(User $user) {
         $amount = config('pagination.news-paginate');
-        $user = User::findOrFail($request->route()->parameter('id'));
 
-        $news = $user->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount)->all();
+        $news = $user->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
 
         foreach($news as $post) {
             $post->canEdit = Auth::user()->can('update', $post);

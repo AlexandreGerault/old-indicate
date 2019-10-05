@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Blog\BlogPost;
-use Auth;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Str;
+use Illuminate\View\View;
 use Validator;
-use Date;
+use Exception;
 
 class BlogController extends Controller
 {
     /**
      * Display a list of recent posts
      *
-     * @param  Request  $request
-     * @return Response
+     * @return Factory|View
      */
     public function index() {
         $posts = BlogPost::orderBy('created_at', 'desc')->paginate(5);
@@ -26,7 +29,7 @@ class BlogController extends Controller
      * Display a list of search results
      *
      * @param  Request  $request
-     * @return Response
+     * @return Factory|View
      */
     public function search(Request $request) {
         $title = $request->input('title');
@@ -52,7 +55,7 @@ class BlogController extends Controller
      * Display a blog post.
      *
      * @param  Request  $request
-     * @return Response
+     * @return Factory|View
      */
     public function show(Request $request) {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
@@ -63,10 +66,9 @@ class BlogController extends Controller
     /**
      * Display a form to write a new blog post.
      *
-     * @param  Request  $request
-     * @return Response
+     * @return Factory|View
      */
-    public function create(Request $request) {
+    public function create() {
 
         return view('blog.create');
     }
@@ -75,7 +77,7 @@ class BlogController extends Controller
      * Store a new blog post.
      *
      * @param  Request  $request
-     * @return Response
+     * @return Factory|View
      */
     public function store(Request $request) {
         
@@ -92,8 +94,8 @@ class BlogController extends Controller
 
         $post = new BlogPost;
 
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
         $post->author_id = $request->user()->id;
 
         $post->save();
@@ -104,7 +106,7 @@ class BlogController extends Controller
     /**
      * Show a table with actions to manage posts.
      *
-     * @return Response
+     * @return Factory|View
      */
     public function dashboard() {
         $posts = BlogPost::orderBy('created_at', 'desc')->paginate(5);
@@ -116,7 +118,7 @@ class BlogController extends Controller
      * Display a form to edit an existing blog post.
      *
      * @param  Request  $request
-     * @return Response
+     * @return Factory|View
      */
     public function edit(Request $request) {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
@@ -127,28 +129,29 @@ class BlogController extends Controller
     /**
      * Update an existing blog post.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse|Redirector
      */
     public function update(Request $request) {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
 
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
 
         $post->save();
 
         return redirect(route('blog.read', [
             'blog' => 'blog', 
             'id' => $post->id, 
-            'slug' => str_slug($post->title)]));
+            'slug' => Str::slug($post->title)]));
     }
 
     /**
      * Delete an existing blog post.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param Request $request
+     * @return RedirectResponse|Redirector
+     * @throws Exception
      */
     public function delete(Request $request) {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));

@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Models\App\Structure;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View;
 use Schema;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Models\App\Structure;
 use App\Models\App\UserStructure;
 
 class DashboardController extends Controller
 {
+    /**
+     * Dashboard overview
+     *
+     * @return Factory|View
+     */
     public function index () {
-        $structure = auth()->user()->structure;
+        /** @var Structure $structure */
+        $structure = auth()->user()->userStructure->structure;
 
         $members = count($structure->members);
         $news = count($structure->news);
@@ -22,42 +30,75 @@ class DashboardController extends Controller
         return view('structure.dashboard.home', compact('members', 'news', 'followers', 'following'));
     }
 
+    /**
+     * Display a table of structure members
+     *
+     * @return Factory|View
+     */
     public function listMembers () {
-        $structure = auth()->user()->structure;
+        /** @var Structure $structure */
+        $structure = auth()->user()->userStructure->structure;
         $members = $structure->members()->paginate(25);
 
         return view('structure.dashboard.members.list', compact('members'));
     }
 
+    /**
+     * Display a table of incoming joining demands
+     *
+     * @return Factory|View
+     */
     public function demands () {
-        $demands = UserStructure::byStructure(auth()->user()->structure)->pending()->get();
+        $demands = UserStructure::byStructure(auth()->user()->userStructure->structure)->pending()->get();
         return view('structure.dashboard.members.demands', compact('demands'));
     }
 
+    /**
+     * Display a table of member's permissions
+     *
+     * @return Factory|View
+     */
     public function permissionsMembers () {
-        $structure = auth()->user()->structure;
-        $columns = \array_diff(Schema::getColumnListing('users_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
+        $structure = auth()->user()->userStructure->structure;
+        $columns = array_diff(Schema::getColumnListing('users_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
         $members = $structure->members;
 
         return view('structure.dashboard.members.permissions', compact('columns', 'members'));
     }
 
+    /**
+     * Edit member's information (related to the structure)
+     *
+     * @param int $id
+     * @return Factory|View
+     * @throws AuthorizationException
+     */
     public function editMember ($id) {
-        // $this->authorize('manage-users', Structure::class);
+        $this->authorize('manage-users', Structure::class);
 
         $user = User::findOrFail($id);
 
         return view('structure.dashboard.members.edit', compact('user'));
     }
 
+    /**
+     * Display information about the structure's news (update DOC later)
+     *
+     * @return Factory|View
+     */
     public function news () {
         return view('structure.dashboard.news');
     }
 
-    public function caracteristics () {
-        $type = auth()->user()->structure->typename();
-        $columns = \array_diff(Schema::getColumnListing($type . '_data'), ['id', 'structure_id', 'created_at', 'updated_at']);
+    /**
+     * Display a form to update structure's characteristics
+     *
+     * @return Factory|View
+     */
+    public function characteristics () {
+        $structure = auth()->user()->userStructure->structure;
+        $type = $structure->data_type;
 
-        return view('structure.dashboard.caracteristics', compact('type'));
+        return view('structure.dashboard.characteristics', compact('type', 'structure'));
     }
 }

@@ -5,8 +5,8 @@ if (!function_exists('formatColumnName')) {
     /**
      * description
      *
-     * @param
-     * @return
+     * @param string $str
+     * @return string
      */
     function formatColumnName($str)
     {

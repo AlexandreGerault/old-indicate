@@ -14,8 +14,8 @@ class NewsPolicy
     /**
      * Determine whether the user can view the news.
      *
-     * @param  \App\User  $user
-     * @param  \App\App\News  $news
+     * @param User $user
+     * @param News $news
      * @return mixed
      */
     public function view(User $user, News $news)
@@ -26,8 +26,8 @@ class NewsPolicy
     /**
      * Determine whether the user can create news.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\App\Structure  $user
+     * @param User $user
+     * @param Structure $user
      * @return mixed
      */
     public function create(User $user, Structure $structure)
@@ -38,32 +38,32 @@ class NewsPolicy
     /**
      * Determine whether the user can update the news.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\App\News  $news
+     * @param User $user
+     * @param News $news
      * @return mixed
      */
     public function update(User $user, News $news)
     {
-        return ($user->authorizations->edit_news && $user->structure->id === $news->structure->id) || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;;
+        return ($user->authorizations->edit_news && $user->userStructure->structure->id === $news->structure->id) || $user->id === $news->author_id || ($user->isStructureOwner($news->structure) ? true : null);
     }
 
     /**
      * Determine whether the user can delete the news.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\App\News  $news
+     * @param User $user
+     * @param News $news
      * @return mixed
      */
     public function delete(User $user, News $news)
     {
-        return ($user->authorizations->delete_news && $user->structure->id === $news->structure->id) || $user->id === $news->author_id || ($user->isStructureOwner($news->structure)) ? true : null;
+        return ($user->authorizations->delete_news && $user->userStructure->structure->id === $news->structure->id) || $user->id === $news->author_id || ($user->isStructureOwner($news->structure) ? true : null);
     }
 
     /**
      * Determine whether the user can restore the news.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\App\News  $news
+     * @param User $user
+     * @param News $news
      * @return mixed
      */
     public function restore(User $user, News $news)
@@ -74,8 +74,8 @@ class NewsPolicy
     /**
      * Determine whether the user can permanently delete the news.
      *
-     * @param  \App\User  $user
-     * @param  \App\Models\App\News  $news
+     * @param User $user
+     * @param News $news
      * @return mixed
      */
     public function forceDelete(User $user, News $news)

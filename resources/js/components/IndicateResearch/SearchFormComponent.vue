@@ -1,8 +1,13 @@
 <template>
-    <form id="indicate-search" @submit.prevent="submitHandler">
+    <form id="indicate-search" method="GET" :action="this.action">
         <div class="form-group">
-            <label for="type">Type de structure recherchée</label>
-            <select name="type" id="type" v-model="type" class="custom-select">
+            <!-- Name or keywords/tags -->
+            <input class="form-control" type="text" placeholder="Nom ou mots clés" aria-label="Search">
+        </div>
+
+        <div class="form-group">
+            <label for="data_type">Type de structure recherchése</label>
+            <select name="data_type" id="data_type" v-model="type" class="custom-select">
                 <option value="company">Entreprise</option>
                 <option value="investor">Investisseur</option>
                 <option value="consulting">Structure de conseil</option>
@@ -15,10 +20,10 @@
             </div>
         </div>
         <div v-else-if="type === 'consulting'">
-            FILTRES POUR CONSULTANTS
+            <consulting-form-component />
         </div>
         <div v-else-if="type === 'investor'">
-            FILTRES POUR INVESTISSEURS
+            <investor-form-component />
         </div>
 
         <input type="submit" value="Rechercher" class="btn btn-primary" />
@@ -27,10 +32,17 @@
 
 <script>
 import CompanyFormComponent from './CompanyFormComponent'
+import InvestorFormComponent from './InvestorFormComponent'
+import ConsultingFormComponent from './ConsultingFormComponent'
 
 export default {
+    props: [
+        'action'
+    ],
     components: {
         CompanyFormComponent,
+        InvestorFormComponent,
+        ConsultingFormComponent
     },
     data () {
         return {

@@ -4,5 +4,5 @@
 
 @section('content')
 <h1>Caractéristiques de la structure</h1>
-@include('includes.dashboard.caracteristics.' . $type)
+@include('includes.dashboard.characteristics.' . $type)
 @endsection

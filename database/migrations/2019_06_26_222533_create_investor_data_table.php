@@ -15,12 +15,7 @@ class CreateInvestorDataTable extends Migration
     {
         Schema::create('investor_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('structure_id')->unsigned();
             $table->timestamps();
-        });
-
-        Schema::table('investor_data', function (Blueprint $table) {
-            $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
         });
     }
 
@@ -31,9 +26,6 @@ class CreateInvestorDataTable extends Migration
      */
     public function down()
     {
-        Schema::table('investor_data', function (Blueprint $table) {
-            $table->dropForeign('investor_data_structure_id_foreign');
-        });
         Schema::dropIfExists('investor_data');
     }
 }

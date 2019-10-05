@@ -20,12 +20,11 @@
             
             <div class="col-md-6 pt-3 pt-md-0" id="news">
                 <news-timeline
-                    get-route="/structure/{{ Auth::user()->structure->id }}/timeline"
+                    get-route="/structure/{{ Auth::user()->userStructure->structure->id }}/timeline"
                     base-update-route="/news/update/"
                     base-delete-route="/news/delete/"
                     base-user-route="/user/profile/"
-                    base-structure-route="/structure/profile/"
-                />
+                    base-structure-route="/structure/profile/"></news-timeline>
             </div>
 
             <div class="col-md-3 pt-3 pt-md-0">
