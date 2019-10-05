@@ -42,7 +42,7 @@
                 @else
                     @if (auth()->id() === $user->id)
                     <p class="lead">Veuillez effectuer une des actions suivantes</p>
-                    <a class="btn btn-primary" href="{{ route('structure.list') }}">Rejoindre une structure</a> ou <a class="btn btn-primary" href="{{ route('structure.create') }}">Créer une structure</a>
+                    <a class="btn btn-primary" href="{{ route('structure.index') }}">Rejoindre une structure</a> ou <a class="btn btn-primary" href="{{ route('structure.create') }}">Créer une structure</a>
                     @else
                     <p class="lead">{{ $user->firstname . ' ' . $user->lastname . __(' n\'est encore affilié à aucune structure')}}</p>
                     @endif

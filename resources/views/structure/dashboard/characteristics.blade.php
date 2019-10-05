@@ -4,5 +4,6 @@
 
 @section('content')
 <h1>Caractéristiques de la structure</h1>
-@include('includes.dashboard.characteristics.' . $type)
+{{ $structure->data_type }}
+@include('includes.dashboard.characteristics.' . $structure->data_type)
 @endsection

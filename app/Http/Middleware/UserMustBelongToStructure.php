@@ -16,7 +16,7 @@ class UserMustBelongToStructure
      */
     public function handle($request, Closure $next) {
         if (Auth::check() && ! Auth::user()->hasStructure()) {
-            return redirect()->route('user.profile.show', ['id' => Auth::user()->id ])
+            return redirect()->route('user.show', ['user' => Auth::user() ])
                              ->with('error', __('Vous n\'appartenez à aucune structure. Veuillez d\'abord en rejoindre une ou bien en créer une.'));
         }
 

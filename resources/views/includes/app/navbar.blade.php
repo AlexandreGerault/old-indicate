@@ -31,7 +31,7 @@
                         {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('user.show', ['id' => auth()->id()]) }}">Profile</a>
+                        <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">Profile</a>
                         @if(Auth::user()->hasStructure())
                         <a class="dropdown-item" href="{{ route('structure.show', ['structure' => auth()->user()->userStructure->structure->id]) }}">Structure</a>
                         @endif

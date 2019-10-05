@@ -38,7 +38,7 @@ class StructureController extends Controller
      *
      * @return Factory|View
      */
-    public function list() {
+    public function index() {
         $structures = Structure::all();
 
         return view('structure.list')->with('structures', $structures);

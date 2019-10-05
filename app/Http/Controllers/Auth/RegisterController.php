@@ -31,7 +31,7 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        return route('user.profile.show', ['id' => Auth::user()->id]);
+        return route('user.show', ['user' => Auth::user()]);
     }
 
     /**
@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
          ]);
-        
+
         $user->save();
 
         if(isset($data['avatar'])) {
@@ -85,7 +85,7 @@ class RegisterController extends Controller
             $user->avatar = $avatarName;
             $user->save();
         }
-        
+
 
         return $user;
     }
