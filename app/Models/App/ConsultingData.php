@@ -27,6 +27,6 @@ class ConsultingData extends Model
      * @return mixed
      */
     public function structure () {
-        return $this->morhOne(Structure::class, 'data');
+        return $this->morphOne(Structure::class, 'data');
     }
 }
