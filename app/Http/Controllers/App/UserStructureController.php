@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\App\ClaimDemand;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateMemberRequest;
@@ -31,7 +32,7 @@ class UserStructureController extends Controller
 
             return redirect()->route('user.profile.show', ['id' => auth()->user()->id ]);
         }
-        
+
         return back()->with('error', __('error.user_structure.join'));
     }
 
@@ -66,7 +67,7 @@ class UserStructureController extends Controller
 
         $userStructure->structure_id = null;
         $userStructure->save();
-        
+
         return back()->with('success', __('success.user_structure.demand_accepted'));
     }
 
@@ -78,12 +79,21 @@ class UserStructureController extends Controller
      */
     public function update (UpdateMemberRequest $request) {
         $request->validated();
-        
+
         $member = UserStructure::findOrFail($request->input('id'));
 
         $member->jobname = $request->input('jobname');
         $member->save();
 
         return back()->with('success', __('success.user_structure.member_update'));
+    }
+
+    public function claim (Request $request, Structure $structure) {
+        $claim = new ClaimDemand();
+        $claim->user()->associate(auth()->user());
+        $claim->structure()->associate($structure);
+        $claim->save();
+
+        return redirect()->back()->with('success', __('Votre demande a bien été prise en compte.'));
     }
 }

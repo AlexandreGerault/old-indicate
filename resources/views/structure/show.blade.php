@@ -18,6 +18,17 @@
                 @if (auth()->user()->hasStructure() && auth()->user()->userStructure->structure->follows($structure) && auth()->user()->userStructure->structure->id !== $structure->id)
                 @unfollow(['structure_id' => $structure->id]) @endunfollow
                 @endif
+                @can('join', $structure)
+                    <a href="{{ route('structure.join', [ 'structure' => $structure ]) }}" class="btn btn-primary">
+                        @lang('join')
+                    </a>
+                @endcan
+                @can('claim', $structure)
+                    <a href="{{ route('structure.claim', [ 'structure' => $structure ]) }}" class="btn btn-primary">
+                        @lang('claim')
+                    </a>
+                @endcan
+                Note moyenne : {{ $structure->averageRating() }}
             </div>
         </div>
         <div class="row my-3 bg-light">
@@ -35,7 +46,7 @@
 
 <div class="mt-5">
     <div class="container">
-        
+
     </div>
 </div>
 

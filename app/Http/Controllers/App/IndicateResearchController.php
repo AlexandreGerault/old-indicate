@@ -26,6 +26,7 @@ class IndicateResearchController extends Controller
 
     public function results (Request $request) {
         $data = null;
+        $keywords = $request->input('keywords');
 
         switch ($request->get('data_type')) {
             case "company":
@@ -41,6 +42,17 @@ class IndicateResearchController extends Controller
 
                 $average_turnover_min = $request->input('average-turnover-min');
                 $average_turnover_max = $request->input('average-turnover-max');
+
+                $bfr = $request->input('bfr');
+
+                $looking_investors = $request->input('looking-investors');
+                $looked_investment_min = $request->input('looked-investment-min');
+                $looked_investment_max = $request->input('looked-investment-max');
+
+
+                $looking_partnership = $request->input('looking-partnership');
+                $looking_shareholding = $request->input('looking-shareholding');
+                $looking_bank_funding = $request->input('looking-bank-funding');
 
 
                 $data = CompanyData::query()
@@ -68,16 +80,63 @@ class IndicateResearchController extends Controller
                     ->when($average_turnover_max, function ($query, $average_turnover_max) {
                         return $query->where('average_monthly_turnover', '<=', $average_turnover_max);
                     })
+                    ->when($bfr, function ($query, $bfr) {
+                        return $query->where('bfr', '=', $bfr == 'on' ? true : false);
+                    })
+                    ->when($looking_investors, function ($query, $looking_investors) use ($looked_investment_min, $looked_investment_max) {
+                        return $query->where('looking_for_funding', '=', $looking_investors == 'on' ? true : false)
+                            ->where('investment_sought', '>=', $looked_investment_min)
+                            ->where('investment_sought', '<=', $looked_investment_max);
+                    })
+                    ->when($looking_partnership, function ($query, $looking_partnership) {
+                        return $query->where('looking_for_accompaniment', '=', $looking_partnership == 'on' ? true : false);
+                    })
+                    ->when($looking_shareholding, function ($query, $looking_shareholding) {
+                        return $query->where('looking_for_accompaniment', '=', $looking_shareholding == 'on' ? true : false);
+                    })
+                    ->when($looking_bank_funding, function ($query, $looking_bank_funding) {
+                        return $query->where('looking_for_funding', '=', $looking_bank_funding == 'on' ? true : false);
+                    })
                     ->with('structure')
                     ->get();
                 break;
 
             case "consulting":
-                dd('TEST');
+                //DATA INPUTS
+                $survival_rate = $request->input('survival-rate');
+                $funding_help = $request->input('funding-help');
+                $company_type = $request->input('company-type');
+                $consulting_domain = $request->input('consulting-domain');
+                $seeking_location = $request->input('seeking-location');
+                
+                $data = ConsultingData::query()
+                    ->when($survival_rate, function ($query, $survival_rate) {
+                        return $query->where('five_years_survival_rate', '=', $survival_rate);
+                    })
+                    ->when($funding_help, function ($query, $funding_help) {
+                        return $query->where('funding_help', '=', $funding_help == 'on' ? true : false);
+                    })
+                    ->when($company_type, function ($query, $company_type) {
+                        return $query->where('company_type', '=', $company_type);
+                    })
+                    ->when($consulting_domain, function ($query, $consulting_domain) {
+                        return $query->where('consulting_domain', 'LIKE', $consulting_domain);
+                    })
+                    ->when($seeking_location, function ($query, $seeking_location) {
+                        return $query->where('seeking_location', 'LIKE', $seeking_location);
+                    })
+                    ->with('structure')
+                    ->get();
+
                 break;
 
             case "investor":
-                dd('TEST');
+                $invesment_type = $request->input('investment-type');
+                $invesment_step = $request->input('invesment-step');
+                $invesment_min = $request->input('invesment-min');
+                $invesment_max = $request->input('invesment-max');
+
+                $data = InvestorData::all()->with('structure')->get();
                 break;
         }
 

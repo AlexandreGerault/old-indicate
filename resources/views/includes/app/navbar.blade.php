@@ -17,6 +17,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('research.form') }}">@lang('Research')</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('structure.create') }}">@lang('Create a new structure')</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">

@@ -106,7 +106,12 @@ class StructurePolicy
 
     public function join(User $user, Structure $structure)
     {
+        return ! $user->hasStructure();
+    }
 
+    public function claim(User $user, Structure $structure)
+    {
+        return ! $user->isStructureOwner($structure);
     }
 
     public function accessDashboard(User $user)

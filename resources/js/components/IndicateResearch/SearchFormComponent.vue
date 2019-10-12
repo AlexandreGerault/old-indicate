@@ -2,7 +2,7 @@
     <form id="indicate-search" method="GET" :action="this.action">
         <div class="form-group">
             <!-- Name or keywords/tags -->
-            <input class="form-control" type="text" placeholder="Nom ou mots clés" aria-label="Search">
+            <input class="form-control" type="text" placeholder="Nom ou mots clés" aria-label="Search" name="keywords" id="keywords">
         </div>
 
         <div class="form-group">

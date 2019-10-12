@@ -59,6 +59,8 @@ Route::prefix('structure')->middleware('auth')->group(function () {
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
     });
 
+    Route::get('/{structure}/claim', 'App\UserStructureController@claim')->name('structure.claim');
+
     Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
     Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
 });

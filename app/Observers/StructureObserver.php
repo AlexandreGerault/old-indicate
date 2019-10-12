@@ -21,19 +21,6 @@ class StructureObserver
 
         $structure->data()->associate($data);
         $structure->save();
-
-        $member = auth()->user()->userStructure;
-        $member->structure_id = $structure->id;
-        $member->status = config('enums.structure_membership_request_status.ACCEPTED');
-        $member->jobname = 'Fondateur';
-        $member->save();
-
-        $authorizations = auth()->user()->authorizations;
-        $columns = \array_diff(Schema::getColumnListing('users_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
-        foreach ($columns as $key => $value) {
-            $authorizations->$value = 1;
-        }
-        $authorizations->save();
     }
 
     /**

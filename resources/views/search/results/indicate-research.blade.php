@@ -18,7 +18,7 @@
                 @foreach($data as $item)
                 <div class="card m-3">
                     <div class="card-body">
-                        <h4>{{ $item->structure->name }}</h4>
+                        <h4><a href="{{ route('structure.show', ['structure' => $item->structure]) }}">{{ $item->structure->name }}</a></h4>
                         <p class="badge badge-secondary">{{ $item->structure->data_type }}</p>
                         <p>{{ $item->structure->comment }}</p>
                     </div>

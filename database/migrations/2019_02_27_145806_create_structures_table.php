@@ -22,6 +22,7 @@ class CreateStructuresTable extends Migration
             $table->integer('siren');
             $table->bigInteger('siret');
             $table->boolean('validated')->default(false);
+            $table->string('location')->nullable()->default(null);
 
             /**
              * Polymorphic relation keys

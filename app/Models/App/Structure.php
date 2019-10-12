@@ -143,4 +143,20 @@ class Structure extends Model
     {
         return $this->following->contains($structure);
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function averageRating()
+    {
+        $average = 0;
+        $ratings = $this->ratings;
+        foreach ($ratings as $rating)
+        {
+            $average += $rating->rating;
+        }
+        return $average/$ratings->count();
+    }
 }
