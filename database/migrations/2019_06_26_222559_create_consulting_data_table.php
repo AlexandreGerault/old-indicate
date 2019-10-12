@@ -16,12 +16,12 @@ class CreateConsultingDataTable extends Migration
         Schema::create('consulting_data', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('five_years_survival_rate');
-            $table->string('consulting_type');
-            $table->boolean('funding_help');
-            $table->string('company_type');
-            $table->string('consulting_domain');
-            $table->string('seeking_location');
+            $table->integer('five_years_survival_rate')->nullable()->default(null);
+            $table->string('consulting_type')->nullable()->default(null);
+            $table->boolean('funding_help')->nullable()->default(null);
+            $table->string('company_type')->nullable()->default(null);
+            $table->string('consulting_domain')->nullable()->default(null);
+            $table->string('seeking_location')->nullable()->default(null);
 
             $table->timestamps();
         });

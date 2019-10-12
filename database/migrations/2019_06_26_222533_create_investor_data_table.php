@@ -16,15 +16,15 @@ class CreateInvestorDataTable extends Migration
         Schema::create('investor_data', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('funding_domain');
-            $table->string('company_type');
-            $table->integer('funding_min');
-            $table->integer('funding_max');
-            $table->string('funding_location');
-            $table->string('funding_way');
-            $table->string('funding_step');
-            $table->boolean('provide_consulting');
-            $table->integer('financial_means');
+            $table->string('funding_domain')->nullable()->default(null);
+            $table->string('company_type')->nullable()->default(null);
+            $table->integer('funding_min')->nullable()->default(null);
+            $table->integer('funding_max')->nullable()->default(null);
+            $table->string('funding_location')->nullable()->default(null);
+            $table->string('funding_way')->nullable()->default(null);
+            $table->string('funding_step')->nullable()->default(null);
+            $table->boolean('provide_consulting')->nullable()->default(null);
+            $table->integer('financial_means')->nullable()->default(null);
 
             $table->timestamps();
         });
