@@ -108,7 +108,7 @@ class IndicateResearchController extends Controller
                 $company_type = $request->input('company-type');
                 $consulting_domain = $request->input('consulting-domain');
                 $seeking_location = $request->input('seeking-location');
-                
+
                 $data = ConsultingData::query()
                     ->when($survival_rate, function ($query, $survival_rate) {
                         return $query->where('five_years_survival_rate', '=', $survival_rate);

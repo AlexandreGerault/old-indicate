@@ -157,6 +157,9 @@ class Structure extends Model
         {
             $average += $rating->rating;
         }
-        return $average/$ratings->count();
+        if ($ratings->count() !== 0)
+            return $average/$ratings->count();
+        else
+            return 0;
     }
 }
