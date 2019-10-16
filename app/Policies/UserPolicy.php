@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use Auth;
 use App\User;
 use App\Models\App\Structure;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -42,7 +43,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        //
+        return Auth::id() === $user->id;
     }
 
     /**
@@ -84,9 +85,9 @@ class UserPolicy
     /**
      * Determine whether the user can join a structure
      * (i.e. whether a join demand is already in progress)
-     * 
+     *
      * @param \App\User $user
-     * 
+     *
      * @return mixed
      */
     public function join(User $user, Structure $structure)

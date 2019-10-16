@@ -79,13 +79,8 @@ class RegisterController extends Controller
         $user->save();
 
         if(isset($data['avatar'])) {
-            $avatarName = $user->id . '_avatar' . time() . '.' . $data['avatar']->getClientOriginalExtension();
-            $data['avatar']->storeAs('users/avatars', $avatarName);
-
-            $user->avatar = $avatarName;
-            $user->save();
+            $user->updateAvatar($data['avatar']);
         }
-
 
         return $user;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -40,5 +41,31 @@ class UserController extends Controller
         }
 
         return response()->json($news, 200);
+    }
+
+    /**
+     * @param User $user
+     * @return Factory|View
+     */
+    public function edit(User $user) {
+        return view('user.profile.edit')->with('user', $user);
+    }
+
+
+    public function update(UpdateUserRequest $request, User $user) {
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
+        if ($user->email !== $request->input('email')) {
+            $user->email = $request->input('email');
+            $user->email_verified_at = null;
+            $user->sendEmailVerificationNotification();
+        }
+        $user->save();
+
+        if($request->hasFile('avatar')) {
+            $user->updateAvatar($request->file('avatar'));
+        }
+
+        return back()->with('success', 'Profil bien mis à jour');
     }
 }

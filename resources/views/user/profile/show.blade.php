@@ -15,7 +15,8 @@
         @endif
         <div class="row shadow-none border-light">
             <div class="col-4 col-md-2">
-                <img class="img-fluid d-block" src="/storage/users/avatars/{{ $user->avatar }}">
+                <p><img class="img-fluid d-block" src="/storage/users/avatars/{{ $user->avatar }}"></p>
+                <p class="small"><a href="{{ route('user.edit', ['user' => auth()->user()]) }}">Mettre à jour mon profil</a></p>
             </div>
             <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $user->firstname }} {{ $user->lastname }}</h1>
@@ -59,43 +60,6 @@
             </div>
 
             <div class="col-md-3 px-3 pb-3 pt-3 pt-md-0">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="">Suggestions</h3>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" />
-                                </div>
-                                <div class="col-8">
-                                    <span class="h4">Indicate</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" />
-                                </div>
-                                <div class="col-8">
-                                    <span class="h4">Indicate</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-4">
-                                    <img class="img-fluid d-block rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" />
-                                </div>
-                                <div class="col-8">
-                                    <span class="h4">Indicate</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>

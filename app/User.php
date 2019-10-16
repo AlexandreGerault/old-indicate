@@ -11,10 +11,11 @@ use DB;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -154,6 +155,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /**
      * Get user's news
+     * @return HasMany news
      */
     public function news()
     {
@@ -168,5 +170,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function blacklisted(Structure $structure)
     {
         return DB::table('demands_blacklist')->where('user_id', '=', $this->id)->where('structure_id', '=', $structure->id)->exists();
+    }
+
+    /**
+     * @param UploadedFile $avatar
+     */
+    public function updateAvatar (UploadedFile $avatar) {
+        $avatarName = $this->id . '_avatar' . time() . '.' . $avatar->getClientOriginalExtension();
+        $avatar->storeAs('users/avatars', $avatarName);
+
+        $this->avatar = $avatarName;
+        $this->save();
     }
 }
