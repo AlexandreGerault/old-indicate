@@ -26,20 +26,20 @@
     <div class="py-5">
         <div class="container">
             <div class="row">
-                <form method="post" action="{{ route('user.update', ['user' => auth()->user()]) }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('user.update', ['user' => $user->]) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="form-group row">
                         <label for="firstname">@lang('firstname')</label>
-                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="@lang('firstname')" value="{{ auth()->user()->firstname }}"/>
+                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="@lang('firstname')" value="{{ $user->firstname }}"/>
                     </div>
                     <div class="form-group row">
                         <label for="lastname">@lang('lastname')</label>
-                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="@lang('lastname')" value="{{ auth()->user()->lastname }}"/>
+                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="@lang('lastname')" value="{{ $user->lastname }}"/>
                     </div>
                     <div class="form-group row">
                         <label for="email">@lang('email')</label>
-                        <input type="text" name="email" id="email" class="form-control" placeholder="@lang('email')" value="{{ auth()->user()->email }}"/>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="@lang('email')" value="{{ $user->email }}"/>
                     </div>
                     <div class="form-group row">
                         <label for="avatar">{{ __('Veuillez choisir une photo de profil') }}</label>
