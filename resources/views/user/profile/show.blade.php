@@ -16,7 +16,9 @@
         <div class="row shadow-none border-light">
             <div class="col-4 col-md-2">
                 <p><img class="img-fluid d-block" src="/storage/users/avatars/{{ $user->avatar }}"></p>
+                @if(auth()->id() === $user->id)
                 <p class="small"><a href="{{ route('user.edit', ['user' => auth()->user()]) }}">Mettre à jour mon profil</a></p>
+                @endif
             </div>
             <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $user->firstname }} {{ $user->lastname }}</h1>
