@@ -26,7 +26,7 @@
     <div class="py-5">
         <div class="container">
             <div class="row">
-                <form method="post" action="{{ route('user.update', ['user' => $user->]) }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('user.update', ['user' => $user]) }}" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="form-group row">
