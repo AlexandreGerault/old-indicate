@@ -43,7 +43,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return Auth::id() === $user->id;
+        return Auth::id() === $model->id;
     }
 
     /**
