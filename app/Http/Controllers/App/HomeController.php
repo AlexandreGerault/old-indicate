@@ -21,7 +21,11 @@ class HomeController extends Controller
     public function index() {
         if (Auth::guest()) {
             return view('app.home');
+        } else if (!Auth::user()->hasStructure()) {
+            return view('user.profile.show', ['user' => Auth::user()]);
+        } else if (Auth::user()->hasStructure()) {
+            return view('app.timeline');
         }
-        return view('app.timeline');
+
     }
 }
