@@ -2,6 +2,7 @@
 
 namespace App\Models\App;
 
+use App\Traits\ModelAvatar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -54,6 +55,8 @@ use Eloquent;
  */
 class Structure extends Model
 {
+    use ModelAvatar;
+
     protected $guarded = [];
 
 

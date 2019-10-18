@@ -131,12 +131,24 @@ class IndicateResearchController extends Controller
                 break;
 
             case "investor":
-                $invesment_type = $request->input('investment-type');
-                $invesment_step = $request->input('invesment-step');
-                $invesment_min = $request->input('invesment-min');
-                $invesment_max = $request->input('invesment-max');
+                $investment_type = $request->input('investment-type');
+                $investment_step = $request->input('investment-step');
+                $investment_min = $request->input('investment-min');
+                $investment_max = $request->input('investment-max');
 
-                $data = InvestorData::all()->with('structure')->get();
+                $data = InvestorData::query()
+                    ->when($investment_min, function ($query, $investment_min) {
+                        return $query->where('funding_min', '>=', $investment_min);
+                    })
+                    ->when($investment_max, function ($query, $investment_max) {
+                        return $query->where('funding_max', '<=', $investment_max);
+                    })
+                    ->when($investment_type, function ($query, $investment_type) {
+                        return $query->where('funding_type', '=', $investment_type);
+                    })
+                    ->when($investment_step, function ($query, $investment_step) {
+                        return $query->where('funding_step', '=', $investment_step);
+                    });
                 break;
         }
 

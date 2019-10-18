@@ -1,16 +1,16 @@
 <template>
     <div>
         <div class="form-group">
-            <label for="type">Type d'investissement</label>
-            <select name="type" id="type" v-model="type" class="custom-select">
+            <label for="investment-type">Type d'investissement</label>
+            <select name="investment-type" id="investment-type" v-model="type" class="custom-select">
                 <option value="major">Majoritaire</option>
                 <option value="minor">Minoritaire</option>
                 <option value="indifferent">Indifférent</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="type">Stade d'investissement</label>
-            <select name="type" id="type" v-model="type" class="custom-select">
+            <label for="investment-step">Stade d'investissement</label>
+            <select name="investment-step" id="investment-step" v-model="type" class="custom-select">
                 <option value="priming">Amorçage</option>
                 <option value="capital-risk">Capital risque</option>
                 <option value="development-capital">Capital développement</option>
@@ -22,7 +22,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="customers-min">Montant de l'investissement</label>
+            <label for="investment-min">Montant de l'investissement</label>
             <div class="form-row">
                 <div class="col">
                     <input type="number" name="investment-min" id="investment-min" class="form-control" placeholder="Minimum"/>
@@ -37,6 +37,6 @@
 
 <script>
 export default {
-    
+
 }
 </script>

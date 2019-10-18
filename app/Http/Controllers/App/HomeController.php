@@ -13,7 +13,6 @@ class HomeController extends Controller
      * HomeController constructor.
      */
     public function __construct() {
-        $this->middleware('struct')->only('index');
     }
 
     /**

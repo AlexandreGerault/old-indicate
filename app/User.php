@@ -6,6 +6,7 @@ use App\Models\App\News;
 use App\Models\App\Structure;
 use App\Models\App\UserAuthorizations;
 use App\Models\App\UserStructure;
+use App\Traits\ModelAvatar;
 use Carbon\Carbon;
 use DB;
 use Eloquent;
@@ -56,7 +57,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, ModelAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -170,16 +171,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function blacklisted(Structure $structure)
     {
         return DB::table('demands_blacklist')->where('user_id', '=', $this->id)->where('structure_id', '=', $structure->id)->exists();
-    }
-
-    /**
-     * @param UploadedFile $avatar
-     */
-    public function updateAvatar (UploadedFile $avatar) {
-        $avatarName = $this->id . '_avatar' . time() . '.' . $avatar->getClientOriginalExtension();
-        $avatar->storeAs('users/avatars', $avatarName);
-
-        $this->avatar = $avatarName;
-        $this->save();
     }
 }
