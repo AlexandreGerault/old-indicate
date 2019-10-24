@@ -148,7 +148,9 @@ class IndicateResearchController extends Controller
                     })
                     ->when($investment_step, function ($query, $investment_step) {
                         return $query->where('funding_step', '=', $investment_step);
-                    });
+                    })
+                    ->with('structure')
+                    ->get();
                 break;
         }
 

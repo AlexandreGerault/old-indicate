@@ -28,7 +28,19 @@ class StructureController extends Controller
      * @return RedirectResponse
      */
     public function store(StoreStructureRequest $request) {
-        Structure::create($request->validated());
+        $structure = new Structure();
+        $structure->name = $request->input('name');
+        $structure->comment = $request->input('comment');
+        $structure->phone_number = $request->input('phone_number');
+        $structure->address = $request->input('adress');
+        $structure->siren = $request->input('siren');
+        $structure->siret = $request->input('siret');
+        $structure->save();
+
+        if ($request->hasFile('avatar')) {
+            $structure->updateAvatar($request->file('avatar'));
+        }
+
 
         return redirect()->route('app.home');
     }

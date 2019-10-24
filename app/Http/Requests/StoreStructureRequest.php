@@ -33,6 +33,7 @@ class StoreStructureRequest extends FormRequest
             'siren' => 'required|digits:9|unique:structures',
             'siret' => 'required|digits:14',
             'data_type' => 'required|string',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

@@ -18,7 +18,7 @@ class CreateStructuresTable extends Migration
             $table->string('name');
             $table->string('comment');
             $table->string('phone_number');
-            $table->string('address');
+            $table->integer('address_id')->nullable()->default(null);
             $table->string('avatar')->default('structure.svg');
             $table->integer('siren');
             $table->bigInteger('siret');
