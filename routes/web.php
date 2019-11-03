@@ -60,12 +60,13 @@ Route::prefix('structure')->middleware('auth')->group(function () {
     });
 
     Route::get('/{structure}/claim', 'App\UserStructureController@claim')->name('structure.claim');
+    Route::get('/{structure}/rate', 'App\StructureController@rate')->name('structure.rate');
 
     Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
     Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
 });
 
-Route::prefix('{structure}/dashboard')->middleware(['auth', 'verified', 'can:access-dashboard,App\Models\App\Structure'])->group(function () {
+Route::prefix('dashboard/{structure}')->middleware(['auth', 'verified', 'can:access-dashboard,structure'])->group(function () {
     Route::get('/', 'App\DashboardController@index')->name('structure.dashboard.index');
     Route::prefix('/members')->group(function () {
         Route::get('/list', 'App\DashboardController@listMembers')->name('structure.dashboard.members.list');
@@ -78,11 +79,12 @@ Route::prefix('{structure}/dashboard')->middleware(['auth', 'verified', 'can:acc
         Route::post('/update/authorizations/{id}', 'App\UserAuthorizationsController@update')->name('structure.dashboard.members.authorizations.update');
     });
     Route::get('/news', 'App\DashboardController@news')->name('structure.dashboard.news');
-    Route::prefix('characteristics')->group(function () {
-        Route::get('/', 'App\DashboardController@characteristics')->name('structure.dashboard.characteristics');
-        Route::post('/update/company', 'App\StructureDataController@updateCompanyData')->name('structure.dashboard.characteristics.update.company');
-        Route::post('/update/investor', 'App\StructureDataController@updateInvestorData')->name('structure.dashboard.characteristics.update.investor');
-        Route::post('/update/consulting', 'App\StructureDataController@updateConsultingData')->name('structure.dashboard.characteristics.update.consulting');
+    Route::prefix('profile')->group(function () {
+        Route::get('/', 'App\DashboardController@profile')->name('structure.dashboard.profile');
+        Route::post('/update/contact', 'App\StructureController@updateContactMeans')->name('structure.dashboard.profile.update.contact');
+        Route::post('/update/company', 'App\StructureDataController@updateCompanyData')->name('structure.dashboard.profile.update.company');
+        Route::post('/update/investor', 'App\StructureDataController@updateInvestorData')->name('structure.dashboard.profile.update.investor');
+        Route::post('/update/consulting', 'App\StructureDataController@updateConsultingData')->name('structure.dashboard.profile.update.consulting');
     });
 });
 

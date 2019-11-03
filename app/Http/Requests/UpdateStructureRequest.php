@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\App\Structure;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateConsultingDataRequest extends FormRequest
+class UpdateStructureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +25,11 @@ class UpdateConsultingDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'funding_help' => 'nullable',
-            'five_years_survival_rate' => 'nullable|numeric',
-            'conulting_type' => 'nullable|string',
-            'company_type' => 'nullable|string',
-            'consulting_domain' => 'nullable|string',
-            'seeking_location' => 'nullable|string',
+            'name' => 'required|max:255|unique:structures,id,' . $this->structure->id,
+            'comment' => 'required|max:255',
+            'siren' => 'required|digits:9|unique:structures,id,' . $this->structure->id,
+            'siret' => 'required|digits:14',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

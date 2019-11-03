@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">@lang('ui.auth.sign_up')</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -102,10 +102,10 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Veuillez choisir une photo de profil') }}</label>
-                            
+
                             <div class="col-md-6">
                                 <input type="file" class="form-control-file" name="avatar" id="avatar" aria-describedby="fileHelp">
                                 <small id="fileHelp" class="form-text text-muted">{{ __('Choisissez un fichier valide : la taille de l\'image ne doit pas dépasser 2Mo.')}}</small>
@@ -115,7 +115,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('S\'inscrire') }}
+                                    @lang('ui.auth.sign_up')
                                 </button>
                             </div>
                         </div>

@@ -3,7 +3,7 @@
 @section('title', 'Dashboard - Utilisateurs')
 
 @section('content')
-<h1>Utilisateurs</h1>
+<h1>@lang('ui.dashboard_words.members')</h1>
 <table class="table table-stripped">
     <thead class="thead-dark">
         <tr>

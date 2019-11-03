@@ -14,18 +14,18 @@ class CreateAddressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('postal_code');
-            $table->integer('street_number');
-            $table->integer('department_id');
-            $table->integer('region_id');
-            $table->string('street_name');
-            $table->string('city_name');
+            $table->increments('id');
+            $table->integer('postcode');
+            $table->integer('house_number');
+            $table->string('county');
+            $table->string('country');
+            $table->string('road');
+            $table->string('city');
             $table->timestamps();
         });
 
         Schema::table('addresses', function (Blueprint $table) {
-            $table->primary(['id', 'postal_code', 'street_number', 'department_id', 'region_id', 'street_name', 'city_name']);
+            $table->unique(['postcode', 'house_number', 'county', 'country', 'road', 'city'], 'address_index_primary_id');
         });
     }
 

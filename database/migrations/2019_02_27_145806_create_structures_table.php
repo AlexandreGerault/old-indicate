@@ -17,13 +17,12 @@ class CreateStructuresTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('comment');
-            $table->string('phone_number');
-            $table->integer('address_id')->nullable()->default(null);
             $table->string('avatar')->default('structure.svg');
             $table->integer('siren');
             $table->bigInteger('siret');
             $table->boolean('validated')->default(false);
-            $table->string('location')->nullable()->default(null);
+            $table->integer('address_id')->unsigned()->nullable()->default(null);
+            $table->integer('contact_id')->unsigned()->nullable()->default(null);
 
             /**
              * Polymorphic relation keys

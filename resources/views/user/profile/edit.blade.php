@@ -48,7 +48,7 @@
                     </div>
 
                     <button type="submit" class="btn mt-4 btn-block btn-outline-dark p-2">
-                        <b>@lang('profile_edit_submit')</b>
+                        <b>@lang('ui.profile.update')</b>
                     </button>
                 </form>
             </div>

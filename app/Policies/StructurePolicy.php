@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\App\ClaimDemand;
 use App\User;
 use App\Models\App\Structure;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -111,12 +112,13 @@ class StructurePolicy
 
     public function claim(User $user, Structure $structure)
     {
-        return ! $user->isStructureOwner($structure);
+        $exists = ClaimDemand::query()->where('user_id', '=', $user->id)->where('structure_id', '=', $structure->id)->get() !== null;
+        return ! $user->isStructureOwner($structure) && !$exists;
     }
 
-    public function accessDashboard(User $user)
+    public function accessDashboard(User $user, Structure $structure)
     {
-        return $user->hasStructure() && $user->authorizations->access_dashboard;
+        return $user->hasStructure() && ($user->authorizations->access_dashboard || $user->isStructureOwner($structure));
     }
 
     public function manageUsers(User $user)

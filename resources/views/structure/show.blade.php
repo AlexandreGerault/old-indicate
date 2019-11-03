@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row shadow-none border-light">
             <div class="col-4 col-md-2">
-                <img class="img-fluid d-block" src="https://static.pingendo.com/img-placeholder-3.svg">
+                <img class="img-fluid d-block" src="/storage/structures/avatars/{{ $structure->avatar }}">
             </div>
             <div class="col-8 col-md-10 shadow-none">
                 <h1>{{ $structure->name }} <span class="badge badge-secondary">{{ __($structure->type) }}</span></h1>
@@ -34,10 +34,10 @@
         <div class="row my-3 bg-light">
             <ul class="nav navbar">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">@lang('news-feed')</a>
+                    <a class="nav-link" href="#">@lang('ui.structure.characteristics')</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">@lang('information')</a>
+                    <a class="nav-link" href="#">@lang('ui.structure.rating_tab')</a>
                 </li>
             </ul>
         </div>
@@ -46,69 +46,48 @@
 
 <div class="mt-5">
     <div class="container">
-
     </div>
 </div>
 
 <div class="py-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">@lang('characteristics')</h4>
-                        <ul>
-                            @foreach ($structure->data->toArray() as $key => $data)
-                            <li><b>{{ __(snakeToString($key)) }}</b> : {{ $data }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+
+            <div class="col-lg-3 border-right border-secondary">
+                <h3 class="text-center">@lang('ui.structure.address')</h3>
+                <p>{!! $structure->address->house_number . ' ' . $structure->address->road . '<br />' . $structure->address->postcode . ' ' . $structure->address->city !!}</p>
             </div>
 
-            <div class="col-md-6 pt-3 pt-md-0">
-                <div id="news">
-                    @auth
-                    @can('create', [App\Models\App\News::class, $structure])
-                    <form class="card mb-5" method="post" action="{{ route('news.store') }}">
-                    @csrf
-                        <div class="card-body">
-                            <h4 class="mb-4 card-title">@lang('write-news')</h4>
-                            <input type="hidden" hidden="hidden" value="{{ $structure->id }}" name="structure_id" />
-                            <input type="text" name="title" id="title" placeholder="@lang('optional') @lang('news-title')" class="form-control" />
-                            <div class="md-form">
-                                <label for="content"></label>
-                                <textarea id="content" name="content" class="md-textarea form-control" rows="3" placeholder="@lang('news-content')"></textarea>
-                            </div>
-                            <input type="submit" class="btn btn-primary mt-4" value="@lang('publish')" />
-                        </div>
-                    </form>
-                    @endcan
-                    @endauth
-                    <news-timeline
-                        get-route="/structure/{{ $structure->id }}/news"
-                        base-update-route="/news/update/"
-                        base-delete-route="/news/delete/"
-                        base-user-route="/user/profile/"
-                        base-structure-route="/structure/profile/"></news-timeline>
-                </div>
+            <div class="col-lg-6">
+                <h3 class="text-center">@lang('ui.structure.characteristics')</h3>
+                <table class="table">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">@lang('structure/data.name')</th>
+                        <th scope="col">@lang('structure/data.value')</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @foreach ($structure->data->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)
+                        @if ($value !== null)
+                        <tr>
+                            <td>@lang('structure/data.' . $structure->data_type . '.' . $key)</td>
+                            <td>{{ $value }}</td>
+                        </tr>
+                        @endif
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
 
-            <div class="col-md-3 px-3 py-3 pt-md-0">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title m-0">@lang('connections')</h3>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @foreach ($structure->following as $followed)
-                        <li class="list-group-item text-center">
-                            <span class="h4"><a href="{{ route('structure.profile.show', ['id' => $followed->id]) }}">{{ $followed->name }}</a></span>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="col-lg-3  border-left border-secondary">
+                <h3 class="text-center">@lang('ui.structure.contact')</h3>
+                <ul>
+                    <li><b>Email : </b> {{ $structure->contact->email }}</li>
+                    <li><b>Tel : </b> {{ $structure->contact->phone_number }}</li>
+                </ul>
             </div>
-
         </div>
     </div>
 </div>

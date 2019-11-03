@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Models\App\Structure;
+use Auth;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
@@ -18,10 +19,7 @@ class DashboardController extends Controller
      *
      * @return Factory|View
      */
-    public function index () {
-        /** @var Structure $structure */
-        $structure = auth()->user()->userStructure->structure;
-
+    public function index (Structure $structure) {
         $members = count($structure->members);
         $news = count($structure->news);
         $followers = count($structure->followers);
@@ -35,9 +33,7 @@ class DashboardController extends Controller
      *
      * @return Factory|View
      */
-    public function listMembers () {
-        /** @var Structure $structure */
-        $structure = auth()->user()->userStructure->structure;
+    public function listMembers (Structure $structure) {
         $members = $structure->members()->paginate(25);
 
         return view('structure.dashboard.members.list', compact('members'));
@@ -49,7 +45,7 @@ class DashboardController extends Controller
      * @return Factory|View
      */
     public function demands () {
-        $demands = UserStructure::byStructure(auth()->user()->userStructure->structure)->pending()->get();
+        $demands = UserStructure::byStructure(Auth::user()->userStructure->structure)->pending()->get();
         return view('structure.dashboard.members.demands', compact('demands'));
     }
 
@@ -91,14 +87,14 @@ class DashboardController extends Controller
     }
 
     /**
-     * Display a form to update structure's characteristics
+     * Display a form to update structure's profile
      *
      * @return Factory|View
      */
-    public function characteristics () {
+    public function profile () {
         $structure = auth()->user()->userStructure->structure;
         $type = $structure->data_type;
 
-        return view('structure.dashboard.characteristics', compact('type', 'structure'));
+        return view('structure.dashboard.profile', compact('type', 'structure'));
     }
 }

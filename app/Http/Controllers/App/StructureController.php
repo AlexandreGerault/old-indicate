@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Http\Requests\UpdateContactMeansRequest;
+use App\Http\Requests\UpdateStructureRequest;
+use App\Models\App\Address;
+use App\Models\App\ContactMeans;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -12,39 +16,6 @@ use Illuminate\View\View;
 
 class StructureController extends Controller
 {
-    /**
-     * Show a form to create a structure.
-     *
-     * @return View
-     */
-    public function create() {
-        return view('structure.create');
-    }
-
-    /**
-     * Store a new structure
-     *
-     * @param StoreStructureRequest $request
-     * @return RedirectResponse
-     */
-    public function store(StoreStructureRequest $request) {
-        $structure = new Structure();
-        $structure->name = $request->input('name');
-        $structure->comment = $request->input('comment');
-        $structure->phone_number = $request->input('phone_number');
-        $structure->address = $request->input('adress');
-        $structure->siren = $request->input('siren');
-        $structure->siret = $request->input('siret');
-        $structure->save();
-
-        if ($request->hasFile('avatar')) {
-            $structure->updateAvatar($request->file('avatar'));
-        }
-
-
-        return redirect()->route('app.home');
-    }
-
     /**
      * Display all the structure
      *
@@ -66,6 +37,63 @@ class StructureController extends Controller
         return view('structure.show')->with('structure', $structure)->with('news', $structure->news);
     }
 
+    /**
+     * Show a form to create a structure.
+     *
+     * @return View
+     */
+    public function create() {
+        return view('structure.create');
+    }
+
+    /**
+     * Store a new structure
+     *
+     * @param StoreStructureRequest $request
+     * @return RedirectResponse
+     */
+    public function store(StoreStructureRequest $request) {
+        //Store the structure's address
+        $address = new Address($request->only('postcode', 'house_number', 'county', 'country', 'road', 'city'));
+        $address->save();
+
+        //Store the structure's contact means
+        $contact = new ContactMeans($request->only('email', 'phone_number'));
+        $contact->mailingAddress()->associate($address);
+        $contact->save();
+
+        //Store the structure
+        $structure = new Structure($request->only('name', 'comment', 'siren', 'siret'));
+        $structure->data_type = $request->input('data_type');
+        $structure->address()->associate($address);
+        $structure->contact()->associate($contact);
+        $structure->save();
+
+        if ($request->hasFile('avatar')) {
+            $structure->updateAvatar($request->file('avatar'));
+        }
+
+        return redirect()->route('app.home');
+    }
+
+    /**
+     * Update the structure's profile
+     *
+     * @param UpdateStructureRequest $request
+     * @param Structure $structure
+     * @return RedirectResponse
+     */
+    public function update(UpdateStructureRequest $request, Structure $structure) {
+        $structure->update($request->validated());
+
+        return redirect()->back()->with('success', __('success.structure.update'));
+    }
+
+    public function updateContactMeans(UpdateContactMeansRequest $request, Structure $structure) {
+        $structure->contact()->update($request->validated());
+
+        return redirect()->back()->with('success', __('success.structure.contact.update'));
+    }
     /**
      * Return a Json response of news
      *
@@ -102,5 +130,12 @@ class StructureController extends Controller
         }
 
         return response()->json($news, 200);
+    }
+
+    /**
+     * Display a rating form
+     */
+    public function rate() {
+        return view('structure.rate');
     }
 }

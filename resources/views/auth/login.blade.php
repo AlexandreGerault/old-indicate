@@ -1,6 +1,6 @@
 @extends('layouts.min')
 
-@section('title', 'Connexion')
+@section('title', __('ui.login'))
 
 @section('content')
     @if ($errors->has('email'))
@@ -20,7 +20,7 @@
         <div class="container">
             <div class="row">
                 <div class="mx-auto col-md-6 col-10 bg-white p-5">
-                    <h1 class="mb-4">{{ __('Login') }}</h1>
+                    <h1 class="mb-4">@lang('ui.auth.login')</h1>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                        <button type="submit" class="btn btn-primary">@lang('ui.auth.login')</button>
                     </form>
                 </div>
             </div>

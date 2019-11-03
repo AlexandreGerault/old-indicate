@@ -24,25 +24,19 @@ class UpdateCompanyDataRequest extends FormRequest
     public function rules()
     {
         return [
-            'address' => 'nullable',
-            'name' => 'required|string',
-            'comment' => 'required|string',
-            'phone_number' => 'required',
-            'siren' => 'required',
-            'siret' => 'required',
-            'created_at' => 'required',
-            'clients_number' => 'required|numeric',
-            'share_capital' => 'required|numeric',
+            //Company characteristics
             'partnership' => 'nullable',
             'accept_offers' => 'nullable',
             'bank_funding' => 'nullable',
-            'turnover_projection' => 'required|numeric',
-            'ebitda' => 'required|numeric',
-            'average_monthly_turnover' => 'required|numeric',
-            'gross_margin' => 'required|numeric',
-            'logistic_cost' => 'required|numeric',
-            'marketing_cost' => 'required|numeric',
-            'investment_sought' => 'required|numeric'
+
+            'turnover_projection' => 'nullable|numeric',
+            'ebitda' => 'nullable|numeric',
+            'clients_number' => 'nullable|numeric',
+            'average_monthly_turnover' => 'nullable|numeric',
+            'gross_margin' => 'nullable|numeric',
+            'logistic_cost' => 'nullable|numeric',
+            'marketing_cost' => 'nullable|numeric',
+            'investment_sought' => 'nullable|numeric',
         ];
     }
 }

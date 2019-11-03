@@ -5,8 +5,10 @@ namespace App\Models\App;
 use App\Traits\ModelAvatar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -57,6 +59,7 @@ class Structure extends Model
 {
     use ModelAvatar;
 
+    protected $fillable = ['name', 'comment', 'siren', 'siret'];
     protected $guarded = [];
 
 
@@ -147,11 +150,17 @@ class Structure extends Model
         return $this->following->contains($structure);
     }
 
+    /**
+     * @return HasMany
+     */
     public function ratings()
     {
         return $this->hasMany(Rating::class);
     }
 
+    /**
+     * @return float|int
+     */
     public function averageRating()
     {
         $average = 0;
@@ -164,5 +173,19 @@ class Structure extends Model
             return $average/$ratings->count();
         else
             return 0;
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function address() {
+        return $this->belongsTo(Address::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function contact() {
+        return $this->belongsTo(ContactMeans::class);
     }
 }

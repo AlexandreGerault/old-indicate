@@ -9,7 +9,7 @@
             <!-- Page header -->
             <div class="row">
                 <div class="col-12">
-                    <h1 class="mb-3 border-bottom border-light">@lang('Matching structures')</h1>
+                    <h1 class="mb-3 border-bottom border-light">@lang('ui.structure.results')</h1>
                 </div>
             </div>
 

@@ -12,20 +12,17 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto" id="collapsibleNavbar">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('app.home') }}">@lang('Indicate')</a>
+                    <a class="nav-link" href="{{ route('research.form') }}">@lang('ui.structure.hub')</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('research.form') }}">@lang('Research')</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('structure.create') }}">@lang('Create a new structure')</a>
+                    <a class="nav-link" href="{{ route('structure.create') }}">@lang('ui.structure.create')</a>
                 </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
                 @guest
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}"><i class="fas fa-user-plus"></i> @lang('Sign up')</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> @lang('Login')</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}"><i class="fas fa-user-plus"></i> @lang('ui.auth.sign_up')</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> @lang('ui.auth.login')</a></li>
                 @endguest
                 <!-- Dropdown -->
                 @auth
@@ -34,15 +31,15 @@
                         {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">Profile</a>
+                        <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">@lang('ui.profile.profile')</a>
                         @if(Auth::user()->hasStructure())
-                        <a class="dropdown-item" href="{{ route('structure.show', ['structure' => auth()->user()->userStructure->structure->id]) }}">Structure</a>
+                        <a class="dropdown-item" href="{{ route('structure.show', ['structure' => Auth::user()->userStructure->structure]) }}">@lang('ui.structure.structure')</a>
                         @endif
-                        @can('access-dashboard', App\Models\App\Structure::class)
-                        <a class="dropdown-item" href="{{ route('structure.dashboard.index', ['structure' => auth()->user()->userStructure->structure->id ]) }}">Dashboard</a>
+                        @can('access-dashboard', Auth::user()->userStructure->structure)
+                        <a class="dropdown-item" href="{{ route('structure.dashboard.index', ['structure' => auth()->user()->userStructure->structure]) }}">@lang('ui.dashboard')</a>
                         @endcan
                         <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            @lang('Logout')
+                            @lang('ui.auth.logout')
                         </a>
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
