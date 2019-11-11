@@ -53,6 +53,9 @@
         <div class="container">
             <div class="row">
                 <div class="col">
+                    <form>
+
+                    </form>
                     @foreach($ratings as $rating)
                         <div class="card">
                             <header class="card-header">
