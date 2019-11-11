@@ -23,7 +23,7 @@ return [
         'news' => 'news',
         'overview' => 'aperçu',
         'permissions' => 'permissions',
-        'profile' => 'profil',
+        'profile' => 'profil de la structure',
     ],
     'profile' => [
         'edit' => 'modifier mon profil',
