@@ -17,12 +17,12 @@
             <a class="dropdown-item" href="{{ route('structure.dashboard.members.authorizations.list', auth()->user()->userStructure->structure) }}">@lang('ui.dashboard_words.permissions')</a>
         </div>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('structure.dashboard.news', auth()->user()->userStructure->structure) }}">
             <i class="fas fa-newspaper"></i>
             <span>@lang('ui.dashboard_words.news')</span>
         </a>
-    </li>
+    </li> -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('structure.dashboard.profile', auth()->user()->userStructure->structure) }}">
             <i class="fas fa-address-card"></i>
