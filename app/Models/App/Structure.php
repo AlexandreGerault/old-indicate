@@ -23,6 +23,7 @@ use Eloquent;
  * @property-read Collection|User[] $members
  * @property-read Collection|News[] $news
  * @property-read Collection|UserStructure[] $structureUsers
+ * @property-read Collection|Rating[] $ratings
  * @method static Builder|Structure newModelQuery()
  * @method static Builder|Structure newQuery()
  * @method static Builder|Structure query()

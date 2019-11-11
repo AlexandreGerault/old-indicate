@@ -10,6 +10,6 @@ class InvestorRating extends Model
      * @return mixed
      */
     public function structure () {
-        return $this->morphOne(Structure::class, 'rating');
+        return $this->morphOne(Rating::class, 'rateable');
     }
 }

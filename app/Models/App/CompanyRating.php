@@ -10,6 +10,6 @@ class CompanyRating extends Model
      * @return mixed
      */
     public function structure () {
-        return $this->morphOne(Structure::class, 'data');
+        return $this->morphOne(Rating::class, 'rateable');
     }
 }

@@ -9,7 +9,7 @@ class ConsultingRating extends Model
     /**
      * @return mixed
      */
-    public function structure () {
-        return $this->morphOne(Structure::class, 'data');
+    public function rating () {
+        return $this->morphOne(Rating::class, 'rateable');
     }
 }
