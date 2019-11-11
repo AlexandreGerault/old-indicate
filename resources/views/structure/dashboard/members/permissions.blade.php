@@ -9,11 +9,11 @@
         <tr>
             <th>Member</th>
         @foreach ($columns as $column)
-            <th class="text-center">{{ formatColumnName($column) }}</th>
+            <th class="text-center">@lang('structure/permissions.' . $column)</th>
         @endforeach
         </tr>
     </thead>
-    
+
     <tbody>
         @foreach($members as $user)
         <tr>
