@@ -92,8 +92,6 @@ class NewsController extends Controller
         $amount = config('pagination.news-paginate');
         $news = News::with('author', 'structure')->paginate($amount);
 
-        dd($news);
-
         foreach ($news as $post) {
             $post->canEdit = Auth::user()->can('update', $post);
             $post->canDelete = Auth::user()->can('delete', $post);
