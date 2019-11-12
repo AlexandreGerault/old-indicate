@@ -53,6 +53,7 @@ class StructureController extends Controller
      * @return RedirectResponse
      */
     public function store(StoreStructureRequest $request) {
+        //dd($request);
         //Store the structure's address
         $address = new Address($request->only('postcode', 'house_number', 'county', 'country', 'road', 'city'));
         $address->save();
@@ -130,12 +131,5 @@ class StructureController extends Controller
         }
 
         return response()->json($news, 200);
-    }
-
-    /**
-     * Display a rating form
-     */
-    public function rate() {
-        return view('structure.rate');
     }
 }

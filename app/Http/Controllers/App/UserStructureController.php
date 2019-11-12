@@ -94,6 +94,6 @@ class UserStructureController extends Controller
         $claim->structure()->associate($structure);
         $claim->save();
 
-        return redirect()->back()->with('success', __('Votre demande a bien été prise en compte.'));
+        return redirect()->back()->with('success', __('Votre demande de revendication a bien été prise en compte.'));
     }
 }
