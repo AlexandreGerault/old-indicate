@@ -18,6 +18,7 @@ return [
     'dashboard' => 'tableau de bord',
     'dashboard_words' => [
         'demands' => 'demandes d\'affiliation',
+        'back_to_app' => 'retourner sur Indicate',
         'list' => 'liste',
         'members' => 'membres',
         'news' => 'news',

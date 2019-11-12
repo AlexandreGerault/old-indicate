@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::directive('uclang', function ($s) {
+            return "<?php echo ucfirst(trans($s)); ?>";
+        });
+
         /* Blade instructions */
         Blade::if('blogger', function () {
             return auth()->check() && User::find(auth()->id())->blogger();

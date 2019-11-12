@@ -61,24 +61,16 @@ Route::prefix('backoffice')->middleware('admin')->group(function () {
 
 Route::resource('structure', 'App\StructureController')->middleware('auth');
 
-Route::prefix('structure')->middleware('auth')->group(function () {
-
-    Route::prefix('{structure}')->group(function () {
+Route::prefix('structure/{structure}')->middleware('auth')->group(function () {
         Route::resource('rating', 'App\RatingsController');
         Route::get('news', 'App\StructureController@news')->name('structure.news');
         Route::get('timeline', 'App\StructureController@timeline')->name('structure.timeline');
         Route::get('claim', 'App\UserStructureController@claim')->name('structure.claim');
-    });
-
-    /**
-     * Routes below are used to join or create a structure
-     */
-    Route::middleware(['nostruct', 'verified'])->group(function () {
-        Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
-    });
-
-    Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
-    Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
+        Route::get('/join', 'App\UserStructureController@join')
+            ->middleware(['nostruct', 'verified'])
+            ->name('structure.join');
+        Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
+        Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
 });
 
 Route::prefix('dashboard/{structure}')
