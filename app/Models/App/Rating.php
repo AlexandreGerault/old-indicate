@@ -5,6 +5,7 @@ namespace App\Models\App;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Rating extends Model
 {
@@ -13,7 +14,7 @@ class Rating extends Model
      *
      * @return BelongsTo
      */
-    public function user() {
+    public function author() {
         return $this->belongsTo(User::class);
     }
 
@@ -25,4 +26,15 @@ class Rating extends Model
     public function structure() {
         return $this->belongsTo(Structure::class);
     }
+
+    /**
+     * Returns an array of rating critera depending on the structure type
+     *
+     * @return MorphTo
+     */
+    public function rating()
+    {
+        return $this->morphTo();
+    }
+
 }
