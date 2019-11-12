@@ -27,8 +27,10 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('blogger', function () {
             return auth()->check() && User::find(auth()->id())->blogger();
         });
+
         Blade::component('components.ui.buttons.follow', 'follow');
         Blade::component('components.ui.buttons.unfollow', 'unfollow');
+        Blade::component('components.rating_card', 'ratingcard');
 
         /* Polymorphic relation setup  */
         Relation::morphMap([
