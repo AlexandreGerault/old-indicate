@@ -15,8 +15,16 @@ class CreateCompanyRatingsTable extends Migration
     {
         Schema::create('company_ratings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('');
-            
+
+            $table->integer('skills');
+            $table->integer('expertise');
+            $table->integer('market');
+            $table->integer('advantage_designed');
+            $table->integer('team');
+            $table->integer('shareholding_created');
+            $table->integer('input_barrier');
+            $table->integer('value_creation');
+
             $table->timestamps();
         });
     }
