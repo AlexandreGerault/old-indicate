@@ -16,16 +16,16 @@ use Illuminate\View\View;
 
 class StructureController extends Controller
 {
+
     /**
-     * Display all the structure
+     * Return a json list of structures
      *
-     * @return Factory|View
+     * @return JsonResponse
      */
     public function index()
     {
-        $structures = Structure::all();
-
-        return view('structure.list')->with('structures', $structures);
+        $structures = Structure::paginate(15);
+        return response()->json($structures, 200);
     }
 
     /**
