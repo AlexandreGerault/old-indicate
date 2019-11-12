@@ -112,7 +112,7 @@ class StructurePolicy
 
     public function claim(User $user, Structure $structure)
     {
-        $exists = ClaimDemand::query()->where('user_id', '=', $user->id)->where('structure_id', '=', $structure->id)->get() !== null;
+        $exists = count(ClaimDemand::query()->where('user_id', '=', $user->id)->where('structure_id', '=', $structure->id)->get()) > 0;
         return ! $user->isStructureOwner($structure) && !$exists;
     }
 
