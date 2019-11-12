@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\App\Rating;
+use App\Policies\RatingPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\App\News;
@@ -20,9 +22,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-        News::class => NewsPolicy::class, 
+        News::class => NewsPolicy::class,
         Structure::class => StructurePolicy::class,
         User::class => UserPolicy::class,
+        Rating::class => RatingPolicy::class,
     ];
 
     /**
