@@ -17,6 +17,7 @@ class DashboardController extends Controller
     /**
      * Dashboard overview
      *
+     * @param Structure $structure
      * @return Factory|View
      */
     public function index (Structure $structure) {
@@ -31,6 +32,7 @@ class DashboardController extends Controller
     /**
      * Display a table of structure members
      *
+     * @param Structure $structure
      * @return Factory|View
      */
     public function listMembers (Structure $structure) {
