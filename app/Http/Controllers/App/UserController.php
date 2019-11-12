@@ -17,6 +17,17 @@ class UserController extends Controller
 {
 
     /**
+     * Return a list of users
+     *
+     * @return JsonResponse
+     */
+    public function index()
+    {
+        $users = User::paginate(15);
+        return response()->json($users, 200);
+    }
+
+    /**
      * @param User $user
      * @return Factory|View
      */
