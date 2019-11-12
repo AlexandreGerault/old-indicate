@@ -30,7 +30,7 @@ class RatingPolicy
      */
     public function create(User $user, Structure $structure)
     {
-        return $user->userStructure->structure != $structure && ! Rating::query()
+        return $user->userStructure->structure->id !== $structure->id && ! Rating::query()
                 ->where('author_id', '=', $user->id)
                 ->where('structure_id', '=', $structure->id)
                 ->exists();
