@@ -38,6 +38,19 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
 
 
 /*
+ * Admin routes
+ */
+Route::prefix('backoffice')->middleware('admin')->group(function () {
+    Route::prefix('claim')->group(function () {
+        Route::get('/', 'Backoffice\ClaimDemandsController@index')->name('claimdemand.index');
+        Route::get('/validates', 'Backoffice\ClaimDemandsController@validates')->name('claimdemand.validates');
+        Route::get('/rejects', 'Backoffice\ClaimDemandsController@rejects')->name('claimdemand.rejects');;
+    });
+
+
+});
+
+/*
  |--------------------------------------------------------------------------
  | Application routes
  |--------------------------------------------------------------------------
@@ -49,8 +62,12 @@ Route::resource('structure', 'App\StructureController')->middleware('auth');
 
 Route::prefix('structure')->middleware('auth')->group(function () {
 
-    Route::get('/{structure}/news', 'App\StructureController@news')->name('structure.news');
-    Route::get('/{structure}/timeline', 'App\StructureController@timeline')->name('structure.timeline');
+    Route::prefix('{structure}')->group(function () {
+        Route::resource('rating', 'App\RatingsController');
+        Route::get('news', 'App\StructureController@news')->name('structure.news');
+        Route::get('timeline', 'App\StructureController@timeline')->name('structure.timeline');
+        Route::get('claim', 'App\UserStructureController@claim')->name('structure.claim');
+    });
 
     /**
      * Routes below are used to join or create a structure
@@ -58,9 +75,6 @@ Route::prefix('structure')->middleware('auth')->group(function () {
     Route::middleware(['nostruct', 'verified'])->group(function() {
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
     });
-
-    Route::get('/{structure}/claim', 'App\UserStructureController@claim')->name('structure.claim');
-    Route::get('/{structure}/rate', 'App\StructureController@rate')->name('structure.rate');
 
     Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
     Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
