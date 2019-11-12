@@ -14,10 +14,16 @@ class UserMustBelongToStructure
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next) {
+    public function handle($request, Closure $next)
+    {
         if (Auth::check() && ! Auth::user()->hasStructure()) {
-            return redirect()->route('user.show', ['user' => Auth::user() ])
-                             ->with('error', __('Vous n\'appartenez à aucune structure. Veuillez d\'abord en rejoindre une ou bien en créer une.'));
+            return redirect()
+                ->route('user.show', ['user' => Auth::user() ])
+                ->with(
+                    'error',
+                    __('Vous n\'appartenez à aucune structure.
+                    Veuillez d\'abord en rejoindre une ou bien en créer une.')
+                );
         }
 
         return $next($request);

@@ -22,7 +22,8 @@ class SearchController extends Controller
      * @param Request $request
      * @return Factory|RedirectResponse|View
      */
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $search = $request->input('search');
 
         $validator = Validator::make($request->all(), [
@@ -46,7 +47,8 @@ class SearchController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function ajaxSearch(Request $request) {
+    public function ajaxSearch(Request $request)
+    {
         $search = $request->input('search');
 
         $validator = Validator::make($request->all(), [

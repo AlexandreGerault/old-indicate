@@ -20,11 +20,17 @@ class IndicateResearchController extends Controller
      *
      * @return Factory|View
      */
-    public function form () {
+    public function form()
+    {
         return view('search.forms.indicate-research');
     }
 
-    public function results (Request $request) {
+    /**
+     * @param Request $request
+     * @return Factory|View
+     */
+    public function results(Request $request)
+    {
         $data = null;
         $keywords = $request->input('keywords');
 
@@ -78,24 +84,55 @@ class IndicateResearchController extends Controller
                         return $query->where('average_monthly_turnover', '>=', $average_turnover_min);
                     })
                     ->when($average_turnover_max, function ($query, $average_turnover_max) {
-                        return $query->where('average_monthly_turnover', '<=', $average_turnover_max);
+                        return $query->where(
+                            'average_monthly_turnover',
+                            '<=',
+                            $average_turnover_max
+                        );
                     })
                     ->when($bfr, function ($query, $bfr) {
-                        return $query->where('bfr', '=', $bfr == 'on' ? true : false);
+                        return $query->where(
+                            'bfr',
+                            '=',
+                            $bfr == 'on' ? true : false
+                        );
                     })
-                    ->when($looking_investors, function ($query, $looking_investors) use ($looked_investment_min, $looked_investment_max) {
-                        return $query->where('looking_for_funding', '=', $looking_investors == 'on' ? true : false)
-                            ->where('investment_sought', '>=', $looked_investment_min)
-                            ->where('investment_sought', '<=', $looked_investment_max);
-                    })
+                    ->when(
+                        $looking_investors,
+                        function ($query, $looking_investors) use ($looked_investment_min, $looked_investment_max) {
+                            return $query->where('looking_for_funding', '=', $looking_investors == 'on' ? true : false)
+                                ->where(
+                                    'investment_sought',
+                                    '>=',
+                                    $looked_investment_min
+                                )
+                                ->where(
+                                    'investment_sought',
+                                    '<=',
+                                    $looked_investment_max
+                                );
+                        }
+                    )
                     ->when($looking_partnership, function ($query, $looking_partnership) {
-                        return $query->where('looking_for_accompaniment', '=', $looking_partnership == 'on' ? true : false);
+                        return $query->where(
+                            'looking_for_accompaniment',
+                            '=',
+                            $looking_partnership == 'on' ? true : false
+                        );
                     })
                     ->when($looking_shareholding, function ($query, $looking_shareholding) {
-                        return $query->where('looking_for_accompaniment', '=', $looking_shareholding == 'on' ? true : false);
+                        return $query->where(
+                            'looking_for_accompaniment',
+                            '=',
+                            $looking_shareholding == 'on' ? true : false
+                        );
                     })
                     ->when($looking_bank_funding, function ($query, $looking_bank_funding) {
-                        return $query->where('looking_for_funding', '=', $looking_bank_funding == 'on' ? true : false);
+                        return $query->where(
+                            'looking_for_funding',
+                            '=',
+                            $looking_bank_funding == 'on' ? true : false
+                        );
                     })
                     ->with('structure')
                     ->get();

@@ -86,7 +86,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function scopeSearchByName($query, $name)
     {
-        return $query->where('firstname', 'LIKE', '%' . $name . '%')->orWhere('lastname', 'LIKE', '%' . $name . '%');
+        return $query
+            ->where('firstname', 'LIKE', '%' . $name . '%')
+            ->orWhere('lastname', 'LIKE', '%' . $name . '%');
     }
 
     /**
@@ -170,6 +172,9 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function blacklisted(Structure $structure)
     {
-        return DB::table('demands_blacklist')->where('user_id', '=', $this->id)->where('structure_id', '=', $structure->id)->exists();
+        return DB::table('demands_blacklist')
+            ->where('user_id', '=', $this->id)
+            ->where('structure_id', '=', $structure->id)
+            ->exists();
     }
 }

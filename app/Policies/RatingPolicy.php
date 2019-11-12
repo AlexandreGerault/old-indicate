@@ -28,7 +28,8 @@ class RatingPolicy
      * @param Structure $structure
      * @return bool
      */
-    public function create (User $user, Structure $structure) {
+    public function create(User $user, Structure $structure)
+    {
         return $user->userStructure->structure != $structure && ! Rating::query()
                 ->where('author_id', '=', $user->id)
                 ->where('structure_id', '=', $structure->id)
@@ -42,7 +43,8 @@ class RatingPolicy
      * @param Rating $rating
      * @return bool
      */
-    public function edit (User $user, Rating $rating) {
+    public function edit(User $user, Rating $rating)
+    {
         return $rating->author->id === $user->id;
     }
 
@@ -53,7 +55,8 @@ class RatingPolicy
      * @param Rating $rating
      * @return bool
      */
-    public function update (User $user, Rating $rating) {
+    public function update(User $user, Rating $rating)
+    {
         return $rating->author->id === $user->id;
     }
 
@@ -64,7 +67,8 @@ class RatingPolicy
      * @param Rating $rating
      * @return bool
      */
-    public function delete (User $user, Rating $rating) {
+    public function delete(User $user, Rating $rating)
+    {
         return $rating->author->id === $user->id;
     }
 }

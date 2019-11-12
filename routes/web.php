@@ -25,7 +25,7 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
     Route::get('/', 'Blog\BlogController@index')->name('blog.index');
     Route::get('/read/{id}/{slug}', 'Blog\BlogController@show')->name('blog.read');
     Route::get('/search', 'Blog\BlogController@search')->name('blog.search');
-    Route::middleware(['auth', 'blogger'])->group(function() {
+    Route::middleware(['auth', 'blogger'])->group(function () {
         Route::get('/write', 'Blog\BlogController@create')->name('blog.create');
         Route::post('/store', 'Blog\BlogController@store')->name('blog.store');
         Route::get('/dashboard', 'Blog\BlogController@dashboard')->name('blog.dashboard');
@@ -33,7 +33,6 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
         Route::get('/delete/{id}', 'Blog\BlogController@delete')->name('blog.delete');
         Route::post('/update/{id}', 'Blog\BlogController@update')->name('blog.update');
     });
-
 });
 
 
@@ -42,12 +41,14 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
  */
 Route::prefix('backoffice')->middleware('admin')->group(function () {
     Route::prefix('claim')->group(function () {
-        Route::get('/', 'Backoffice\ClaimDemandsController@index')->name('claimdemand.index');
-        Route::get('/validates', 'Backoffice\ClaimDemandsController@validates')->name('claimdemand.validates');
-        Route::get('/rejects', 'Backoffice\ClaimDemandsController@rejects')->name('claimdemand.rejects');;
+        Route::get('/', 'Backoffice\ClaimDemandsController@index')
+            ->name('claimdemand.index');
+        Route::get('/validates', 'Backoffice\ClaimDemandsController@validates')
+            ->name('claimdemand.validates');
+        Route::get('/rejects', 'Backoffice\ClaimDemandsController@rejects')
+            ->name('claimdemand.rejects');
+        ;
     });
-
-
 });
 
 /*
@@ -72,7 +73,7 @@ Route::prefix('structure')->middleware('auth')->group(function () {
     /**
      * Routes below are used to join or create a structure
      */
-    Route::middleware(['nostruct', 'verified'])->group(function() {
+    Route::middleware(['nostruct', 'verified'])->group(function () {
         Route::get('/join/{id}', 'App\UserStructureController@join')->name('structure.join');
     });
 
@@ -80,27 +81,41 @@ Route::prefix('structure')->middleware('auth')->group(function () {
     Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
 });
 
-Route::prefix('dashboard/{structure}')->middleware(['auth', 'verified', 'can:access-dashboard,structure'])->group(function () {
-    Route::get('/', 'App\DashboardController@index')->name('structure.dashboard.index');
-    Route::prefix('/members')->group(function () {
-        Route::get('/list', 'App\DashboardController@listMembers')->name('structure.dashboard.members.list');
-        Route::get('/demands', 'App\DashboardController@demands')->name('structure.dashboard.members.demands');
-        Route::get('/demands/{id}/accepts', 'App\UserStructureController@accepts')->name('demands.accepts');
-        Route::get('/demands/{id}/refuses', 'App\UserStructureController@refuses')->name('demands.refuses');
-        Route::get('/permissions', 'App\DashboardController@permissionsMembers')->name('structure.dashboard.members.authorizations.list');
-        Route::get('/edit/{id}', 'App\DashboardController@editMember')->name('structure.dashboard.members.edit');
-        Route::post('/update/{id}', 'App\UserStructureController@update')->name('structure.dashboard.members.update');
-        Route::post('/update/authorizations/{id}', 'App\UserAuthorizationsController@update')->name('structure.dashboard.members.authorizations.update');
+Route::prefix('dashboard/{structure}')
+    ->middleware(['auth', 'verified', 'can:access-dashboard,structure'])
+    ->group(function () {
+        Route::get('/', 'App\DashboardController@index')->name('structure.dashboard.index');
+        Route::prefix('/members')->group(function () {
+            Route::get('/list', 'App\DashboardController@listMembers')
+            ->name('structure.dashboard.members.list');
+            Route::get('/demands', 'App\DashboardController@demands')
+            ->name('structure.dashboard.members.demands');
+            Route::get('/demands/{id}/accepts', 'App\UserStructureController@accepts')
+            ->name('demands.accepts');
+            Route::get('/demands/{id}/refuses', 'App\UserStructureController@refuses')
+            ->name('demands.refuses');
+            Route::get('/permissions', 'App\DashboardController@permissionsMembers')
+            ->name('structure.dashboard.members.authorizations.list');
+            Route::get('/edit/{id}', 'App\DashboardController@editMember')
+            ->name('structure.dashboard.members.edit');
+            Route::post('/update/{id}', 'App\UserStructureController@update')
+            ->name('structure.dashboard.members.update');
+            Route::post('/update/authorizations/{id}', 'App\UserAuthorizationsController@update')
+            ->name('structure.dashboard.members.authorizations.update');
+        });
+        Route::get('/news', 'App\DashboardController@news')->name('structure.dashboard.news');
+        Route::prefix('profile')->group(function () {
+            Route::get('/', 'App\DashboardController@profile')->name('structure.dashboard.profile');
+            Route::post('/update/contact', 'App\StructureController@updateContactMeans')
+            ->name('structure.dashboard.profile.update.contact');
+            Route::post('/update/company', 'App\StructureDataController@updateCompanyData')
+            ->name('structure.dashboard.profile.update.company');
+            Route::post('/update/investor', 'App\StructureDataController@updateInvestorData')
+            ->name('structure.dashboard.profile.update.investor');
+            Route::post('/update/consulting', 'App\StructureDataController@updateConsultingData')
+            ->name('structure.dashboard.profile.update.consulting');
+        });
     });
-    Route::get('/news', 'App\DashboardController@news')->name('structure.dashboard.news');
-    Route::prefix('profile')->group(function () {
-        Route::get('/', 'App\DashboardController@profile')->name('structure.dashboard.profile');
-        Route::post('/update/contact', 'App\StructureController@updateContactMeans')->name('structure.dashboard.profile.update.contact');
-        Route::post('/update/company', 'App\StructureDataController@updateCompanyData')->name('structure.dashboard.profile.update.company');
-        Route::post('/update/investor', 'App\StructureDataController@updateInvestorData')->name('structure.dashboard.profile.update.investor');
-        Route::post('/update/consulting', 'App\StructureDataController@updateConsultingData')->name('structure.dashboard.profile.update.consulting');
-    });
-});
 
 Route::resource('user', 'App\UserController');
 Route::get('/user/{user}/news', 'App\UserController@news')->name('user.news');
@@ -110,14 +125,15 @@ Route::resource('news', 'App\NewsController')->middleware(['auth', 'verified']);
 Route::prefix('search')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/ajax', 'App\SearchController@ajaxSearch')->name('search.ajax');
     Route::get('/', 'App\SearchController@search')->name('search');
-
 });
 
 /*********************
  * INDICATE RESEARCH *
  *********************/
-Route::get('/indicate-search', 'App\IndicateResearchController@form')->name('research.form');
-Route::get('/indicate-search-results', 'App\IndicateResearchController@results')->name('research.results');
+Route::get('/indicate-search', 'App\IndicateResearchController@form')
+    ->name('research.form');
+Route::get('/indicate-search-results', 'App\IndicateResearchController@results')
+    ->name('research.results');
 
 /************************
  * SEARCH PROFESSIONALS *

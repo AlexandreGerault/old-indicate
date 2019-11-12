@@ -13,7 +13,8 @@ class ClaimDemand extends Model
      *
      * @return BelongsTo
      */
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -22,7 +23,8 @@ class ClaimDemand extends Model
      *
      * @return BelongsTo
      */
-    public function structure() {
+    public function structure()
+    {
         return $this->belongsTo(Structure::class);
     }
 }

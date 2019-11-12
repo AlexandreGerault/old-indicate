@@ -25,7 +25,8 @@ class VerificationController extends Controller
      *
      * @return string
      */
-    protected function redirectTo () {
+    protected function redirectTo()
+    {
         return route('app.home');
     }
 

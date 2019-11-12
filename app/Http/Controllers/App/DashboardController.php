@@ -20,7 +20,8 @@ class DashboardController extends Controller
      * @param Structure $structure
      * @return Factory|View
      */
-    public function index (Structure $structure) {
+    public function index(Structure $structure)
+    {
         $members = count($structure->members);
         $news = count($structure->news);
         $followers = count($structure->followers);
@@ -35,7 +36,8 @@ class DashboardController extends Controller
      * @param Structure $structure
      * @return Factory|View
      */
-    public function listMembers (Structure $structure) {
+    public function listMembers(Structure $structure)
+    {
         $members = $structure->members()->paginate(25);
 
         return view('structure.dashboard.members.list', compact('members'));
@@ -46,7 +48,8 @@ class DashboardController extends Controller
      *
      * @return Factory|View
      */
-    public function demands () {
+    public function demands()
+    {
         $demands = UserStructure::byStructure(Auth::user()->userStructure->structure)->pending()->get();
         return view('structure.dashboard.members.demands', compact('demands'));
     }
@@ -56,9 +59,13 @@ class DashboardController extends Controller
      *
      * @return Factory|View
      */
-    public function permissionsMembers () {
+    public function permissionsMembers()
+    {
         $structure = auth()->user()->userStructure->structure;
-        $columns = array_diff(Schema::getColumnListing('users_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
+        $columns = array_diff(
+            Schema::getColumnListing('users_authorizations'),
+            ['id', 'user_id', 'created_at', 'updated_at']
+        );
         $members = $structure->members;
 
         return view('structure.dashboard.members.permissions', compact('columns', 'members'));
@@ -71,7 +78,8 @@ class DashboardController extends Controller
      * @return Factory|View
      * @throws AuthorizationException
      */
-    public function editMember ($id) {
+    public function editMember($id)
+    {
         $this->authorize('manage-users', Structure::class);
 
         $user = User::findOrFail($id);
@@ -84,7 +92,8 @@ class DashboardController extends Controller
      *
      * @return Factory|View
      */
-    public function news () {
+    public function news()
+    {
         return view('structure.dashboard.news');
     }
 
@@ -93,7 +102,8 @@ class DashboardController extends Controller
      *
      * @return Factory|View
      */
-    public function profile () {
+    public function profile()
+    {
         $structure = auth()->user()->userStructure->structure;
         $type = $structure->data_type;
 

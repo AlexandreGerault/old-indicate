@@ -15,7 +15,8 @@ class FollowersController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function follows(Request $request) {
+    public function follows(Request $request)
+    {
         $following = Structure::findOrFail($request->input('id'));
         $follower = auth()->user()->structure;
 
@@ -34,7 +35,8 @@ class FollowersController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function unfollows(Request $request) {
+    public function unfollows(Request $request)
+    {
         $following = Structure::findOrFail($request->id);
         $follower = auth()->user()->structure;
 

@@ -25,7 +25,8 @@ class NewsController extends Controller
      * @return RedirectResponse
      * @throws AuthorizationException
      */
-    public function store(StoreNewsRequest $request) {
+    public function store(StoreNewsRequest $request)
+    {
         $request->validated();
 
         $this->authorize('create', [News::class, Structure::find($request->input('structure_id'))]);
@@ -47,7 +48,8 @@ class NewsController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function update(UpdateNewsRequest $request, $id) {
+    public function update(UpdateNewsRequest $request, $id)
+    {
         $request->validated();
 
         $news = News::findOrFail($id);
@@ -69,7 +71,8 @@ class NewsController extends Controller
      * @return JsonResponse
      * @throws AuthorizationException
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $news = News::findOrFail($id);
         $this->authorize('delete', $news);
         News::destroy($id);
@@ -84,13 +87,14 @@ class NewsController extends Controller
      *
      * @return JsonResponse
      */
-    public function index() {
+    public function index()
+    {
         $amount = config('pagination.news-paginate');
         $news = News::with('author', 'structure')->paginate($amount);
 
         dd($news);
 
-        foreach($news as $post) {
+        foreach ($news as $post) {
             $post->canEdit = Auth::user()->can('update', $post);
             $post->canDelete = Auth::user()->can('delete', $post);
         }

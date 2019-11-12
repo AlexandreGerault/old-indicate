@@ -50,7 +50,8 @@ class News extends Model
      *
      * @return BelongsTo
      */
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -59,7 +60,8 @@ class News extends Model
      *
      * @return BelongsTo
      */
-    public function structure() {
+    public function structure()
+    {
         return $this->belongsTo(Structure::class);
     }
 
@@ -68,7 +70,10 @@ class News extends Model
      * @param Structure $structure
      * @return mixed
      */
-    public function scopeByFollowersOf($query, $structure) {
-        return $query->whereIn('structure_id', $structure->following->pluck('id'))->orWhere('structure_id', '=', $structure->id);
+    public function scopeByFollowersOf($query, $structure)
+    {
+        return $query
+            ->whereIn('structure_id', $structure->following->pluck('id'))
+            ->orWhere('structure_id', '=', $structure->id);
     }
 }

@@ -34,7 +34,8 @@ class BlogPost extends Model
     /**
      * Gets the author of the post
      */
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo(User::class);
     }
 }

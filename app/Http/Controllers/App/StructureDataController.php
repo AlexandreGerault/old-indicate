@@ -20,16 +20,23 @@ class StructureDataController extends Controller
      * @param Structure $structure
      * @return RedirectResponse
      */
-    public function updateCompanyData (UpdateCompanyDataRequest $request, Structure $structure) {
+    public function updateCompanyData(UpdateCompanyDataRequest $request, Structure $structure)
+    {
         $requestData = $request->validated();
         /** @var CompanyData $data */
         $data = $structure->data;
 
         foreach ($data->makeHidden('id')->toArray() as $key => $value) {
-            if ($request->input($key) !== null) $data->$key = $requestData[$key];
+            if ($request->input($key) !== null) {
+                $data->$key = $requestData[$key];
+            }
         }
-        foreach ($structure->makeHidden(['id', 'validated', 'data_type', 'data_id', 'data'])->toArray() as $key => $value) {
-            if ($request->input($key) !== null) $structure->$key = $requestData[$key];
+        foreach ($structure
+                     ->makeHidden(['id', 'validated', 'data_type', 'data_id', 'data'])
+                     ->toArray() as $key => $value) {
+            if ($request->input($key) !== null) {
+                $structure->$key = $requestData[$key];
+            }
         }
 
         $structure->save();
@@ -38,11 +45,11 @@ class StructureDataController extends Controller
         return back()->with('success', 'success.data.updated');
     }
 
-    public function updateInvestorData (UpdateInvestorDataRequest $request) {
-
+    public function updateInvestorData(UpdateInvestorDataRequest $request)
+    {
     }
 
-    public function updateConsultingData (UpdateConsultingDataRequest $request) {
-
+    public function updateConsultingData(UpdateConsultingDataRequest $request)
+    {
     }
 }

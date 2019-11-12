@@ -13,21 +13,25 @@ use Validator;
 
 class RatingsController extends Controller
 {
-    public function index (Structure $structure) {
+    public function index(Structure $structure)
+    {
         $ratings = $structure->ratings;
 
         return view('structure.rating.index')->with('ratings', $ratings)->with('structure', $structure);
     }
 
-    public function show (Structure $structure, Rating $rating) {
+    public function show(Structure $structure, Rating $rating)
+    {
         return view('structure.rating.show')->with('rating', $rating)->with('structure', $structure);
     }
 
-    public function edit (Structure $structure, Rating $rating) {
+    public function edit(Structure $structure, Rating $rating)
+    {
         return view('structure.rating.edit')->with('rating', $rating)->with('structure', $structure);
     }
 
-    public function delete (Rating $rating) {
+    public function delete(Rating $rating)
+    {
         try {
             $rating->delete();
             return redirect()->back()->with('success', __('rating.deleted.success'));
@@ -36,13 +40,15 @@ class RatingsController extends Controller
         }
     }
 
-    public function create (Structure $structure) {
+    public function create(Structure $structure)
+    {
         $this->authorize('create', [Rating::class, $structure]);
 
         return view('structure.rating.create')->with('structure', $structure);
     }
 
-    public function store (Request $request, Structure $structure) {
+    public function store(Request $request, Structure $structure)
+    {
         $this->authorize('create', [Rating::class, $structure]);
 
         $validator = null;
@@ -95,7 +101,7 @@ class RatingsController extends Controller
         return route('rating.index')->back('structure', $structure);
     }
 
-    public function update () {
-
+    public function update()
+    {
     }
 }

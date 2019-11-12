@@ -26,10 +26,15 @@ class UpdateAuthorizationsRequest extends FormRequest
      */
     public function rules()
     {
-        $columns = \array_diff(Schema::getColumnListing('users_authorizations'), ['id', 'user_id', 'created_at', 'updated_at']);
+        $columns = \array_diff(
+            Schema::getColumnListing(
+                'users_authorizations'
+            ),
+            ['id', 'user_id', 'created_at', 'updated_at']
+        );
         $rules = [];
 
-        foreach($columns as $column) {
+        foreach ($columns as $column) {
             $rules[$column] = 'boolean';
         }
 

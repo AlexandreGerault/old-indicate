@@ -14,7 +14,8 @@ class Rating extends Model
      *
      * @return BelongsTo
      */
-    public function author() {
+    public function author()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -23,7 +24,8 @@ class Rating extends Model
      *
      * @return BelongsTo
      */
-    public function structure() {
+    public function structure()
+    {
         return $this->belongsTo(Structure::class);
     }
 
@@ -36,5 +38,4 @@ class Rating extends Model
     {
         return $this->morphTo();
     }
-
 }

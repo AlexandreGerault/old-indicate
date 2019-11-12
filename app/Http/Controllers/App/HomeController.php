@@ -12,20 +12,21 @@ class HomeController extends Controller
     /**
      * HomeController constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
      * @return Factory|View
      */
-    public function index() {
+    public function index()
+    {
         if (Auth::guest()) {
             return view('app.home');
-        } else if (!Auth::user()->hasStructure()) {
+        } elseif (!Auth::user()->hasStructure()) {
             return view('user.profile.show', ['user' => Auth::user()]);
-        } else if (Auth::user()->hasStructure()) {
+        } elseif (Auth::user()->hasStructure()) {
             return view('app.timeline');
         }
-
     }
 }

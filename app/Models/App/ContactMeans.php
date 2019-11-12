@@ -27,7 +27,8 @@ class ContactMeans extends Model
 {
     protected $fillable = ['phone_number', 'email'];
 
-    public function mailingAddress() {
+    public function mailingAddress()
+    {
         return $this->belongsTo(Address::class);
     }
 }

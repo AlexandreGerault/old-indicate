@@ -21,7 +21,8 @@ class StructureController extends Controller
      *
      * @return Factory|View
      */
-    public function index() {
+    public function index()
+    {
         $structures = Structure::all();
 
         return view('structure.list')->with('structures', $structures);
@@ -33,7 +34,8 @@ class StructureController extends Controller
      * @param Structure $structure
      * @return Factory|View
      */
-    public function show(Structure $structure) {
+    public function show(Structure $structure)
+    {
         return view('structure.show')->with('structure', $structure)->with('news', $structure->news);
     }
 
@@ -42,7 +44,8 @@ class StructureController extends Controller
      *
      * @return View
      */
-    public function create() {
+    public function create()
+    {
         return view('structure.create');
     }
 
@@ -52,7 +55,8 @@ class StructureController extends Controller
      * @param StoreStructureRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreStructureRequest $request) {
+    public function store(StoreStructureRequest $request)
+    {
         //dd($request);
         //Store the structure's address
         $address = new Address($request->only('postcode', 'house_number', 'county', 'country', 'road', 'city'));
@@ -84,13 +88,15 @@ class StructureController extends Controller
      * @param Structure $structure
      * @return RedirectResponse
      */
-    public function update(UpdateStructureRequest $request, Structure $structure) {
+    public function update(UpdateStructureRequest $request, Structure $structure)
+    {
         $structure->update($request->validated());
 
         return redirect()->back()->with('success', __('success.structure.update'));
     }
 
-    public function updateContactMeans(UpdateContactMeansRequest $request, Structure $structure) {
+    public function updateContactMeans(UpdateContactMeansRequest $request, Structure $structure)
+    {
         $structure->contact()->update($request->validated());
 
         return redirect()->back()->with('success', __('success.structure.contact.update'));
@@ -101,12 +107,13 @@ class StructureController extends Controller
      * @param Structure $structure
      * @return JsonResponse
      */
-    public function news(Structure $structure) {
+    public function news(Structure $structure)
+    {
         $amount = config('pagination.news-paginate');
 
         $news = $structure->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
 
-        foreach($news as $post) {
+        foreach ($news as $post) {
             $post->canEdit = auth()->user()->can('update', $post);
             $post->canDelete = auth()->user()->can('delete', $post);
         }
@@ -120,12 +127,13 @@ class StructureController extends Controller
      * @param Structure $structure
      * @return JsonResponse
      */
-    public function timeline(Structure $structure) {
+    public function timeline(Structure $structure)
+    {
         $amount = config('pagination.news-paginate');
 
         $news = $structure->timeline()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
 
-        foreach($news as $post) {
+        foreach ($news as $post) {
             $post->canEdit = auth()->user()->can('update', $post);
             $post->canDelete = auth()->user()->can('delete', $post);
         }

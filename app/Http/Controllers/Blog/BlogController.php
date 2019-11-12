@@ -17,7 +17,8 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function index() {
+    public function index()
+    {
         $posts = BlogPost::orderBy('created_at', 'desc')->paginate(5);
 
         return view('blog.index')->with('posts', $posts)->with('title', 'Derniers articles publiés');
@@ -29,7 +30,8 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $title = $request->input('title');
 
         $validator = Validator::make($request->all(), [
@@ -46,7 +48,9 @@ class BlogController extends Controller
                             ->orderBy('title')
                             ->paginate(5);
 
-        return view('blog.index')->with('posts', $posts)->with('title', 'Résultat de la recherche pour <strong>'.$title.'</strong>');
+        return view('blog.index')
+            ->with('posts', $posts)
+            ->with('title', 'Résultat de la recherche pour <strong>'.$title.'</strong>');
     }
 
     /**
@@ -55,7 +59,8 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
 
         return view('blog.show')->with('post', $post);
@@ -67,7 +72,8 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
 
         return view('blog.create');
     }
@@ -78,8 +84,9 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request) {
-        
+    public function store(Request $request)
+    {
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'content' => 'required',
@@ -93,8 +100,8 @@ class BlogController extends Controller
 
         $post = new BlogPost;
 
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
         $post->author_id = $request->user()->id;
 
         $post->save();
@@ -107,7 +114,8 @@ class BlogController extends Controller
      *
      * @return Response
      */
-    public function dashboard() {
+    public function dashboard()
+    {
         $posts = BlogPost::orderBy('created_at', 'desc')->paginate(5);
 
         return view('blog.dashboard')->with('posts', $posts);
@@ -119,7 +127,8 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
 
         return view('blog.edit')->with('post', $post);
@@ -131,17 +140,18 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
 
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
 
         $post->save();
 
         return redirect()->route('blog.read', [
-            'blog' => 'blog', 
-            'id' => $post->id, 
+            'blog' => 'blog',
+            'id' => $post->id,
             'slug' => str_slug($post->title)]);
     }
 
@@ -151,7 +161,8 @@ class BlogController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post = BlogPost::findOrFail($request->route()->parameter('id'));
 
         $post->delete();

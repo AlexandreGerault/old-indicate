@@ -166,27 +166,29 @@ class Structure extends Model
     {
         $average = 0;
         $ratings = $this->ratings;
-        foreach ($ratings as $rating)
-        {
+        foreach ($ratings as $rating) {
             $average += $rating->rating;
         }
-        if ($ratings->count() !== 0)
+        if ($ratings->count() !== 0) {
             return $average/$ratings->count();
-        else
+        } else {
             return 0;
+        }
     }
 
     /**
      * @return BelongsTo
      */
-    public function address() {
+    public function address()
+    {
         return $this->belongsTo(Address::class);
     }
 
     /**
      * @return BelongsTo
      */
-    public function contact() {
+    public function contact()
+    {
         return $this->belongsTo(ContactMeans::class);
     }
 }

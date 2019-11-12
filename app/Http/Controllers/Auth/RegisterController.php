@@ -78,7 +78,7 @@ class RegisterController extends Controller
 
         $user->save();
 
-        if(isset($data['avatar'])) {
+        if (isset($data['avatar'])) {
             $user->updateAvatar($data['avatar']);
         }
 

@@ -58,7 +58,8 @@ class CompanyData extends Model
     /**
      * @return mixed
      */
-    public function structure () {
+    public function structure()
+    {
         return $this->morphOne(Structure::class, 'data');
     }
 }

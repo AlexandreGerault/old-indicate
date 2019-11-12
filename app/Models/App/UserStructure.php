@@ -59,7 +59,8 @@ class UserStructure extends Model
      *
      * @return BelongsTo
      */
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
@@ -68,7 +69,8 @@ class UserStructure extends Model
      *
      * @return BelongsTo
      */
-    public function structure() {
+    public function structure()
+    {
         return $this->belongsTo(Structure::class, 'structure_id');
     }
 
@@ -77,7 +79,8 @@ class UserStructure extends Model
      * @param $structure
      * @return mixed
      */
-    public function scopeByStructure ($query, $structure) {
+    public function scopeByStructure($query, $structure)
+    {
         return $query->where('structure_id', '=', $structure->id);
     }
 
@@ -85,7 +88,8 @@ class UserStructure extends Model
      * @param Builder $query
      * @return mixed
      */
-    public function scopePending ($query) {
+    public function scopePending($query)
+    {
         return $query->where('status', '=', config('enums.structure_membership_request_status.PENDING'));
     }
 }

@@ -91,7 +91,9 @@ class StructurePolicy
      */
     public function follow(User $user, Structure $structure)
     {
-        return $user->authorizations->follow_structure && ! $user->userStructure->structure->follows($structure) && $user->userStructure->structure->id !== $structure->id;
+        return $user->authorizations->follow_structure
+            && ! $user->userStructure->structure->follows($structure)
+            && $user->userStructure->structure->id !== $structure->id;
     }
     /**
      * Determine whether the user can follows another structure.
@@ -102,7 +104,9 @@ class StructurePolicy
      */
     public function unfollow(User $user, Structure $structure)
     {
-        return $user->authorizations->follow_structure && $user->userStructure->structure->follows($structure) && $user->userStructure->structure->id !== $structure->id;
+        return $user->authorizations->follow_structure
+            && $user->userStructure->structure->follows($structure)
+            && $user->userStructure->structure->id !== $structure->id;
     }
 
     public function join(User $user, Structure $structure)
@@ -112,13 +116,16 @@ class StructurePolicy
 
     public function claim(User $user, Structure $structure)
     {
-        $exists = count(ClaimDemand::query()->where('user_id', '=', $user->id)->where('structure_id', '=', $structure->id)->get()) > 0;
+        $exists = count(ClaimDemand::query()
+                ->where('user_id', '=', $user->id)
+                ->where('structure_id', '=', $structure->id)->get()) > 0;
         return ! $user->isStructureOwner($structure) && !$exists;
     }
 
     public function accessDashboard(User $user, Structure $structure)
     {
-        return $user->hasStructure() && ($user->authorizations->access_dashboard || $user->isStructureOwner($structure));
+        return $user->hasStructure()
+            && ($user->authorizations->access_dashboard || $user->isStructureOwner($structure));
     }
 
     public function manageUsers(User $user)

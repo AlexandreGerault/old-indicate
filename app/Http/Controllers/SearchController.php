@@ -17,7 +17,8 @@ class SearchController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $search = $request->input('search');
 
         $validator = Validator::make($request->all(), [

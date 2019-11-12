@@ -15,7 +15,7 @@ class RedirectIfNotBlogger
      */
     public function handle($request, Closure $next)
     {
-        if(!auth()->check() || auth()->check() && !auth()->user()->blogger()) {
+        if (!auth()->check() || auth()->check() && !auth()->user()->blogger()) {
             return redirect()->route('app.home');
         }
         return $next($request);

@@ -21,7 +21,8 @@ class UserStructureController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function join(Request $request) {
+    public function join(Request $request)
+    {
         $userStructure = UserStructure::findOrFail(auth()->user()->userStructure->id);
 
         if ($userStructure->user->can('join', [User::class, Structure::findOrFail($request->input('id'))])) {
@@ -42,7 +43,8 @@ class UserStructureController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function accepts(Request $request) {
+    public function accepts(Request $request)
+    {
         $userStructure = UserStructure::findOrFail($request->id);
 
         $userStructure->status = config('enums.structure_membership_request_status.ACCEPTED');
@@ -57,7 +59,8 @@ class UserStructureController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function refuses(Request $request) {
+    public function refuses(Request $request)
+    {
         $userStructure = UserStructure::findOrFail($request->id);
 
         DB::table('demands_blacklist')->insert([
@@ -77,7 +80,8 @@ class UserStructureController extends Controller
      * @param UpdateMemberRequest $request
      * @return RedirectResponse
      */
-    public function update (UpdateMemberRequest $request) {
+    public function update(UpdateMemberRequest $request)
+    {
         $request->validated();
 
         $member = UserStructure::findOrFail($request->input('id'));
@@ -88,7 +92,8 @@ class UserStructureController extends Controller
         return back()->with('success', __('success.user_structure.member_update'));
     }
 
-    public function claim (Request $request, Structure $structure) {
+    public function claim(Request $request, Structure $structure)
+    {
         $claim = new ClaimDemand();
         $claim->user()->associate(auth()->user());
         $claim->structure()->associate($structure);

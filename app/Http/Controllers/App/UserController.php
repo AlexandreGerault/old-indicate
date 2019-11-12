@@ -20,7 +20,8 @@ class UserController extends Controller
      * @param User $user
      * @return Factory|View
      */
-    public function show(User $user) {
+    public function show(User $user)
+    {
         $news = News::all()->where('author_id', '=', $user->id);
 
         return view('user.profile.show')->with('user', $user)->with('news', $news);
@@ -30,12 +31,13 @@ class UserController extends Controller
      * @param User $user
      * @return JsonResponse
      */
-    public function news(User $user) {
+    public function news(User $user)
+    {
         $amount = config('pagination.news-paginate');
 
         $news = $user->news()->with('author', 'structure')->orderBy('created_at', 'desc')->paginate($amount);
 
-        foreach($news as $post) {
+        foreach ($news as $post) {
             $post->canEdit = Auth::user()->can('update', $post);
             $post->canDelete = Auth::user()->can('delete', $post);
         }
@@ -47,12 +49,14 @@ class UserController extends Controller
      * @param User $user
      * @return Factory|View
      */
-    public function edit(User $user) {
+    public function edit(User $user)
+    {
         return view('user.profile.edit')->with('user', $user);
     }
 
 
-    public function update(UpdateUserRequest $request, User $user) {
+    public function update(UpdateUserRequest $request, User $user)
+    {
         $user->firstname = $request->input('firstname');
         $user->lastname = $request->input('lastname');
         if ($user->email !== $request->input('email')) {
@@ -62,7 +66,7 @@ class UserController extends Controller
         }
         $user->save();
 
-        if($request->hasFile('avatar')) {
+        if ($request->hasFile('avatar')) {
             $user->updateAvatar($request->file('avatar'));
         }
 

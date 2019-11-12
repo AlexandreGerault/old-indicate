@@ -26,8 +26,6 @@ class Siren implements Rule
     public function passes($attribute, $value)
     {
         $siren = (string) $value;
-
-        
     }
 
     /**

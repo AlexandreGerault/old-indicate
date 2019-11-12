@@ -11,7 +11,8 @@ class InvestorRating extends Model
     /**
      * @return mixed
      */
-    public function rating () {
+    public function rating()
+    {
         return $this->morphOne(Rating::class, 'rating');
     }
 }

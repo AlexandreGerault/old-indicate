@@ -16,7 +16,8 @@ class UserAuthorizationsController extends Controller
      * @param UpdateAuthorizationsRequest $request
      * @return RedirectResponse
      */
-    public function update (UpdateAuthorizationsRequest $request) {
+    public function update(UpdateAuthorizationsRequest $request)
+    {
         $request->validated();
 
         $authorizations = UserAuthorizations::findOrFail($request->input('id'));
