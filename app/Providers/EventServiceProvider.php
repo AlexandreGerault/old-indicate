@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ValidatedClaimDemand;
+use App\Listeners\OnValidatedClaimDemand;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -34,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewsDeleted::class => [
         ],
+        ValidatedClaimDemand::class => [
+            OnValidatedClaimDemand::class,
+        ]
 
     ];
 
