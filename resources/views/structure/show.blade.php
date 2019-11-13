@@ -31,15 +31,21 @@
                     </tr>
                     </thead>
                     <tbody>
-
-                    @foreach ($structure->data->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)
-                        @if ($value !== null)
-                        <tr>
-                            <td>{{ ucfirst(trans('structure.data.' . $structure->data_type . '.' . $key)) }}</td>
-                            <td>{{ $value }}</td>
-                        </tr>
-                        @endif
-                    @endforeach
+                        @foreach($structure->data
+                        ->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)
+                            @if ($value !== null)
+                            <tr>
+                                <td>{{ ucfirst(trans('structure.data.' . $structure->data_type . '.' . $key)) }}</td>
+                                @if($key == 'wcr')
+                                    <td>{{ $value ? 'Positif' : 'Négatif'}}</td>
+                                @elseif(Schema::getColumnType($structure->data_type . '_data', $key) == 'boolean')
+                                    <td>{{ $value ? ucfirst('oui') : ucfirst('non') }}</td>
+                                @else
+                                    <td>{{ $value }}</td>
+                                @endif
+                            </tr>
+                            @endif
+                        @endforeach
                     </tbody>
                 </table>
             </div>
