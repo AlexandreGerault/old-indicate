@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 @endforeach
-                @elseif
+                @else
                 <p>Aucun résultats</p>
                 @endif
             </div>
