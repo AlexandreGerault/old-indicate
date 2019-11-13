@@ -25,6 +25,7 @@ class CreateInvestorDataTable extends Migration
             $table->string('funding_step')->nullable()->default(null);
             $table->boolean('provide_consulting')->nullable()->default(null);
             $table->integer('financial_means')->nullable()->default(null);
+            $table->string('funding_type')->nullable()->default(null);
 
             $table->timestamps();
         });

@@ -8,7 +8,7 @@
         </p>
         <ul>
             @foreach($rating->rating->makeHidden(['id', 'created_at', 'updated_at'])->attributesToArray() as $key => $value)
-                <li><b>@lang('structure/rating.' . $key) :</b> {{ $value }} /5</li>
+                <li><b> {{ ucfirst(trans('rating.' . $key)) }} :</b> {{ $value }} /5</li>
             @endforeach
         </ul>
     </div>
