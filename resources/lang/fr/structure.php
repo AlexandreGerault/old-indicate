@@ -36,6 +36,7 @@ return [
         'investor' => [],
         'value' => 'valeur',
     ],
+    'datatype' => 'type de structure',
     'followers' => 'abonnés',
     'followings' => 'abonnements',
     'follows' => 'suivre',

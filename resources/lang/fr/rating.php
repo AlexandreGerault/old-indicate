@@ -10,6 +10,7 @@ return [
 
     'create' => 'noter cette structure',
     'index' => 'notes',
+    'mean' => 'note moyenne',
 
     'comment' => 'commentaire',
 
