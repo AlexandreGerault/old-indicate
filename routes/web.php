@@ -11,13 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    if (auth()->check())
-        return redirect()->route('user.show', auth()->user());
-    else
-        return view('app.home');
-})->name('app.home');
-
 /*
 |--------------------------------------------------------------------------
 | Blog routes
@@ -39,6 +32,13 @@ Route::domain('blog.' . parse_url(config('app.url'), PHP_URL_HOST))->group(funct
         Route::post('/update/{id}', 'Blog\BlogController@update')->name('blog.update');
     });
 });
+
+Route::get('/', function () {
+    if (auth()->check())
+        return redirect()->route('user.show', auth()->user());
+    else
+        return view('app.home');
+})->name('app.home');
 
 
 /*
@@ -68,7 +68,7 @@ Route::resource('structure', 'App\StructureController')->middleware('auth');
 
 Route::prefix('structure/{structure}')->middleware('auth')->group(function () {
         Route::resource('rating', 'App\RatingsController');
-        Route::get('news', 'App\StructureController@news')->name('structure.news');
+        Route::get('written-news', 'App\StructureController@news')->name('structure.news');
         Route::get('timeline', 'App\StructureController@timeline')->name('structure.timeline');
         Route::get('claim', 'App\UserStructureController@claim')->name('structure.claim');
         Route::get('/join', 'App\UserStructureController@join')
@@ -76,6 +76,8 @@ Route::prefix('structure/{structure}')->middleware('auth')->group(function () {
             ->name('structure.join');
         Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
         Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
+
+        Route::resource('news', 'App\NewsController')->middleware(['auth', 'verified']);
 });
 
 Route::prefix('dashboard/{structure}')
@@ -117,7 +119,6 @@ Route::prefix('dashboard/{structure}')
 Route::resource('user', 'App\UserController');
 Route::get('/user/{user}/news', 'App\UserController@news')->name('user.news');
 
-Route::resource('news', 'App\NewsController')->middleware(['auth', 'verified']);
 
 Route::prefix('search')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/ajax', 'App\SearchController@ajaxSearch')->name('search.ajax');

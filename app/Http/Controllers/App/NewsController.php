@@ -28,15 +28,16 @@ class NewsController extends Controller
     public function store(StoreNewsRequest $request)
     {
         $request->validated();
+        $structure = $request->route('structure');
 
-        $this->authorize('create', [News::class, Structure::find($request->input('structure_id'))]);
+        $this->authorize('create', [News::class, $structure]);
 
-        News::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'author_id' => auth()->id(),
-            'structure_id' => auth()->user()->userStructure->structure->id,
-        ]);
+        $news = new News();
+        $news->title = $request->input('title');
+        $news->content = $request->input('content');
+        $news->author()->associate(auth()->user());
+        $news->structure()->associate($structure);
+        $news->save();
 
         return back();
     }
@@ -87,7 +88,7 @@ class NewsController extends Controller
      *
      * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         $amount = config('pagination.news-paginate');
         $news = News::with('author', 'structure')->paginate($amount);

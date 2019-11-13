@@ -12,6 +12,11 @@
                         {{ ucfirst(trans('structure.rating_tab')) }}
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('structure.news', ['structure' => $structure]) }}">
+                        {{ ucfirst(trans('structure.news_tab')) }}
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

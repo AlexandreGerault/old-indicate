@@ -21,7 +21,7 @@ return [
             'clients_number' => 'nombre de clients',
             'ebitda' => 'ebitda',
             'gross_margin' => 'profit brut',
-            'invesment_sought' => 'investissement recherché',
+            'investment_sought' => 'investissement recherché',
             'logistic_cost' => 'coût logistique',
             'looking_for_funding' => 'recherche des financements',
             'looking_for_accompaniment' => 'recherche des aides d\'accompagnement',
@@ -31,9 +31,13 @@ return [
             'turnover_projection' => 'chiffre d\'affaire prévisionnel' ,
             'wcr' => 'bfr',
         ],
-        'consulting' => [],
+        'consulting' => [
+
+        ],
         'name' => 'nom de la caractéristique',
-        'investor' => [],
+        'investor' => [
+
+        ],
         'value' => 'valeur',
     ],
     'datatype' => 'type de structure',
@@ -62,6 +66,7 @@ return [
     ],
     'join' => 'rejoindre',
     'member' => 'membre',
+    'news_tab' => 'actualités',
     'permissions' => [
         'overview' => 'aperçu des permissions',
         'create_news' => 'écrire une news',

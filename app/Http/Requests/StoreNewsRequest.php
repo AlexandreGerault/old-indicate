@@ -19,9 +19,7 @@ class StoreNewsRequest extends FormRequest
      */
     public function authorize()
     {
-        $structure = Structure::find(Input::get('structure_id'));
-
-        return Auth::user()->can('create', [News::class, $structure]);
+        return Auth::user()->can('create', [News::class, $this->route('structure')]);
     }
 
     /**

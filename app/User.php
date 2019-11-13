@@ -128,7 +128,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function structureIs(Structure $structure)
     {
-        return $this->userStructure->structure === $structure;
+        return $this->userStructure->structure->id === $structure->id;
     }
 
     /**

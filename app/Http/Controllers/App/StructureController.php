@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Models\App\Structure;
 use App\Http\Requests\StoreStructureRequest;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class StructureController extends Controller
@@ -101,13 +102,15 @@ class StructureController extends Controller
 
         return redirect()->back()->with('success', __('success.structure.contact.update'));
     }
+
     /**
      * Return a Json response of news
      *
+     * @param \Request $request
      * @param Structure $structure
      * @return JsonResponse
      */
-    public function news(Structure $structure)
+    public function news(Request $request, Structure $structure)
     {
         $amount = config('pagination.news-paginate');
 
@@ -118,7 +121,10 @@ class StructureController extends Controller
             $post->canDelete = auth()->user()->can('delete', $post);
         }
 
-        return response()->json($news, 200);
+        if($request->ajax())
+            return response()->json($news, 200);
+        else
+            return view('structure.news')->with('structure', $structure);
     }
 
     /**

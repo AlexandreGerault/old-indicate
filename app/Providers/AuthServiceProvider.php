@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\App\Rating;
 use App\Policies\RatingPolicy;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\App\News;
 use App\Policies\NewsPolicy;

@@ -27,7 +27,7 @@ class NewsPolicy
      * Determine whether the user can create news.
      *
      * @param User $user
-     * @param Structure $user
+     * @param Structure $structure
      * @return mixed
      */
     public function create(User $user, Structure $structure)
