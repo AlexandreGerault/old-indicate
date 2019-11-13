@@ -35,6 +35,9 @@
                         {{ ucfirst(trans('structure.claim')) }}
                     </a>
                 @endcan
+                @if ($structure->ratings->count() > 0)
+                    {{ ucfirst(trans('rating.mean')) }} : {{ $structure->averageRating() }}/5
+                @endif
             </div>
         </div>
     </div>
