@@ -11,7 +11,12 @@
 |
 */
 
-Route::get('/', 'App\HomeController@index')->name('app.home');
+Route::get('/', function () {
+    if (auth()->check())
+        return redirect()->route('user.show', auth()->user());
+    else
+        return view('app.home');
+});
 
 /*
 |--------------------------------------------------------------------------
