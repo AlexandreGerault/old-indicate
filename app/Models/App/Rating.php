@@ -38,4 +38,14 @@ class Rating extends Model
     {
         return $this->morphTo();
     }
+
+    public function mean()
+    {
+        $sum = 0;
+        $ratingsArray = $this->rating->makeHidden(['id', 'created_at', 'updated_at'])->attributesToArray();
+        foreach ($ratingsArray as $key => $value) {
+            $sum += $value;
+        }
+        return $sum/count($ratingsArray);
+    }
 }

@@ -164,15 +164,12 @@ class Structure extends Model
      */
     public function averageRating()
     {
-        $average = 0;
-        $ratings = $this->ratings;
-        foreach ($ratings as $rating) {
-            $average += $rating->rating;
-        }
-        if ($ratings->count() !== 0) {
-            return $average/$ratings->count();
-        } else {
-            return 0;
+        if ($this->ratings->count() > 0) {
+            $sum = 0;
+            foreach ($this->ratings as $rating) {
+                $sum += $rating->mean();
+            }
+            return $sum / $this->ratings->count();
         }
     }
 
