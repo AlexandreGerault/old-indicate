@@ -15,6 +15,7 @@
 
             <!-- Search results -->
             <div id="indicate-search-results" class="d-flex flex-wrap p-2">
+                @if (count($data) > 0)
                 @foreach($data as $item)
                 <div class="card m-3">
                     <div class="card-body">
@@ -28,6 +29,9 @@
                     </div>
                 </div>
                 @endforeach
+                @elseif
+                <p>Aucun résultats</p>
+                @endif
             </div>
         </div>
 
