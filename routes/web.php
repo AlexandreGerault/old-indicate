@@ -16,7 +16,7 @@ Route::get('/', function () {
         return redirect()->route('user.show', auth()->user());
     else
         return view('app.home');
-});
+})->name('app.home');
 
 /*
 |--------------------------------------------------------------------------
