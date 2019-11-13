@@ -32,6 +32,7 @@ class IndicateResearchController extends Controller
     public function results(Request $request)
     {
         $data = null;
+        $paginate = config('pagination.indicate-research-paginate');
         $keywords = $request->input('keywords');
 
         switch ($request->get('data_type')) {
@@ -135,7 +136,7 @@ class IndicateResearchController extends Controller
                         );
                     })
                     ->with('structure')
-                    ->get();
+                    ->paginate($paginate);
                 break;
 
             case "consulting":
@@ -163,7 +164,7 @@ class IndicateResearchController extends Controller
                         return $query->where('seeking_location', 'LIKE', $seeking_location);
                     })
                     ->with('structure')
-                    ->get();
+                    ->paginate($paginate);
 
                 break;
 
@@ -187,7 +188,7 @@ class IndicateResearchController extends Controller
                         return $query->where('funding_step', '=', $investment_step);
                     })
                     ->with('structure')
-                    ->get();
+                    ->paginate($paginate);
                 break;
         }
 
