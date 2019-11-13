@@ -13,7 +13,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="my-3">Noter cette structure</h3>
+                            <h3 class="my-3">{{ ucfirst(trans('rating.create')) }}</h3>
                             @include('includes.forms.structure.rating.' . $structure->data_type)
                         </div>
                     </div>

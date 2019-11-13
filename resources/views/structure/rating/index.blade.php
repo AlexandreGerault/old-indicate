@@ -11,9 +11,9 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h3>Notes</h3>
+                    <h3>{{ ucfirst(trans('rating.index')) }}</h3>
                     @can('create', [App\Models\App\Rating::class, $structure])
-                    <p><a class="btn btn-primary" href="{{ route('rating.create', ['structure' => $structure]) }}">Noter cette structure</a></p>
+                    <p><a class="btn btn-primary" href="{{ route('rating.create', ['structure' => $structure]) }}">{{ ucfirst(trans('rating.create')) }}</a></p>
                     @endcan
                     @foreach($ratings as $rating)
                         @ratingcard(['rating' => $rating])

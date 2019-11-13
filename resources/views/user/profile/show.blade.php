@@ -15,9 +15,9 @@
         @endif
         <div class="row shadow-none border-light">
             <div class="col-4 col-md-2">
-                <p><img class="img-fluid d-block" src="/storage/users/avatars/{{ $user->avatar }}"></p>
+                <p><img class="img-fluid d-block" src="/storage/users/avatars/{{ $user->avatar }}" alt="user's avatar"></p>
                 @if(auth()->id() === $user->id)
-                <p class="small"><a href="{{ route('user.edit', ['user' => auth()->user()]) }}">@lang('ui.profile.edit')</a></p>
+                <p class="small"><a href="{{ route('user.edit', ['user' => auth()->user()]) }}">@uclang('ui.profile.edit')</a></p>
                 @endif
             </div>
             <div class="col-8 col-md-10 shadow-none">
@@ -55,9 +55,8 @@
 
             <div class="col-md-6">
                 <div id="news">
-                    <news-timeline
-                        get-route="/user/{{ $user->id }}/news"
-                    />
+                    <news-timeline get-route="/user/{{ $user->id }}/news">
+                    </news-timeline>
                 </div>
             </div>
 

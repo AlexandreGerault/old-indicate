@@ -1,15 +1,16 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Rating Language Lines
+|--------------------------------------------------------------------------
+*/
+
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Ratings criteria
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the structure's data names.
-    |
-    */
+    'create' => 'noter cette structure',
+    'index' => 'notes',
+
     'comment' => 'commentaire',
 
     // COMPANY
@@ -27,5 +28,4 @@ return [
     'procedure_simplicity' => 'simplicité de la procédure',
     'procedure_speed' => 'vitesse de la procédure',
     'global_rating' => 'note globale de la structure'
-
 ];

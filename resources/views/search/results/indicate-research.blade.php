@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('Results'))
+@section('title', ucfirst(trans('structure.results')))
 
 @section('content')
     <div class="py-5">
@@ -9,7 +9,7 @@
             <!-- Page header -->
             <div class="row">
                 <div class="col-12">
-                    <h1 class="mb-3 border-bottom border-light">@lang('ui.structure.results')</h1>
+                    <h1 class="mb-3 border-bottom border-light">{{ ucfirst(trans('structure.results')) }}</h1>
                 </div>
             </div>
 
@@ -18,8 +18,12 @@
                 @foreach($data as $item)
                 <div class="card m-3">
                     <div class="card-body">
-                        <h4><a href="{{ route('structure.show', ['structure' => $item->structure]) }}">{{ $item->structure->name }}</a></h4>
-                        <p class="badge badge-secondary">{{ $item->structure->data_type }}</p>
+                        <h4>
+                            <a href="{{ route('structure.show', ['structure' => $item->structure]) }}">
+                                {{ $item->structure->name }}
+                            </a>
+                        </h4>
+                        <p class="badge badge-secondary">{{ ucfirst(trans('structure.type.' . $item->structure->data_type)) }}</p>
                         <p>{{ $item->structure->comment }}</p>
                     </div>
                 </div>

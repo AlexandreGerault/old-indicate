@@ -12,17 +12,31 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto" id="collapsibleNavbar">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('research.form') }}">@lang('ui.structure.hub')</a>
+                    <a class="nav-link" href="{{ route('research.form') }}">
+                        {{ ucfirst(trans('structure.info.hub')) }}
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('structure.create') }}">@lang('ui.structure.create')</a>
+                    <a class="nav-link" href="{{ route('structure.create') }}">
+                        {{ ucfirst(trans('structure.create')) }}
+                    </a>
                 </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
                 @guest
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}"><i class="fas fa-user-plus"></i> @lang('ui.auth.sign_up')</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> @lang('ui.auth.login')</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">
+                        <i class="fas fa-user-plus"></i>
+                        {{ ucfirst(trans('ui.auth.sign_up')) }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">
+                        <i class="fas fa-sign-in-alt"></i>
+                        {{ ucfirst(trans('ui.auth.login')) }}
+                    </a>
+                </li>
                 @endguest
                 <!-- Dropdown -->
                 @auth
@@ -31,15 +45,27 @@
                         {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">@lang('ui.profile.profile')</a>
+                        <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">
+                            {{ ucfirst(trans('user.profile')) }}
+                        </a>
                         @if(Auth::user()->hasStructure())
-                        <a class="dropdown-item" href="{{ route('structure.show', ['structure' => Auth::user()->userStructure->structure]) }}">@lang('ui.structure.structure')</a>
+                        <a class="dropdown-item"
+                           href="{{ route('structure.show', [
+                           'structure' => Auth::user()->userStructure->structure]) }}">
+                            {{ ucfirst(trans('structure.structure')) }}
+                        </a>
                         @endif
                         @can('access-dashboard', Auth::user()->userStructure->structure)
-                        <a class="dropdown-item" href="{{ route('structure.dashboard.index', ['structure' => auth()->user()->userStructure->structure]) }}">@lang('ui.dashboard')</a>
+                        <a class="dropdown-item"
+                           href="{{ route('structure.dashboard.index', [
+                           'structure' => auth()->user()->userStructure->structure]) }}">
+                            {{ ucfirst(trans('ui.dashboard')) }}
+                        </a>
                         @endcan
-                        <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            @lang('ui.auth.logout')
+                        <a class="dropdown-item"
+                           href="{{ url('/logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ ucfirst(trans('ui.auth.logout')) }}
                         </a>
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}

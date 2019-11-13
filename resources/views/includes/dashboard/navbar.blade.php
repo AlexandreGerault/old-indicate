@@ -59,7 +59,7 @@
                 <a class="dropdown-item" href="{{ route('app.home') }}">@uclang('ui.dashboard_words.back_to_app')</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    @uclang('ui.auth.logout')
+                    {{ ucfirst(trans('ui.auth.logout')) }}
                 </a>
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}

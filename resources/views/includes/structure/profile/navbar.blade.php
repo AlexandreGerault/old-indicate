@@ -4,12 +4,12 @@
             <ul class="nav navbar">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('structure.show', [ 'structure' => $structure ]) }}">
-                        @lang('ui.structure.characteristics')
+                        {{ ucfirst(trans('structure.characteristics')) }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('rating.index', ['structure' => $structure]) }}">
-                        @lang('ui.structure.rating_tab')
+                        {{ ucfirst(trans('structure.rating_tab')) }}
                     </a>
                 </li>
             </ul>

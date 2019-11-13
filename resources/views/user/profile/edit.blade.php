@@ -30,25 +30,25 @@
                     @csrf
                     @method('put')
                     <div class="form-group row">
-                        <label for="firstname">@lang('firstname')</label>
-                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="@lang('firstname')" value="{{ $user->firstname }}"/>
+                        <label for="firstname">{{ ucfirst(trans('user.firstname')) }}</label>
+                        <input type="text" name="firstname" id="firstname" class="form-control" placeholder="{{ ucfirst(trans('user.firstname')) }}" value="{{ $user->firstname }}"/>
                     </div>
                     <div class="form-group row">
-                        <label for="lastname">@lang('lastname')</label>
-                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="@lang('lastname')" value="{{ $user->lastname }}"/>
+                        <label for="lastname">{{ ucfirst(trans('user.lastname')) }}</label>
+                        <input type="text" name="lastname" id="lastname" class="form-control" placeholder="{{ ucfirst(trans('user.lastname')) }}" value="{{ $user->lastname }}"/>
                     </div>
                     <div class="form-group row">
-                        <label for="email">@lang('email')</label>
-                        <input type="text" name="email" id="email" class="form-control" placeholder="@lang('email')" value="{{ $user->email }}"/>
+                        <label for="email">{{ ucfirst(trans('user.email')) }}</label>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="{{ ucfirst(trans('user.email')) }}" value="{{ $user->email }}"/>
                     </div>
                     <div class="form-group row">
-                        <label for="avatar">{{ __('Veuillez choisir une photo de profil') }}</label>
+                        <label for="avatar">{{ ucfirst(trans('register.avatar.choose')) }}</label>
                         <input type="file" class="form-control-file" name="avatar" id="avatar" aria-describedby="fileHelp">
-                        <small id="fileHelp" class="form-text text-muted">{{ __('Choisissez un fichier valide : la taille de l\'image ne doit pas dépasser 2Mo.')}}</small>
+                        <small id="fileHelp" class="form-text text-muted">{{ ucfirst(trans('register.avatar.help')) }}</small>
                     </div>
 
                     <button type="submit" class="btn mt-4 btn-block btn-outline-dark p-2">
-                        <b>@lang('ui.profile.update')</b>
+                        <b>@uclang('ui.profile.update')</b>
                     </button>
                 </form>
             </div>
