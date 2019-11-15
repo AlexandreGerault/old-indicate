@@ -31,7 +31,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if($structure->shouldDisplay)
+                    @if($structure->shouldDisplay())
                         @foreach($structure->data
                         ->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)
                             @if ($value !== null)
