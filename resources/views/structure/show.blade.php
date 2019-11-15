@@ -23,6 +23,7 @@
 
             <div class="col-lg-6">
                 <h3 class="text-center">{{ ucfirst(trans('structure.characteristics')) }}</h3>
+                @if($structure->shouldDisplay())
                 <table class="table">
                     <thead class="thead-light">
                     <tr>
@@ -31,7 +32,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if($structure->shouldDisplay())
                         @foreach($structure->data
                         ->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)
                             @if ($value !== null)
@@ -47,11 +47,11 @@
                             </tr>
                             @endif
                         @endforeach
-                    @else
-                        <p>{{ ucfirst(trans('structure.data.not_available')) }}</p>
-                    @endif
                     </tbody>
                 </table>
+                @else
+                    <p>{{ ucfirst(trans('structure.data.not_available')) }}</p>
+                @endif
             </div>
 
             <div class="col-lg-3  border-left border-secondary">
