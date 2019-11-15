@@ -25,9 +25,17 @@
         <td>{{ $user->userStructure->created_at }}</td>
         <td>
             <a href="" class="btn btn-outline-secondary">Voir</a>
-            @can('manage-users', $user->structure)
-            <a href="{{ route('structure.dashboard.members.edit', ['id' => $user->id ]) }}" class="btn btn-outline-secondary">Éditer</a>
-            <a href="{{ route('demands.refuses', ['id' => $user->userStructure->id])}}" class="btn btn-outline-secondary">Bannir</a>
+            @can('manage-users', $user->userStructure->structure)
+            <a href="{{ route('structure.dashboard.members.edit', [
+            'structure' => $user->userStructure->structure,
+            'id' => $user->id ]) }}" class="btn btn-outline-secondary">
+                Éditer
+            </a>
+            <a href="{{ route('demands.refuses', [
+            'structure' => $user->userStructure->structure,
+            'id' => $user->userStructure->id])}}" class="btn btn-outline-secondary">
+                Bannir
+            </a>
             @endcan</td>
     </tr>
     @endforeach

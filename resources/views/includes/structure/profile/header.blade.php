@@ -9,6 +9,7 @@
             </div>
             <div class="col-8 col-md-10 shadow-none">
                 <h1>
+                    {!! $structure->verified ? '<i class="fas fa-check-circle text-primary"></i>' : '' !!}
                     {{ $structure->name }}
                     <small>
                         <span class="badge badge-secondary h4">

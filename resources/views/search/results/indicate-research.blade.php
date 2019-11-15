@@ -21,6 +21,7 @@
                 <div class="card m-3">
                     <div class="card-body">
                         <h4>
+                            {!! $item->structure->verified ? '<i class="fas fa-check-circle text-primary"></i>' : '' !!}
                             <a href="{{ route('structure.show', ['structure' => $item->structure]) }}">
                                 {{ $item->structure->name }}
                             </a>

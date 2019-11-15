@@ -82,7 +82,7 @@ class DashboardController extends Controller
     {
         $this->authorize('manage-users', Structure::class);
 
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($id)->first();
 
         return view('structure.dashboard.members.edit', compact('user'));
     }

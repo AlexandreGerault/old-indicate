@@ -20,7 +20,7 @@ class CreateStructuresTable extends Migration
             $table->string('avatar')->default('structure.svg');
             $table->integer('siren');
             $table->bigInteger('siret');
-            $table->boolean('validated')->default(false);
+            $table->boolean('verified')->default(false);
             $table->integer('address_id')->unsigned()->nullable()->default(null);
             $table->integer('contact_id')->unsigned()->nullable()->default(null);
 

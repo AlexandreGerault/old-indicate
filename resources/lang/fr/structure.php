@@ -14,6 +14,7 @@ return [
     'claim' => 'revendiquer',
     'create' => 'ajouter une structure',
     'data' => [
+        'not_available' => 'les données de cette structure n\'ont pas encore été renseignées',
         'company' => [
             'accept_offers' => 'accepte des offres',
             'average_monthly_turnover' => 'chiffre d\'affaire mensuel moyen',

@@ -91,6 +91,11 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orWhere('lastname', 'LIKE', '%' . $name . '%');
     }
 
+    public function scopeAdmin($query)
+    {
+        return $query->where('is_admin', '=', '1');
+    }
+
     /**
      * Check if user is a blogger
      *

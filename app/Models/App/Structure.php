@@ -76,6 +76,11 @@ class Structure extends Model
         return $query->where('name', 'LIKE', '%' . $name . '%');
     }
 
+    public function scopeVerified($query)
+    {
+        return $query->where('verified', 1);
+    }
+
     /**
      * @return HasMany
      */
@@ -90,9 +95,14 @@ class Structure extends Model
     public function members()
     {
         $structure = $this;
-        return $this->belongsToMany(User::class, 'users_structures', 'structure_id', 'user_id')
+        return $this->belongsToMany(User::class,
+            'users_structures',
+            'structure_id',
+            'user_id')
             ->whereHas('UserStructure', function (Builder $q) use ($structure) {
-                $q->where('status', '=', config('enums.structure_membership_request_status.ACCEPTED'))
+                $q->where('status',
+                    '=',
+                    config('enums.structure_membership_request_status.ACCEPTED'))
                     ->where('structure_id', '=', $structure->id);
             });
     }
@@ -126,17 +136,23 @@ class Structure extends Model
     /**
      * @return BelongsToMany
      */
-    public function following()
+    public function following() : BelongsToMany
     {
-        return $this->belongsToMany(Structure::class, 'followers', 'follower_id', 'following_id');
+        return $this->belongsToMany(Structure::class,
+            'followers',
+            'follower_id',
+            'following_id');
     }
 
     /**
      * @return BelongsToMany
      */
-    public function followers()
+    public function followers() : BelongsToMany
     {
-        return $this->belongsToMany(Structure::class, 'followers', 'following_id', 'follower_id');
+        return $this->belongsToMany(Structure::class,
+            'followers',
+            'following_id',
+            'follower_id');
     }
 
     /**
@@ -146,7 +162,7 @@ class Structure extends Model
      *
      * @return boolean
      */
-    public function follows(Structure $structure)
+    public function follows(Structure $structure) : bool
     {
         return $this->following->contains($structure);
     }
@@ -154,29 +170,15 @@ class Structure extends Model
     /**
      * @return HasMany
      */
-    public function ratings()
+    public function ratings() : HasMany
     {
         return $this->hasMany(Rating::class);
     }
 
     /**
-     * @return float|int
-     */
-    public function averageRating()
-    {
-        if ($this->ratings->count() > 0) {
-            $sum = 0;
-            foreach ($this->ratings as $rating) {
-                $sum += $rating->mean();
-            }
-            return $sum / $this->ratings->count();
-        }
-    }
-
-    /**
      * @return BelongsTo
      */
-    public function address()
+    public function address() : BelongsTo
     {
         return $this->belongsTo(Address::class);
     }
@@ -184,8 +186,37 @@ class Structure extends Model
     /**
      * @return BelongsTo
      */
-    public function contact()
+    public function contact() : BelongsTo
     {
         return $this->belongsTo(ContactMeans::class);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function averageRating() : bool
+    {
+        if ($this->ratings->count() > 0)
+        {
+            $sum = 0;
+            foreach ($this->ratings as $rating)
+            {
+                $sum += $rating->mean();
+            }
+            return $sum / $this->ratings->count();
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function shouldDisplay() : bool
+    {
+        $display = false;
+        foreach($this->data->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)
+        {
+            if($value !== null) return true;
+        }
+        return false;
     }
 }

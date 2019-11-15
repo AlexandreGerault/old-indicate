@@ -9,6 +9,7 @@ use App\Models\App\ConsultingData;
 use App\Models\App\InvestorData;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use DB;
@@ -135,7 +136,14 @@ class IndicateResearchController extends Controller
                             $looking_bank_funding == 'on' ? true : false
                         );
                     })
-                    ->with('structure')
+                    ->when($keywords, function ($query, $keywords) {
+                        $query->whereHas('structure', function ($subQuery) use ($keywords) {
+                            $subQuery->searchByName($keywords);
+                        });
+                    })
+                    ->whereHas('structure', function (Builder $query) {
+                        $query->verified();
+                    })
                     ->paginate($paginate);
                 break;
 
@@ -163,7 +171,14 @@ class IndicateResearchController extends Controller
                     ->when($seeking_location, function ($query, $seeking_location) {
                         return $query->where('seeking_location', 'LIKE', $seeking_location);
                     })
-                    ->with('structure')
+                    ->when($keywords, function ($query, $keywords) {
+                        $query->whereHas('structure', function ($subQuery) use ($keywords) {
+                            $subQuery->searchByName($keywords);
+                        });
+                    })
+                    ->whereHas('structure', function ($query) {
+                        $query->verified();
+                    })
                     ->paginate($paginate);
 
                 break;
@@ -187,7 +202,14 @@ class IndicateResearchController extends Controller
                     ->when($investment_step, function ($query, $investment_step) {
                         return $query->where('funding_step', '=', $investment_step);
                     })
-                    ->with('structure')
+                    ->when($keywords, function ($query, $keywords) {
+                        $query->whereHas('structure', function ($subQuery) use ($keywords) {
+                            $subQuery->searchByName($keywords);
+                        });
+                    })
+                    ->whereHas('structure', function ($query) {
+                        $query->verified();
+                    })
                     ->paginate($paginate);
                 break;
         }
