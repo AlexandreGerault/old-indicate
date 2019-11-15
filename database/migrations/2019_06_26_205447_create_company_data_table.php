@@ -17,13 +17,13 @@ class CreateCompanyDataTable extends Migration
             $table->increments('id');
 
             /* Booleans values */
-            $table->boolean('accept_offers')->default(false);
-            $table->boolean('partnership')->default(false);
-            $table->boolean('bank_funding')->default(false);
-            $table->boolean('wcr')->default(false);
-            $table->boolean('shareholding')->default(false);
-            $table->boolean('looking_for_funding')->default(false);
-            $table->boolean('looking_for_accompaniment')->default(false);
+            $table->boolean('accept_offers')->nullable()->default(null);
+            $table->boolean('partnership')->nullable()->default(null);
+            $table->boolean('bank_funding')->nullable()->default(null);
+            $table->boolean('wcr')->nullable()->default(null);
+            $table->boolean('shareholding')->nullable()->default(null);
+            $table->boolean('looking_for_funding')->nullable()->default(null);
+            $table->boolean('looking_for_accompaniment')->nullable()->default(null);
 
             /* Integer values */
             $table->integer('share_capital')->nullable()->default(null);
