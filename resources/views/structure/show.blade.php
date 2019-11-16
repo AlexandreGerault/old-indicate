@@ -23,7 +23,7 @@
 
             <div class="col-lg-6">
                 <h3 class="text-center">{{ ucfirst(trans('structure.characteristics')) }}</h3>
-                @if($structure->shouldDisplay())
+                @if($structure->shouldDisplayCharacteristics())
                 <table class="table">
                     <thead class="thead-light">
                     <tr>

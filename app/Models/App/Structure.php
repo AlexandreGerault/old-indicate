@@ -76,9 +76,22 @@ class Structure extends Model
         return $query->where('name', 'LIKE', '%' . $name . '%');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeVerified($query)
     {
         return $query->where('verified', 1);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeUnverified($query)
+    {
+        return $query->where('verified', 0);
     }
 
     /**
@@ -210,7 +223,7 @@ class Structure extends Model
     /**
      * @return bool
      */
-    public function shouldDisplay() : bool
+    public function shouldDisplayCharacteristics() : bool
     {
         $display = false;
         foreach($this->data->makeHidden(['id', 'created_at', 'updated_at'])->toArray() as $key => $value)

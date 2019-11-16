@@ -12,8 +12,9 @@ return [
     */
     'characteristics' => 'caractéristiques',
     'claim' => 'revendiquer',
-    'claimedemands' => [
+    'claimdemands' => [
         'index' => 'liste des demandes de revendications',
+        'indexshort' => 'revendications',
         'rejects' => 'refuser',
         'validates' => 'valider',
     ],
@@ -58,6 +59,7 @@ return [
         'county' => 'région',
         'country' => 'pays',
         'email' => 'adresse mail de la structure',
+        'general' => 'informations générales',
         'house_number' => 'numéro',
         'hub' => 'hub structure',
         'name' => 'nom de la structure',
@@ -93,6 +95,12 @@ return [
         'investor' => 'investisseur',
     ],
     'unfollows' => 'ne plus suivre',
-
+    'validation' => [
+        'index' => 'vérification des structures',
+        'indexshort' => 'structures',
+        'show' => 'aperçu de :name pour la validation',
+        'showshort' => 'aperçu',
+        'validates' => 'valider'
+    ],
 
 ];

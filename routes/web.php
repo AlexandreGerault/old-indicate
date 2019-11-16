@@ -54,6 +54,15 @@ Route::prefix('backoffice')->middleware('admin')->group(function () {
             ->name('claimdemand.rejects');
         ;
     });
+
+    Route::prefix('structure-validation')->group(function () {
+        Route::get('/', 'Backoffice\StructureValidationController@index')
+            ->name('structure-validation.index');
+        Route::get('/{structure}', 'Backoffice\StructureValidationController@show')
+            ->name('structure-validation.show');
+        Route::get('/{structure}/validates', 'Backoffice\StructureValidationController@validates')
+            ->name('structure-validation.validates');
+    });
 });
 
 /*
