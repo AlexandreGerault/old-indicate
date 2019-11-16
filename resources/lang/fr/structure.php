@@ -12,6 +12,11 @@ return [
     */
     'characteristics' => 'caractéristiques',
     'claim' => 'revendiquer',
+    'claimedemands' => [
+        'index' => 'liste des demandes de revendications',
+        'rejects' => 'refuser',
+        'validates' => 'valider',
+    ],
     'create' => 'ajouter une structure',
     'data' => [
         'not_available' => 'les données de cette structure n\'ont pas encore été renseignées',

@@ -15,7 +15,7 @@ class ClaimDemandsController extends Controller
 {
     public function index()
     {
-        $claimDemands = ClaimDemand::paginate(10);
+        $claimDemands = ClaimDemand::paginate(1);
 
         return view('backoffice.claim_demand.index')->with('claimdemands', $claimDemands);
     }
