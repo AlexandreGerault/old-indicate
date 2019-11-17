@@ -7,11 +7,6 @@
 
 @include('includes.structure.profile.navbar')
 
-<div class="mt-5">
-    <div class="container">
-    </div>
-</div>
-
 <div class="py-5">
     <div class="container">
         <div class="row">

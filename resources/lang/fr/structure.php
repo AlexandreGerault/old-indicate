@@ -62,6 +62,7 @@ return [
         'general' => 'informations générales',
         'house_number' => 'numéro',
         'hub' => 'hub structure',
+        'legal' => 'informations légales',
         'name' => 'nom de la structure',
         'phone' => 'numéro de téléphone',
         'road' => 'nom de rue',

@@ -15,14 +15,17 @@ return [
 
     'firstname' => 'prénom',
     'lastname' => 'nom',
-    'profile' => 'profil',
-    'profile.edit' => 'édtier le profil membre de :firstname :lastname',
     'email' => 'adresse email',
     'password' => 'mot de passe',
     'password.confirm' => 'confirmer le mot de passe',
-    'avatar.choose' => 'veuillez choisir une photo de profil',
+    'avatar.choose' => 'photo de profil',
     'avatar.help' => 'choisissez un fichier valide : la taille de l\'image ne doit pas dépasser 2Mo.',
     'jobname' => 'poste',
-    'user' => 'utilisateur'
-
+    'user' => 'utilisateur',
+    'profile' => [
+        'profileshort' => 'profil',
+        'edit' => 'modifier mon profil',
+        'profile' => 'éditer le profil membre de :firstname :lastname',
+        'update' => 'mettre à jour mon profil',
+    ],
 ];

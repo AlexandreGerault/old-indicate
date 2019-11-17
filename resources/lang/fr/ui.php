@@ -26,11 +26,6 @@ return [
         'permissions' => 'permissions',
         'profile' => 'profil de la structure',
     ],
-    'profile' => [
-        'edit' => 'modifier mon profil',
-        'profile' => 'profil',
-        'update' => 'mettre à jour mon profil',
-    ],
     'structure' => [
 
     ]

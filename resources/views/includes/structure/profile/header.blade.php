@@ -1,22 +1,28 @@
 <div class="py-5">
     <div class="container">
         <div class="row shadow-none border-light">
-            <div class="col-4 col-md-2">
-                <img
-                    class="img-fluid d-block"
-                    src="/storage/structures/avatars/{{ $structure->avatar }}"
-                    alt="structure's logo">
+            <div class="col-12 col-sm-4 col-md-2 text-center text-sm-left">
+                <div class="row">
+                    <p class="text-center col-6 col-sm-12 mx-auto">
+                        <img
+                            class="img-fluid d-block"
+                            src="/storage/structures/avatars/{{ $structure->avatar }}"
+                            alt="structure's logo"
+                        />
+                    </p>
+                </div>
             </div>
-            <div class="col-8 col-md-10 shadow-none">
+
+            <div class="col-12 col-sm-8 col-md-10 shadow-none text-center text-sm-left">
                 <h1>
                     {!! $structure->verified ? '<i class="fas fa-check-circle text-primary"></i>' : '' !!}
                     {{ $structure->name }}
-                    <small>
-                        <span class="badge badge-secondary h4">
-                            {{ ucfirst(trans('structure.type.' . $structure->data_type)) }}
-                        </span>
-                    </small>
                 </h1>
+                <p class="lead">
+                    <span class="badge badge-secondary h4">
+                        {{ ucfirst(trans('structure.type.' . $structure->data_type)) }}
+                    </span>
+                </p>
                 <p class="lead">{{ $structure->comment }}</p>
                 @can('follow', $structure)
                     @follow(['structure_id' => $structure->id]) @endfollow

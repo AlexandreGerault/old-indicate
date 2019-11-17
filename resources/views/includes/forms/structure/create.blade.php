@@ -1,6 +1,8 @@
 <form method="post" action="{{ route('structure.store') }}" enctype="multipart/form-data">
     @csrf
-    <h3 class="text-left h4">Informations générales</h3>
+    <h3 class="text-left h4">
+        {{ ucfirst(trans('structure.info.general')) }}
+    </h3>
     <div class="form-group mb-3">
         <label for="name">
             {{ ucfirst(trans('structure.info.name')) }}
@@ -51,7 +53,9 @@
         </div>
     </div>
 
-    <h3 class="text-left h4">Moyens de contact</h3>
+    <h3 class="text-left h4">
+        {{ ucfirst(trans('structure.info.contact')) }}
+    </h3>
     <div class="form-group mb-3">
         <label for="phone_number">
             {{ ucfirst(trans('structure.info.phone')) }}
@@ -72,7 +76,7 @@
         il vous faudra revendiquer la structure.
     </p>
 
-    <h3 class="text-left h4">Adresse du siège social</h3>
+    <h3 class="text-left h4">{{ ucfirst(trans('structure.info.address')) }}</h3>
     <div class="form-group mb-3">
         <label for="road">
             {{ ucfirst(trans('structure.info.road')) }}

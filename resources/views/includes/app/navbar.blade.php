@@ -46,7 +46,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('user.show', ['user' => auth()->user()]) }}">
-                            {{ ucfirst(trans('user.profile')) }}
+                            {{ ucfirst(trans('user.profile.profileshort')) }}
                         </a>
                         @if(Auth::user()->hasStructure())
                         <a class="dropdown-item"
