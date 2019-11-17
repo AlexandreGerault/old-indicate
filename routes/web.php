@@ -86,8 +86,10 @@ Route::prefix('structure/{structure}')->middleware('auth')->group(function () {
         Route::get('/follows', 'App\FollowersController@follows')->name('structure.follows');
         Route::get('/unfollows', 'App\FollowersController@unfollows')->name('structure.unfollows');
 
-        Route::resource('news', 'App\NewsController')->middleware(['auth', 'verified']);
+
 });
+
+Route::resource('news', 'App\NewsController')->middleware(['auth', 'verified']);
 
 Route::prefix('dashboard/{structure}')
     ->middleware(['auth', 'verified', 'can:access-dashboard,structure'])
