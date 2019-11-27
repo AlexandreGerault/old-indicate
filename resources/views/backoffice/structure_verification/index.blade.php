@@ -20,11 +20,11 @@
                     </a>
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="{{ route('structure-validation.validates', [
+                    <a class="btn btn-primary" href="{{ route('backoffice.structure-validation.validates', [
                     'structure' => $structure]) }}">
                         {{ ucfirst(trans('structure.validation.validates')) }}
                     </a>
-                    <a class="btn btn-primary" href="{{ route('structure-validation.show', [
+                    <a class="btn btn-primary" href="{{ route('backoffice.structure-validation.show', [
                     'structure' => $structure]) }}">
                         {{ ucfirst(trans('structure.validation.showshort')) }}
                     </a>

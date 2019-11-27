@@ -14,20 +14,20 @@ class CreateStructuresTable extends Migration
     public function up()
     {
         Schema::create('structures', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('comment');
             $table->string('avatar')->default('structure.svg');
-            $table->integer('siren');
+            $table->bigInteger('siren');
             $table->bigInteger('siret');
             $table->boolean('verified')->default(false);
-            $table->integer('address_id')->unsigned()->nullable()->default(null);
-            $table->integer('contact_id')->unsigned()->nullable()->default(null);
+            $table->bigInteger('address_id')->unsigned()->nullable()->default(null);
+            $table->bigInteger('contact_id')->unsigned()->nullable()->default(null);
 
             /**
              * Polymorphic relation keys
              */
-            $table->integer('data_id')->nullable()->default(null);
+            $table->bigInteger('data_id')->nullable()->default(null);
             $table->string('data_type');
 
             $table->timestamps();

@@ -17,7 +17,7 @@ class ClaimDemandsController extends Controller
     {
         $claimDemands = ClaimDemand::paginate(config('pagination.backoffice.claimdemands'));
 
-        return view('backoffice.claim_demand.index')->with('claimdemands', $claimDemands);
+        return view('backoffice.claim-demands.index')->with('claimdemands', $claimDemands);
     }
 
     public function validates(Request $request)
@@ -36,16 +36,16 @@ class ClaimDemandsController extends Controller
             ->where('structure_id', '=', $request->get('structure_id'))
             ->delete();
 
-        return redirect(route('claimdemand.index'))->with('success', 'Demande de revendication acceptée');
+        return redirect(route('backoffice.claim-demands.index'))->with('success', 'Demande de revendication acceptée');
     }
 
     public function rejects(ClaimDemand $claimDemand)
     {
         try {
             $claimDemand->delete();
-            return redirect(route('claimdemand.index'))->with('success', 'Demande de revendication rejetée');
+            return redirect(route('backoffice.claim-demands.index'))->with('success', 'Demande de revendication rejetée');
         } catch (\Exception $e) {
-            return redirect(route('claimdemand.index'))->with('error', $e);
+            return redirect(route('backoffice.claim-demands.index'))->with('error', $e);
         }
 
 

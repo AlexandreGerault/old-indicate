@@ -35,10 +35,10 @@ class SearchController extends Controller
         }
 
         $structures = Structure::searchByName($search)->orderBy('name')->paginate(5);
-        
+
         $users = User::searchByName($search)->orderBy('firstname')->paginate(5);
 
-        return view('user.search_results')->with(['structures' => $structures, 'users' => $users]);
+        return view('app.user.search_results')->with(['structures' => $structures, 'users' => $users]);
     }
 
     /**

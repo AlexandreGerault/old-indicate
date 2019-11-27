@@ -12,5 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+   .copy('node_modules/startbootstrap-sb-admin-2/js/sb-admin-2.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
+   .sass('resources/sass/backoffice.scss', 'public/css')
    .sourceMaps();

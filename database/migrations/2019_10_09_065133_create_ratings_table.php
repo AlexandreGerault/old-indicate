@@ -14,16 +14,17 @@ class CreateRatingsTable extends Migration
     public function up()
     {
         Schema::create('ratings', function (Blueprint $table) {
-            $table->integer('author_id')->unsigned()->index();
-            $table->integer('structure_id')->unsigned()->index();
+            $table->bigIncrements('id');
+            $table->bigInteger('author_id')->unsigned()->index();
+            $table->bigInteger('structure_id')->unsigned()->index();
             $table->string('rating_type');
-            $table->integer('rating_id');
+            $table->bigInteger('rating_id');
             $table->text('comment');
             $table->timestamps();
         });
 
         Schema::table('ratings', function (Blueprint $table) {
-            $table->primary(['author_id', 'structure_id']);
+            $table->unique(['author_id', 'structure_id']);
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
         });
@@ -37,6 +38,7 @@ class CreateRatingsTable extends Migration
     public function down()
     {
         Schema::table('ratings', function (Blueprint $table) {
+            $table->dropUnique('ratings_author_id_structure_id_unique');
             $table->dropForeign('ratings_author_id_foreign');
             $table->dropForeign('ratings_structure_id_foreign');
         });

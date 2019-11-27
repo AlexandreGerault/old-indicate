@@ -20,6 +20,19 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ConsultingData whereId($value)
  * @method static Builder|ConsultingData whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int|null $five_years_survival_rate
+ * @property string|null $consulting_type
+ * @property int|null $funding_help
+ * @property string|null $company_type
+ * @property string|null $consulting_domain
+ * @property string|null $seeking_location
+ * @property-read \App\Models\App\Structure $structure
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ConsultingData whereCompanyType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ConsultingData whereConsultingDomain($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ConsultingData whereConsultingType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ConsultingData whereFiveYearsSurvivalRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ConsultingData whereFundingHelp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ConsultingData whereSeekingLocation($value)
  */
 class ConsultingData extends Model
 {

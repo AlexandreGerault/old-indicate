@@ -1,0 +1,30 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@import '~startbootstrap-sb-admin-2/scss/sb-admin-2';
+
+a[role="button"] {
+    cursor: pointer;
+}
+
+sidebar *:first-letter {
+    text-transform: uppercase;
+}
+
+.ucfirst {
+    text-transform: capitalize !important;
+}
+
+table tr th::first-letter {
+    text-transform: capitalize;
+}

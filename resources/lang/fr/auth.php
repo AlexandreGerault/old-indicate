@@ -16,4 +16,12 @@ return [
     'failed' => 'Ces identifiants ne correspondent pas à nos enregistrements.',
     'throttle' => 'Tentatives de connexion trop nombreuses. Veuillez essayer de nouveau dans :seconds secondes.',
 
+    'admin' => [
+        'login' => 'Connexion au backoffice',
+        'logout' => 'Se déconnecter du backoffice',
+        'forgot' => 'Mot de passe oublié ?',
+        'remember' => 'Se rappeler de moi'
+    ],
+
+    'submit' => 'Se connecter'
 ];

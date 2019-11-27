@@ -26,12 +26,12 @@
                     </a>
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="{{ route('claimdemand.validates', [
+                    <a class="btn btn-primary" href="{{ route('backoffice.claim-demands.validates', [
                     'user_id' => $demand->user->id,
                     'structure_id' => $demand->structure->id]) }}">
                         {{ ucfirst(trans('structure.claimdemands.validates')) }}
                     </a>
-                    <a class="btn btn-primary" href="{{ route('claimdemand.rejects', [
+                    <a class="btn btn-primary" href="{{ route('backoffice.claim-demands.rejects', [
                     'user_id' => $demand->user->id,
                     'structure_id' => $demand->structure->id]) }}">
                         {{ ucfirst(trans('structure.claimdemands.rejects')) }}

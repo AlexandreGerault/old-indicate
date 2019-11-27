@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\App\News;
+use App\Models\App\Rating;
 use App\Models\App\Structure;
 use App\Models\App\UserAuthorizations;
 use App\Models\App\UserStructure;
@@ -11,12 +12,11 @@ use Carbon\Carbon;
 use DB;
 use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +54,14 @@ use Illuminate\Notifications\Notifiable;
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
+ * @property int $is_admin
+ * @property-read int|null $news_count
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\App\Rating[] $ratings
+ * @property-read int|null $ratings_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User admin()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User didntRate(\App\Models\App\Structure $structure)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIsAdmin($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -84,16 +92,27 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param string $name
      * @return Builder
      */
-    public function scopeSearchByName($query, $name)
+    public function scopeSearchByName(Builder $query, $name)
     {
         return $query
             ->where('firstname', 'LIKE', '%' . $name . '%')
             ->orWhere('lastname', 'LIKE', '%' . $name . '%');
     }
 
-    public function scopeAdmin($query)
+    public function scopeAdmin(Builder $query)
     {
         return $query->where('is_admin', '=', '1');
+    }
+
+    /**
+     * @param Builder $query
+     * @param Structure $structure
+     */
+    public function scopeDidntRate(Builder $query, Structure $structure)
+    {
+        return $query->whereDoesntHave(Rating::class, function (Builder $query, Rating $rating) use ($structure) {
+            return $query->where('structure_id', $structure->id);
+        });
     }
 
     /**
@@ -113,6 +132,34 @@ class User extends Authenticatable implements MustVerifyEmail
     public function userStructure()
     {
         return $this->hasOne(UserStructure::class, 'user_id');
+    }
+
+    /**
+     * Return the authorizations of the user
+     *
+     * @return HasOne
+     */
+    public function authorizations()
+    {
+        return $this->hasOne(UserAuthorizations::class);
+    }
+
+    /**
+     * Get user's news
+     * @return HasMany news
+     */
+    public function news()
+    {
+        return $this->hasMany(News::class, 'author_id');
+    }
+
+    /**
+     * Get user's ratings
+     * @return HasMany Rating[]
+     */
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'author_id', 'id');
     }
 
     /**
@@ -137,16 +184,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Return the authorizations of the user
-     *
-     * @return HasOne
-     */
-    public function authorizations()
-    {
-        return $this->hasOne(UserAuthorizations::class);
-    }
-
-    /**
      * Check if the user is the structure owner
      * @param Structure $structure : The structure we want to know if the user owns
      * @return bool
@@ -159,15 +196,6 @@ class User extends Authenticatable implements MustVerifyEmail
             ->get()
             ->isEmpty()
         );
-    }
-
-    /**
-     * Get user's news
-     * @return HasMany news
-     */
-    public function news()
-    {
-        return $this->hasMany(News::class, 'author_id');
     }
 
     /**

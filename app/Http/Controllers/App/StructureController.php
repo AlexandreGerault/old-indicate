@@ -37,7 +37,7 @@ class StructureController extends Controller
      */
     public function show(Structure $structure)
     {
-        return view('structure.show')->with('structure', $structure)->with('news', $structure->news);
+        return view('app.structure.show')->with('structure', $structure)->with('news', $structure->news);
     }
 
     /**
@@ -47,7 +47,7 @@ class StructureController extends Controller
      */
     public function create()
     {
-        return view('structure.create');
+        return view('app.structure.create');
     }
 
     /**
@@ -124,7 +124,7 @@ class StructureController extends Controller
         if($request->ajax())
             return response()->json($news, 200);
         else
-            return view('structure.news')->with('structure', $structure);
+            return view('app.structure.news')->with('structure', $structure);
     }
 
     /**

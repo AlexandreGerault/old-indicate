@@ -34,7 +34,7 @@
                                 <td>{{ ucfirst(trans('structure.data.' . $structure->data_type . '.' . $key)) }}</td>
                                 @if($key == 'wcr')
                                     <td>{{ $value ? 'Positif' : 'Négatif'}}</td>
-                                @elseif(Schema::getColumnType($structure->data_type . '_data', $key) == 'boolean')
+                                @elseif(Schema::getColumnType($structure->data_type, $key) == 'boolean')
                                     <td>{{ $value ? ucfirst('oui') : ucfirst('non') }}</td>
                                 @else
                                     <td>{{ $value }}</td>

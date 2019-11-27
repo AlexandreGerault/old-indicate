@@ -14,8 +14,8 @@ class CreateClaimDemandsTable extends Migration
     public function up()
     {
         Schema::create('claim_demands', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->index();
-            $table->integer('structure_id')->unsigned()->index();
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->bigInteger('structure_id')->unsigned()->index();
             $table->timestamps();
         });
 

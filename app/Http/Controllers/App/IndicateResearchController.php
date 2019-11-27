@@ -23,7 +23,7 @@ class IndicateResearchController extends Controller
      */
     public function form()
     {
-        return view('search.forms.indicate-research');
+        return view('app.search.forms.indicate-research');
     }
 
     /**
@@ -214,6 +214,6 @@ class IndicateResearchController extends Controller
                 break;
         }
 
-        return view('search.results.indicate-research')->with('data', $data);
+        return view('app.search.results.indicate-research')->with('data', $data);
     }
 }

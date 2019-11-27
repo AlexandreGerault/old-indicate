@@ -14,8 +14,8 @@ class CreateBloggersTable extends Migration
     public function up()
     {
         Schema::create('bloggers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned()->unique();
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned()->unique();
         });
 
         Schema::table('bloggers', function (Blueprint $table) {

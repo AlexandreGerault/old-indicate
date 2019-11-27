@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|ContactMeans whereCity($value)
  * @method static Builder|ContactMeans whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property int $postcode
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Address wherePostcode($value)
  */
 class Address extends Model
 {

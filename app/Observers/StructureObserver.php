@@ -15,7 +15,7 @@ class StructureObserver
      */
     public function created(Structure $structure)
     {
-        $dataClass = 'App\Models\App\\' . ucfirst($structure->data_type) . 'Data';
+        $dataClass = 'App\Models\App\\' . ucfirst(preg_replace('/_data$/', '', $structure->data_type)) . 'Data';
         $data = new $dataClass();
         $data->save();
 

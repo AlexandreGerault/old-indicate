@@ -24,7 +24,7 @@ class HomeController extends Controller
         if (Auth::guest()) {
             return view('app.home');
         } elseif (!Auth::user()->hasStructure()) {
-            return view('user.profile.show', ['user' => Auth::user()]);
+            return view('app.user.profile.show', ['user' => Auth::user()]);
         } elseif (Auth::user()->hasStructure()) {
             return view('app.timeline');
         }

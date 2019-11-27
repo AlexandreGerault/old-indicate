@@ -24,9 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.11.2",
         "acorn-dynamic-import": "^4.0.0",
         "eslint": "^5.16.0",
-        "startbootstrap-sb-admin": "^5.1.0",
+        "startbootstrap-sb-admin-2": "^4.0.7",
         "vue-infinite-loading": "^2.4.4"
     }
 }

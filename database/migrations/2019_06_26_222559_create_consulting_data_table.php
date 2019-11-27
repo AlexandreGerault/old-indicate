@@ -14,9 +14,9 @@ class CreateConsultingDataTable extends Migration
     public function up()
     {
         Schema::create('consulting_data', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->integer('five_years_survival_rate')->nullable()->default(null);
+            $table->bigInteger('five_years_survival_rate')->nullable()->default(null);
             $table->string('consulting_type')->nullable()->default(null);
             $table->boolean('funding_help')->nullable()->default(null);
             $table->string('company_type')->nullable()->default(null);

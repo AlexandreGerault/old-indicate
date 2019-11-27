@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         $news = News::all()->where('author_id', '=', $user->id);
 
-        return view('user.profile.show')->with('user', $user)->with('news', $news);
+        return view('app.user.profile.show')->with('user', $user)->with('news', $news);
     }
 
     /**
@@ -62,7 +62,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('user.profile.edit')->with('user', $user);
+        return view('app.user.profile.edit')->with('user', $user);
     }
 
 

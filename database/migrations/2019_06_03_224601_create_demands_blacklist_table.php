@@ -14,8 +14,8 @@ class CreateDemandsBlacklistTable extends Migration
     public function up()
     {
         Schema::create('demands_blacklist', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('structure_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('structure_id')->unsigned();
             $table->timestamps();
         });
 

@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use App\Models\App\CompanyData;
+use App\Models\App\CompanyRating;
 use App\Models\App\ConsultingData;
+use App\Models\App\ConsultingRating;
 use App\Models\App\InvestorData;
+use App\Models\App\InvestorRating;
 use App\Models\App\Structure;
 use App\Observers\StructureObserver;
 use App\Observers\UserObserver;
@@ -38,9 +41,15 @@ class AppServiceProvider extends ServiceProvider
 
         /* Polymorphic relation setup  */
         Relation::morphMap([
-            'company' => CompanyData::class,
-            'investor' => InvestorData::class,
-            'consulting' => ConsultingData::class,
+            'company_data' => CompanyData::class,
+            'investor_data' => InvestorData::class,
+            'consulting_data' => ConsultingData::class,
+        ]);
+
+        Relation::morphMap([
+            'company_rating' => CompanyRating::class,
+            'investor_rating' => InvestorRating::class,
+            'consulting_rating' => ConsultingRating::class
         ]);
 
         /* Observers registration */

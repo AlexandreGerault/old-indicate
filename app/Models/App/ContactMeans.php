@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|ContactMeans whereEmail($value)
  * @method static Builder|ContactMeans whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read \App\Models\App\Address|null $mailingAddress
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\ContactMeans whereMailingAddressId($value)
  */
 class ContactMeans extends Model
 {

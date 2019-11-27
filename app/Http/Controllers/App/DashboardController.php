@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $followers = count($structure->followers);
         $following = count($structure->following);
 
-        return view('structure.dashboard.home', compact('members', 'news', 'followers', 'following'));
+        return view('app.structure.dashboard.home', compact('members', 'news', 'followers', 'following'));
     }
 
     /**
@@ -40,7 +40,7 @@ class DashboardController extends Controller
     {
         $members = $structure->members()->paginate(25);
 
-        return view('structure.dashboard.members.list', compact('members'));
+        return view('app.structure.dashboard.members.list', compact('members'));
     }
 
     /**
@@ -51,7 +51,7 @@ class DashboardController extends Controller
     public function demands()
     {
         $demands = UserStructure::byStructure(Auth::user()->userStructure->structure)->pending()->get();
-        return view('structure.dashboard.members.demands', compact('demands'));
+        return view('app.structure.dashboard.members.demands', compact('demands'));
     }
 
     /**
@@ -68,7 +68,7 @@ class DashboardController extends Controller
         );
         $members = $structure->members;
 
-        return view('structure.dashboard.members.permissions', compact('columns', 'members'));
+        return view('app.structure.dashboard.members.permissions', compact('columns', 'members'));
     }
 
     /**
@@ -84,7 +84,7 @@ class DashboardController extends Controller
 
         $user = User::findOrFail($id)->first();
 
-        return view('structure.dashboard.members.edit', compact('user'));
+        return view('app.structure.dashboard.members.edit', compact('user'));
     }
 
     /**
@@ -94,7 +94,7 @@ class DashboardController extends Controller
      */
     public function news()
     {
-        return view('structure.dashboard.news');
+        return view('app.structure.dashboard.news');
     }
 
     /**
@@ -107,6 +107,6 @@ class DashboardController extends Controller
         $structure = auth()->user()->userStructure->structure;
         $type = $structure->data_type;
 
-        return view('structure.dashboard.profile', compact('type', 'structure'));
+        return view('app.structure.dashboard.profile', compact('type', 'structure'));
     }
 }

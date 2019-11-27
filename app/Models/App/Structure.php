@@ -55,6 +55,23 @@ use Eloquent;
  * @method static Builder|Structure whereDataId($value)
  * @method static Builder|Structure whereDataType($value)
  * @method static Builder|Structure wherePhoneNumber($value)
+ * @property string $avatar
+ * @property int $verified
+ * @property int|null $address_id
+ * @property int|null $contact_id
+ * @property-read \App\Models\App\ContactMeans|null $contact
+ * @property-read int|null $followers_count
+ * @property-read int|null $following_count
+ * @property-read int|null $members_count
+ * @property-read int|null $news_count
+ * @property-read int|null $ratings_count
+ * @property-read int|null $structure_users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Structure unverified()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Structure verified()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Structure whereAddressId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Structure whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Structure whereContactId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Structure whereVerified($value)
  */
 class Structure extends Model
 {
@@ -207,7 +224,7 @@ class Structure extends Model
     /**
      * @return float|int
      */
-    public function averageRating() : bool
+    public function averageRating() : float
     {
         if ($this->ratings->count() > 0)
         {

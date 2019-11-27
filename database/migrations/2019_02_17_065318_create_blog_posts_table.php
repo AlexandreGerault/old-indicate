@@ -14,10 +14,10 @@ class CreateBlogPostsTable extends Migration
     public function up()
     {
         Schema::create('blog_posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('title', 255);
             $table->longText('content');
-            $table->integer('author_id')->unsigned();
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
 
@@ -34,6 +34,9 @@ class CreateBlogPostsTable extends Migration
      */
     public function down()
     {
+        Schema::table('blog_posts', function (Blueprint $table) {
+            $table->dropForeign('blog_posts_author_id_foreign');
+        });
         Schema::dropIfExists('blog_posts');
     }
 }

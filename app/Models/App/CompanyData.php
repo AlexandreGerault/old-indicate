@@ -52,6 +52,15 @@ use Illuminate\Support\Carbon;
  * @method static Builder|CompanyData whereUpdatedAt($value)
  * @method static Builder|CompanyData whereWcr($value)
  * @mixin Eloquent
+ * @property int|null $turnover_projection
+ * @property int|null $ebitda
+ * @property int|null $investment_sought
+ * @property int|null $gross_margin
+ * @property-read \App\Models\App\Structure $structure
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\CompanyData whereEbitda($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\CompanyData whereGrossMargin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\CompanyData whereInvestmentSought($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\CompanyData whereTurnoverProjection($value)
  */
 class CompanyData extends Model
 {

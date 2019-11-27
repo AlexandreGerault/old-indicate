@@ -12,7 +12,6 @@
                     </p>
                 </div>
             </div>
-
             <div class="col-12 col-sm-8 col-md-10 shadow-none text-center text-sm-left">
                 <h1>
                     {!! $structure->verified ? '<i class="fas fa-check-circle text-primary"></i>' : '' !!}
@@ -42,6 +41,7 @@
                         {{ ucfirst(trans('structure.claim')) }}
                     </a>
                 @endcan
+
                 @if ($structure->ratings->count() > 0)
                     {{ ucfirst(trans('rating.mean')) }} : {{ $structure->averageRating() }}/5
                 @endif

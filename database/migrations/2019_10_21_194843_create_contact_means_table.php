@@ -14,8 +14,8 @@ class CreateContactMeansTable extends Migration
     public function up()
     {
         Schema::create('contact_means', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('mailing_address_id')->unsigned()->nullable()->default(null);
+            $table->bigIncrements('id');
+            $table->bigInteger('mailing_address_id')->unsigned()->nullable()->default(null);
             $table->string('email');
             $table->string('phone_number');
 

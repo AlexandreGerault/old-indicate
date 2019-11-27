@@ -55,12 +55,6 @@
                             {{ ucfirst(trans('structure.structure')) }}
                         </a>
                         @endif
-                        @if(Auth::user()->is_admin)
-                            <a class="dropdown-item"
-                               href="{{ route('claimdemand.index') }}">
-                                Backoffice
-                            </a>
-                        @endif
                         @can('access-dashboard', Auth::user()->userStructure->structure)
                         <a class="dropdown-item"
                            href="{{ route('structure.dashboard.index', [

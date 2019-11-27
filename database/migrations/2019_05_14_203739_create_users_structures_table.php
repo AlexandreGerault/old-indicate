@@ -14,17 +14,23 @@ class CreateUsersStructuresTable extends Migration
     public function up()
     {
         Schema::create('users_structures', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned()->unique();
-            $table->integer('structure_id')->unsigned()->nullable()->default(null);
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned()->unique();
+            $table->bigInteger('structure_id')->unsigned()->nullable()->default(null);
             $table->integer('status')->default(1);
             $table->string('jobname')->nullable()->default(null);
             $table->timestamps();
         });
 
         Schema::table('users_structures', function (Blueprint $table ) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('structure_id')
+                ->references('id')
+                ->on('structures')
+                ->onDelete('cascade');
         });
     }
 

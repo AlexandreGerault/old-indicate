@@ -17,17 +17,17 @@ class RatingsController extends Controller
     {
         $ratings = $structure->ratings;
 
-        return view('structure.rating.index')->with('ratings', $ratings)->with('structure', $structure);
+        return view('app.structure.rating.index')->with('ratings', $ratings)->with('structure', $structure);
     }
 
     public function show(Structure $structure, Rating $rating)
     {
-        return view('structure.rating.show')->with('rating', $rating)->with('structure', $structure);
+        return view('app.structure.rating.show')->with('rating', $rating)->with('structure', $structure);
     }
 
     public function edit(Structure $structure, Rating $rating)
     {
-        return view('structure.rating.edit')->with('rating', $rating)->with('structure', $structure);
+        return view('app.structure.rating.edit')->with('rating', $rating)->with('structure', $structure);
     }
 
     public function delete(Rating $rating)
@@ -44,7 +44,7 @@ class RatingsController extends Controller
     {
         $this->authorize('create', [Rating::class, $structure]);
 
-        return view('structure.rating.create')->with('structure', $structure);
+        return view('app.structure.rating.create')->with('structure', $structure);
     }
 
     public function store(Request $request, Structure $structure)
@@ -98,7 +98,7 @@ class RatingsController extends Controller
         $rating->rating()->associate($rateable);
         $rating->save();
 
-        return route('rating.index')->back('structure', $structure);
+        return route('app.rating.index')->back('structure', $structure);
     }
 
     public function update()
