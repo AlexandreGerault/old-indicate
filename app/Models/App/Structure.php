@@ -222,19 +222,13 @@ class Structure extends Model
     }
 
     /**
-     * @return float|int
+     * @return float|void
      */
     public function averageRating() : float
     {
-        if ($this->ratings->count() > 0)
-        {
-            $sum = 0;
-            foreach ($this->ratings as $rating)
-            {
-                $sum += $rating->mean();
-            }
-            return $sum / $this->ratings->count();
-        }
+        if ($this->ratings->count() > 0) return $this->ratings->reduce(function ($acc, Rating $rating) {
+            return $acc + $rating->mean();
+        })/$this->ratings->count();
     }
 
     /**

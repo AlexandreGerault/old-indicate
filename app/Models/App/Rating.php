@@ -3,9 +3,12 @@
 namespace App\Models\App;
 
 use App\User;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\App\Rating
@@ -15,22 +18,22 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string $rating_type
  * @property int $rating_id
  * @property string $comment
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\User $author
- * @property-read \App\Models\App\Rating $rating
- * @property-read \App\Models\App\Structure $structure
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereAuthorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereComment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereRatingId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereRatingType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereStructureId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\App\Rating whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User $author
+ * @property-read Rating $rating
+ * @property-read Structure $structure
+ * @method static Builder|Rating newModelQuery()
+ * @method static Builder|Rating newQuery()
+ * @method static Builder|Rating query()
+ * @method static Builder|Rating whereAuthorId($value)
+ * @method static Builder|Rating whereComment($value)
+ * @method static Builder|Rating whereCreatedAt($value)
+ * @method static Builder|Rating whereRatingId($value)
+ * @method static Builder|Rating whereRatingType($value)
+ * @method static Builder|Rating whereStructureId($value)
+ * @method static Builder|Rating whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Rating extends Model
 {
@@ -55,7 +58,7 @@ class Rating extends Model
     }
 
     /**
-     * Returns an array of rating critera depending on the structure type
+     * Returns an array of rating criteria depending on the structure type
      *
      * @return MorphTo
      */
@@ -66,11 +69,9 @@ class Rating extends Model
 
     public function mean()
     {
-        $sum = 0;
         $ratingsArray = $this->rating->makeHidden(['id', 'created_at', 'updated_at'])->attributesToArray();
-        foreach ($ratingsArray as $key => $value) {
-            $sum += $value;
-        }
-        return $sum/count($ratingsArray);
+        return array_reduce($ratingsArray, function ($acc, $rating) {
+            return $acc + $rating;
+        })/count($ratingsArray);
     }
 }
