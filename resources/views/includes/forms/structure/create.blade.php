@@ -36,9 +36,9 @@
             {{ ucfirst(trans('structure.datatype')) }}
         </label>
         <select class="form-control" id="data_type" name="data_type">
-            <option value="investor">{{ ucfirst(trans('structure.type.investor')) }}</option>
-            <option value="company">{{ ucfirst(trans('structure.type.company')) }}</option>
-            <option value="consulting">{{ ucfirst(trans('structure.type.consulting')) }}</option>
+            <option value="investor_data">{{ ucfirst(trans('structure.type.investor')) . '_data' }}</option>
+            <option value="company_data">{{ ucfirst(trans('structure.type.company')). '_data' }}</option>
+            <option value="consulting_data">{{ ucfirst(trans('structure.type.consulting')). '_data' }}</option>
         </select>
     </div>
     <div class="form-group mb-3">

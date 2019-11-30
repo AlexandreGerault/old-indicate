@@ -68,6 +68,7 @@ class StructureController extends Controller
         $contact->mailingAddress()->associate($address);
         $contact->save();
 
+
         //Store the structure
         $structure = new Structure($request->only('name', 'comment', 'siren', 'siret'));
         $structure->data_type = $request->input('data_type');

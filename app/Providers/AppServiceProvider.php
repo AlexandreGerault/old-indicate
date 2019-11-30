@@ -44,9 +44,6 @@ class AppServiceProvider extends ServiceProvider
             'company_data' => CompanyData::class,
             'investor_data' => InvestorData::class,
             'consulting_data' => ConsultingData::class,
-        ]);
-
-        Relation::morphMap([
             'company_rating' => CompanyRating::class,
             'investor_rating' => InvestorRating::class,
             'consulting_rating' => ConsultingRating::class
