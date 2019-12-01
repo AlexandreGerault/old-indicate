@@ -32,7 +32,7 @@
                 </div>
                 @endforeach
             </div>
-            {{ $data->links() }}
+            {{ $data->appends(request()->query())->links() }}
             @else
                 <p>Aucun résultats</p>
             @endif
