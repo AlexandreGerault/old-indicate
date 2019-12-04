@@ -51,7 +51,7 @@ class IndicateResearchController extends Controller
                 $average_turnover_min = $request->input('average-turnover-min');
                 $average_turnover_max = $request->input('average-turnover-max');
 
-                $bfr = $request->input('bfr');
+                $wcr = $request->input('wcr');
 
                 $looking_investors = $request->input('looking-investors');
                 $looked_investment_min = $request->input('looked-investment-min');
@@ -64,44 +64,44 @@ class IndicateResearchController extends Controller
 
 
                 $data = CompanyData::query()
-                    ->when($customer_min, function ($query, $customer_min) {
+                    ->when($customer_min, function (Builder $query, $customer_min) {
                         return $query->where('clients_number', '>=', $customer_min);
                     })
-                    ->when($customer_max, function ($query, $customer_max) {
+                    ->when($customer_max, function (Builder $query, $customer_max) {
                         return $query->where('clients_number', '<=', $customer_max);
                     })
-                    ->when($ebitda_min, function ($query, $ebitda_min) {
+                    ->when($ebitda_min, function (Builder $query, $ebitda_min) {
                         return $query->where('ebitda', '>=', $ebitda_min);
                     })
-                    ->when($ebitda_max, function ($query, $ebitda_max) {
+                    ->when($ebitda_max, function (Builder $query, $ebitda_max) {
                         return $query->where('ebitda', '<=', $ebitda_max);
                     })
-                    ->when($valued_turnover_min, function ($query, $valued_turnover_min) {
+                    ->when($valued_turnover_min, function (Builder $query, $valued_turnover_min) {
                         return $query->where('turnover', '>=', $valued_turnover_min);
                     })
-                    ->when($valued_turnover_max, function ($query, $valued_turnover_max) {
+                    ->when($valued_turnover_max, function (Builder $query, $valued_turnover_max) {
                         return $query->where('turnover', '<=', $valued_turnover_max);
                     })
-                    ->when($average_turnover_min, function ($query, $average_turnover_min) {
+                    ->when($average_turnover_min, function (Builder $query, $average_turnover_min) {
                         return $query->where('average_monthly_turnover', '>=', $average_turnover_min);
                     })
-                    ->when($average_turnover_max, function ($query, $average_turnover_max) {
+                    ->when($average_turnover_max, function (Builder $query, $average_turnover_max) {
                         return $query->where(
                             'average_monthly_turnover',
                             '<=',
                             $average_turnover_max
                         );
                     })
-                    ->when($bfr, function ($query, $bfr) {
+                    ->when($wcr, function (Builder $query, $bfr) {
                         return $query->where(
-                            'bfr',
+                            'wcr',
                             '=',
                             $bfr == 'on' ? true : false
                         );
                     })
                     ->when(
                         $looking_investors,
-                        function ($query, $looking_investors) use ($looked_investment_min, $looked_investment_max) {
+                        function (Builder $query, $looking_investors) use ($looked_investment_min, $looked_investment_max) {
                             return $query->where('looking_for_funding', '=', $looking_investors == 'on' ? true : false)
                                 ->where(
                                     'investment_sought',
@@ -115,30 +115,30 @@ class IndicateResearchController extends Controller
                                 );
                         }
                     )
-                    ->when($looking_partnership, function ($query, $looking_partnership) {
+                    ->when($looking_partnership, function (Builder $query, $looking_partnership) {
                         return $query->where(
                             'looking_for_accompaniment',
                             '=',
                             $looking_partnership == 'on' ? true : false
                         );
                     })
-                    ->when($looking_shareholding, function ($query, $looking_shareholding) {
+                    ->when($looking_shareholding, function (Builder $query, $looking_shareholding) {
                         return $query->where(
                             'looking_for_accompaniment',
                             '=',
                             $looking_shareholding == 'on' ? true : false
                         );
                     })
-                    ->when($looking_bank_funding, function ($query, $looking_bank_funding) {
+                    ->when($looking_bank_funding, function (Builder $query, $looking_bank_funding) {
                         return $query->where(
                             'looking_for_funding',
                             '=',
                             $looking_bank_funding == 'on' ? true : false
                         );
                     })
-                    ->when($keywords, function ($query, $keywords) {
-                        $query->whereHas('structure', function ($subQuery) use ($keywords) {
-                            $subQuery->searchByName($keywords);
+                    ->when($keywords, function (Builder $query, $keywords) {
+                        $query->whereHas('structure', function (Builder $subQuery) use ($keywords) {
+                            $subQuery->searchWithKeywords($keywords);
                         });
                     })
                     ->whereHas('structure', function (Builder $query) {
@@ -156,27 +156,27 @@ class IndicateResearchController extends Controller
                 $seeking_location = $request->input('seeking-location');
 
                 $data = ConsultingData::query()
-                    ->when($survival_rate, function ($query, $survival_rate) {
+                    ->when($survival_rate, function (Builder $query, $survival_rate) {
                         return $query->where('five_years_survival_rate', '=', $survival_rate);
                     })
-                    ->when($funding_help, function ($query, $funding_help) {
+                    ->when($funding_help, function (Builder $query, $funding_help) {
                         return $query->where('funding_help', '=', $funding_help == 'on' ? true : false);
                     })
-                    ->when($company_type, function ($query, $company_type) {
+                    ->when($company_type, function (Builder $query, $company_type) {
                         return $query->where('company_type', '=', $company_type);
                     })
-                    ->when($consulting_domain, function ($query, $consulting_domain) {
+                    ->when($consulting_domain, function (Builder $query, $consulting_domain) {
                         return $query->where('consulting_domain', 'LIKE', $consulting_domain);
                     })
-                    ->when($seeking_location, function ($query, $seeking_location) {
+                    ->when($seeking_location, function (Builder $query, $seeking_location) {
                         return $query->where('seeking_location', 'LIKE', $seeking_location);
                     })
-                    ->when($keywords, function ($query, $keywords) {
-                        $query->whereHas('structure', function ($subQuery) use ($keywords) {
-                            $subQuery->searchByName($keywords);
+                    ->when($keywords, function (Builder $query, $keywords) {
+                        $query->whereHas('structure', function (Builder $subQuery) use ($keywords) {
+                            $subQuery->searchWithKeywords($keywords);
                         });
                     })
-                    ->whereHas('structure', function ($query) {
+                    ->whereHas('structure', function (Builder $query) {
                         $query->verified();
                     })
                     ->paginate($paginate);
@@ -190,24 +190,24 @@ class IndicateResearchController extends Controller
                 $investment_max = $request->input('investment-max');
 
                 $data = InvestorData::query()
-                    ->when($investment_min, function ($query, $investment_min) {
+                    ->when($investment_min, function (Builder $query, $investment_min) {
                         return $query->where('funding_min', '>=', $investment_min);
                     })
-                    ->when($investment_max, function ($query, $investment_max) {
+                    ->when($investment_max, function (Builder $query, $investment_max) {
                         return $query->where('funding_max', '<=', $investment_max);
                     })
-                    ->when($investment_type, function ($query, $investment_type) {
+                    ->when($investment_type, function (Builder $query, $investment_type) {
                         return $query->where('funding_type', '=', $investment_type);
                     })
-                    ->when($investment_step, function ($query, $investment_step) {
+                    ->when($investment_step, function (Builder $query, $investment_step) {
                         return $query->where('funding_step', '=', $investment_step);
                     })
-                    ->when($keywords, function ($query, $keywords) {
-                        $query->whereHas('structure', function ($subQuery) use ($keywords) {
-                            $subQuery->searchByName($keywords);
+                    ->when($keywords, function (Builder $query, $keywords) {
+                        $query->whereHas('structure', function (Builder $subQuery) use ($keywords) {
+                            $subQuery->searchWithKeywords($keywords);
                         });
                     })
-                    ->whereHas('structure', function ($query) {
+                    ->whereHas('structure', function (Builder $query) {
                         $query->verified();
                     })
                     ->paginate($paginate);
