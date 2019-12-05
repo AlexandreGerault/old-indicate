@@ -94,6 +94,29 @@ class Structure extends Model
     }
 
     /**
+     * Scope a query to search structures with keywords in comment.
+     *
+     * @param Builder $query
+     * @param String $keyword
+     * @return mixed
+     */
+    public function scopeSearchInComment($query, $keyword)
+    {
+        return $query->where('comment', 'LIKE', '%' . $keyword . '%');
+    }
+
+    /**
+     * @param Builder $query
+     * @param String $keyword
+     * @return Builder
+     */
+    public function scopeSearchWithKeywords(Builder $query, $keyword)
+    {
+        return $query->where('name', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('comment', 'LIKE', '%' . $keyword . '%');
+    }
+
+    /**
      * @param $query
      * @return mixed
      */
